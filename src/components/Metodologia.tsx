@@ -45,13 +45,20 @@ export function Metodologia() {
             <p data-revela className="text-xl leading-snug font-medium text-off md:col-span-5 md:text-2xl">
               Minha metodologia parte de uma ideia simples: cada pessoa aprende de um jeito diferente, e as aulas devem respeitar isso.
             </p>
-            <p data-revela className="leading-relaxed md:col-span-3 md:col-start-7">
-              O inglês é aprendido na prática, com foco na comunicação desde o início. Músicas, filmes, séries, conversas e situações do cotidiano deixam o
-              aprendizado mais natural e interessante.
-            </p>
-            <p data-revela className="leading-relaxed md:col-span-3">
-              A proposta é trazer o idioma para o seu mundo, e não fazer você se adaptar a um método engessado.
-            </p>
+            <div className="grid gap-6 md:col-span-6 md:col-start-7 md:grid-cols-2">
+              <p data-revela className="leading-relaxed">
+                Aqui, o inglês é aprendido na prática, com foco na comunicação desde o início. Utilizamos músicas, filmes, séries, conversas, situações do cotidiano e
+                assuntos que fazem parte da sua vida para tornar o aprendizado mais natural e interessante.
+              </p>
+              <p data-revela className="leading-relaxed">
+                Não se trata de decorar regras ou traduzir frases, mas de entender o idioma, experimentar, praticar e ganhar confiança para se comunicar. Os conteúdos
+                e atividades são preparados individualmente, considerando seus interesses, objetivos, dificuldades e ritmo de aprendizagem.
+              </p>
+              <p data-revela className="border-t border-off/15 pt-6 text-lg leading-relaxed font-medium text-off md:col-span-2 md:text-xl">
+                Acredito que aprender inglês deve fazer sentido dentro e fora da sala de aula. Por isso, minha proposta é trazer o idioma para o seu mundo, e não
+                fazer você se adaptar a um método engessado.
+              </p>
+            </div>
           </div>
         </div>
 

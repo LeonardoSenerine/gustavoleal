@@ -78,8 +78,9 @@ export function Trajetoria() {
           <div data-revela className="md:col-span-5">
             <p className="nota-caps text-caneta">a) Na sala de aula</p>
             <p className="mt-4 text-lg leading-relaxed text-preto/75">
-              Ensinei inglês para alunos de diferentes idades e níveis, em aulas particulares, escolas de idiomas e no ambiente escolar. Cada experiência me
-              ajudou a entender melhor as dificuldades, as necessidades e as diferentes formas de aprender de cada aluno.
+              Ao longo da minha trajetória como professor, tive a oportunidade de ensinar inglês para alunos de diferentes idades e níveis, tanto em aulas
+              particulares quanto em escolas de idiomas e no ambiente escolar. Cada experiência me ajudou a entender melhor as dificuldades, necessidades e
+              diferentes formas de aprender de cada aluno.
             </p>
             <ul className="nota mt-6 border-t border-preto/12" aria-label="Experiência como professor">
               {experienciaProfissional.map((item) => (
@@ -96,8 +97,9 @@ export function Trajetoria() {
           <div data-revela className="md:col-span-5 md:col-start-8">
             <p className="nota-caps text-caneta">b) O que o inglês me deu</p>
             <p className="mt-4 text-lg leading-relaxed text-preto/75">
-              Viajei por diferentes países usando o inglês como minha principal ferramenta de comunicação em todos eles. Na prática, vi como o idioma conecta
-              pessoas, culturas e experiências, mesmo quando a gente não fala a língua local.
+              Além da experiência em sala de aula, tive a oportunidade de viajar por diferentes países e utilizar o inglês como minha principal ferramenta de
+              comunicação em todos eles. Na prática, pude perceber como o idioma conecta pessoas, culturas e experiências, mesmo quando não falamos a língua
+              local.
             </p>
             <ul className="nota mt-6 border-t border-preto/12" aria-label="Países onde usei o inglês">
               {paises.map((pais, i) => (
@@ -124,7 +126,10 @@ export function Trajetoria() {
           ))}
         </div>
 
-        <blockquote className="mt-24 grid gap-4 md:mt-40 md:grid-cols-12 md:gap-6">
+        <p data-revela className="mt-24 max-w-[52ch] text-lg leading-relaxed text-preto/70 md:mt-40 md:ml-[calc(100%/12)] md:pl-6">
+          Essas vivências contribuíram para desenvolver minha maneira de ensinar e reforçaram algo em que acredito muito:
+        </p>
+        <blockquote className="mt-8 grid gap-4 md:mt-10 md:grid-cols-12 md:gap-6">
           <span className="display text-[6rem] leading-[0.6] text-caneta md:col-span-1 md:text-right md:text-[8rem]" aria-hidden>
             “
           </span>

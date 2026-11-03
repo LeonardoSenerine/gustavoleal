@@ -88,21 +88,27 @@ export function Apresentacao() {
 
           <div className="flex flex-col gap-10 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
             <p data-revela className="text-[clamp(1.6rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.03em]">
-              Eu sou o teacher Gustavo, apaixonado pela ideia de que aprender um idioma pode ir muito além de livros e regras gramaticais.
+              Eu sou o teacher Gustavo e apaixonado pela ideia de que aprender um idioma pode ir muito além de livros e regras gramaticais.
             </p>
 
-            <div className="grid gap-8 border-t border-preto/12 pt-8 sm:grid-cols-2">
+            <div className="grid gap-6 border-t border-preto/12 pt-8 sm:grid-cols-2 sm:gap-8">
               <p data-revela className="leading-relaxed text-preto/70">
-                Cada aluno é único. Minhas aulas envolvem conversação, música, filmes, cultura e situações reais, conectadas aos seus interesses e objetivos.
+                Acredito que o inglês deve fazer parte da sua vida, conectado aos seus interesses, à sua personalidade e aos seus objetivos. Por isso, minhas aulas
+                envolvem conversação, música, filmes, cultura e situações reais, tornando o aprendizado mais natural e significativo.
               </p>
               <p data-revela className="leading-relaxed text-preto/70">
-                Aqui, as aulas se adaptam a você,{" "}
-                <span className="relative isolate inline-block whitespace-nowrap text-preto">
-                  não o contrário.
-                  <span className="absolute inset-x-0 bottom-0.5 -z-10 h-2 bg-caneta/20" aria-hidden />
-                </span>
+                Cada aluno é único, e é assim que enxergo o ensino. Não existe uma única maneira de aprender. Meu objetivo é ajudar você a desenvolver confiança, se
+                comunicar de verdade e descobrir tudo o que um novo idioma pode proporcionar.
               </p>
             </div>
+
+            <p data-revela className="text-2xl leading-tight font-medium tracking-[-0.02em] md:text-3xl">
+              Aqui, as aulas se adaptam a você,{" "}
+              <span className="relative isolate inline-block whitespace-nowrap">
+                não o contrário.
+                <span className="absolute inset-x-0 bottom-1 -z-10 h-[0.4em] bg-caneta/20" aria-hidden />
+              </span>
+            </p>
           </div>
         </div>
       </div>
