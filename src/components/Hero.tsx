@@ -75,13 +75,7 @@ export function Hero() {
           <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-vinho text-off hover:bg-vermelho">
             Agendar aula experimental grátis
           </a>
-          <div className="flex items-center gap-3 text-left">
-            <img src="/media/apresentacao.jpg" alt="" className="size-11 rounded-full object-cover object-[50%_28%] ring-2 ring-off" />
-            <div className="leading-tight">
-              <p className="text-sm font-bold">Gustavo Leal</p>
-              <p className="text-sm text-preto/60">Online ou presencial</p>
-            </div>
-          </div>
+          <p className="text-preto/65">Agende online ou presencial</p>
         </div>
       </div>
 
