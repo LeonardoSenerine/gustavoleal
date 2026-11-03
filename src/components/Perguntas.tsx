@@ -10,8 +10,8 @@ export function Perguntas() {
   const [aberta, setAberta] = useState<number | null>(0);
 
   return (
-    <section id="perguntas" className="relative bg-off px-4 pt-8 pb-24 text-preto md:px-8 md:pt-12 md:pb-36">
-      <div className="mx-auto grid max-w-6xl gap-12 border-t border-preto/10 pt-20 md:grid-cols-12 md:gap-8 md:pt-28">
+    <section id="perguntas" className="relative bg-off px-4 pb-16 text-preto md:px-8 md:pb-24">
+      <div className="mx-auto grid max-w-6xl gap-10 border-t border-preto/10 pt-14 md:grid-cols-12 md:gap-8 md:pt-20">
         <div className="md:col-span-4">
           <div className="md:sticky md:top-32">
             <Rotulo>Dúvidas</Rotulo>

@@ -5,7 +5,7 @@ export function Rodape() {
 
   return (
     <footer className="bg-off text-preto">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-12 md:items-end md:px-8 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-12 md:items-end md:px-8 md:py-16">
         <p className="text-[clamp(3.2rem,9vw,7rem)] leading-[0.9] font-medium tracking-[-0.04em] md:col-span-7">
           <span className="font-serif tracking-[-0.01em] text-vinho italic">Gustavo</span> Leal
           <span className="mt-3 block text-lg font-medium tracking-normal text-preto/60">Teacher de inglês · online ou presencial</span>

@@ -9,7 +9,7 @@ function Fileira({ fotos, className }: { fotos: { foto: string; lugar: string }[
   return (
     <div className={`${className} flex w-max gap-3 md:gap-5`} aria-hidden>
       {repetidas.map((f, i) => (
-        <figure key={i} className="relative aspect-[3/4] h-[52vw] shrink-0 overflow-hidden rounded-[20px] bg-papel md:h-[26vw]">
+        <figure key={i} className="relative aspect-[3/4] h-[64vw] shrink-0 overflow-hidden rounded-[20px] bg-papel md:h-[26vw]">
           <img src={`/fotos/${f.foto}.webp`} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
           <figcaption className="absolute bottom-3 left-3 rounded-full bg-preto/55 px-3 py-1 text-xs font-semibold text-off backdrop-blur-sm">
             {f.lugar}
@@ -45,10 +45,12 @@ export function Trajetoria() {
   );
 
   return (
-    <section id="trajetoria" ref={root} className="relative overflow-hidden bg-off py-20 text-preto md:py-28">
+    <section id="trajetoria" ref={root} className="relative overflow-hidden bg-off py-12 text-preto md:py-20">
       <Fileira fotos={galeriaViagens[0]} className="trajetoria-a" />
 
-      <div className="relative z-10 -my-[18vw] px-3 md:-my-[9vw] md:px-8">
+      {/* No celular o cartão só encosta nas fileiras, pra as fotos aparecerem inteiras;
+          no desktop ele avança sobre elas e as fotos passam por trás. */}
+      <div className="relative z-10 -my-8 px-3 md:-my-[9vw] md:px-8">
         <div className="trajetoria-cartao mx-auto max-w-5xl rounded-[28px] bg-off/90 p-6 shadow-[0_40px_90px_-30px_rgb(61_9_18/0.45)] ring-1 ring-preto/5 backdrop-blur-xl md:rounded-[36px] md:p-14">
           <div className="text-center">
             <Rotulo>Trajetória</Rotulo>

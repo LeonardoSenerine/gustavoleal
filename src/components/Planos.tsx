@@ -69,7 +69,7 @@ export function Planos() {
   const descricaoPlano = `${plano.duracao} por semana, ${formato === "dupla" ? "em dupla" : "individual"}`;
 
   return (
-    <section id="planos" ref={root} className="relative bg-off px-4 py-24 text-preto md:px-8 md:py-36">
+    <section id="planos" ref={root} className="relative bg-off px-4 py-14 text-preto md:px-8 md:py-24">
       <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-12 md:items-center md:gap-8">
         <div className="md:col-span-5">
           <Rotulo>Planos e valores</Rotulo>

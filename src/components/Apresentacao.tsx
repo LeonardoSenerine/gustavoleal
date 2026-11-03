@@ -39,7 +39,7 @@ export function Apresentacao() {
   }
 
   return (
-    <section id="apresentacao" ref={root} className="relative overflow-hidden bg-off px-4 pt-14 pb-24 text-preto md:px-8 md:pt-16 md:pb-36">
+    <section id="apresentacao" ref={root} className="relative overflow-hidden bg-off px-4 pt-12 pb-16 text-preto md:px-8 md:pt-16 md:pb-24">
       <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-12 md:items-center md:gap-8">
         <div className="md:col-span-7">
           <Rotulo>Quem é o Gustavo</Rotulo>
