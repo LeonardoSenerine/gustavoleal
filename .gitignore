@@ -5,4 +5,5 @@ dist
 # Vídeos brutos: só entram os que o scripts/prepare-media.mjs usa.
 assets/videos/*
 !assets/videos/apresentacao.mp4
-!assets/videos/w08.mp4
+!assets/videos/s02.mp4
+!assets/videos/s04.mp4

@@ -1,5 +1,5 @@
 // Todo o texto do site num lugar só. Itens marcados com PENDENTE ainda
-// dependem de material do Gustavo (número, vídeos, valores, trajetória).
+// dependem de material ou confirmação do Gustavo.
 
 // PENDENTE: @ do Instagram.
 export const contato = {
@@ -7,11 +7,37 @@ export const contato = {
   instagram: "",
 };
 
-export function linkWhatsApp(mensagem = "Oi, Leal! Quero agendar uma aula experimental.") {
+export function linkWhatsApp(mensagem = "Oi, Gustavo! Quero agendar uma aula experimental grátis.") {
   return `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-export const cidades = ["London", "Paris", "Roma", "Madrid", "Barcelona"];
+// Cartões do hero: o que o inglês abre na vida do aluno, além das viagens.
+// O visitante marca os que importam pra ele, e a escolha vai junto na
+// mensagem do WhatsApp (ver lib/interesses.ts).
+export const experiencias: { id: string; titulo: string; texto: string; video?: string; foto?: string; alt?: string }[] = [
+  {
+    id: "trabalho",
+    titulo: "Trabalho",
+    texto: "Reuniões, entrevistas e novas oportunidades de carreira.",
+    foto: "cafe-paris",
+    alt: "Gustavo sentado numa mesa de café em Paris",
+  },
+  {
+    id: "viagens",
+    titulo: "Viagens",
+    texto: "Perguntar, pedir e se virar em qualquer lugar.",
+    foto: "londres-cabine",
+    alt: "Gustavo numa cabine telefônica vermelha em Londres",
+  },
+  { id: "cultura", titulo: "Cultura", texto: "Música, filmes e séries sem depender da legenda.", video: "exp-cultura" },
+  {
+    id: "perspectivas",
+    titulo: "Novas perspectivas",
+    texto: "Conhecer gente de outros lugares e ver o mundo de outro jeito.",
+    foto: "piramide",
+    alt: "A pirâmide de vidro do Louvre vista de baixo",
+  },
+];
 
 // Etapas tiradas do texto de metodologia do Gustavo.
 export const etapas = [
@@ -19,13 +45,13 @@ export const etapas = [
     numero: "01",
     titulo: "Você no centro",
     texto: "Cada pessoa aprende de um jeito diferente. Conteúdos e atividades são preparados individualmente, a partir dos seus interesses, objetivos, dificuldades e ritmo.",
-    foto: "cafe-paris",
+    foto: "madrid-rooftop",
   },
   {
     numero: "02",
     titulo: "Fala desde o início",
     texto: "O inglês é aprendido na prática, com foco na comunicação desde a primeira aula. É praticando que você ganha confiança pra se comunicar.",
-    foto: "madrid-rooftop",
+    foto: "londres-big-ben-gustavo",
   },
   {
     numero: "03",
@@ -61,55 +87,40 @@ export const depoimentos: { nome: string; contexto: string; video: string }[] = 
 
 export const temDepoimentos = depoimentos.length > 0;
 
-// Ordem das seções numeradas. O número de cada placa sai daqui, então
-// esconder uma seção não deixa buraco na contagem.
-const secoes = ["apresentacao", "metodo", ...(temDepoimentos ? ["alunos"] : []), "trajetoria", "planos"];
+// Experiência de sala de aula, do texto de trajetória dele.
+export const experienciaProfissional = ["Aulas particulares", "Escolas de idiomas", "Ensino escolar", "Alunos de várias idades e níveis"];
 
-export function numeroSecao(id: string) {
-  return String(secoes.indexOf(id) + 1).padStart(2, "0");
-}
+// Países onde ele usou o inglês, pelas fotos que mandou.
+export const paises = ["Inglaterra", "França", "Espanha", "Itália"];
 
-// As cidades e fotos são reais. As frases de cada parada ainda são rascunho:
-// confirmar com o Gustavo.
-export const paradas = [
-  {
-    cidade: "London",
-    pais: "UK",
-    fotos: ["big-ben", "londres-bandeira"],
-    texto: "Onde o inglês saiu do livro e virou conversa de verdade, com sotaque, pressa e gíria.",
-  },
-  {
-    cidade: "Paris",
-    pais: "FR",
-    fotos: ["arco-triunfo", "piramide", "sacre-coeur"],
-    texto: "Até onde ninguém fala inglês primeiro, é ele que abre a porta: museu, café, metrô e amizade nova.",
-  },
-  {
-    cidade: "Barcelona",
-    pais: "ES",
-    fotos: ["sagrada"],
-    texto: "Turistas do mundo inteiro e uma língua em comum pra todo mundo se entender.",
-  },
-  {
-    cidade: "Roma",
-    pais: "IT",
-    fotos: ["coliseu"],
-    texto: "História em cada esquina e o inglês servindo de ponte em cada pergunta.",
-  },
-  {
-    cidade: "Madrid",
-    pais: "ES",
-    fotos: ["madrid-gran-via", "retiro", "madrid-galeria"],
-    texto: "Rooftop, Gran Vía e a prova de que dá pra se virar em qualquer lugar.",
-  },
+// Fotos que passam por trás da trajetória, em duas fileiras.
+export const galeriaViagens = [
+  [
+    { foto: "big-ben", lugar: "Londres" },
+    { foto: "arco-triunfo", lugar: "Paris" },
+    { foto: "sena-baguete", lugar: "Paris" },
+    { foto: "sagrada", lugar: "Barcelona" },
+    { foto: "londres-bandeira", lugar: "Londres" },
+    { foto: "place-des-vosges", lugar: "Paris" },
+    { foto: "madrid-gran-via", lugar: "Madrid" },
+  ],
+  [
+    { foto: "coliseu", lugar: "Roma" },
+    { foto: "eiffel-noite", lugar: "Paris" },
+    { foto: "retiro", lugar: "Madrid" },
+    { foto: "cafe-paris", lugar: "Paris" },
+    { foto: "sacre-coeur", lugar: "Paris" },
+    { foto: "madrid-galeria", lugar: "Madrid" },
+    { foto: "louvre-estatua", lugar: "Paris" },
+  ],
 ];
 
 // Valores mensais da tabela do Gustavo. Em dupla, o preço é por pessoa.
 export const planos = [
-  { duracao: "1h", detalhe: "por semana", individual: 220, dupla: 160 },
-  { duracao: "1h15", detalhe: "por semana", individual: 260, dupla: 200 },
-  { duracao: "1h30", detalhe: "por semana", individual: 320, dupla: 240, destaque: true },
-  { duracao: "2h", detalhe: "por semana", individual: 415, dupla: 320 },
+  { duracao: "1h", extenso: "1 hora", individual: 220, dupla: 160 },
+  { duracao: "1h15", extenso: "1 hora e 15 minutos", individual: 260, dupla: 200 },
+  { duracao: "1h30", extenso: "1 hora e 30 minutos", individual: 320, dupla: 240 },
+  { duracao: "2h", extenso: "2 horas", individual: 415, dupla: 320 },
 ];
 
 // Tirado da fala dele no vídeo de apresentação.
@@ -117,5 +128,45 @@ export const incluso = [
   "Aula 100% personalizada pra você",
   "Do jeito que você aprende melhor",
   "Com o que você curte: música, série, viagem",
-  "Inglês sem ser entediante",
+  "Online ou presencial",
+];
+
+// Só o que já foi confirmado: aula experimental grátis, online ou presencial,
+// valores mensais da tabela e a metodologia dele.
+// PENDENTE: confirmar com o Gustavo regras de remarcação e forma de pagamento
+// antes de adicionar perguntas sobre isso.
+export const perguntas = [
+  {
+    pergunta: "A aula experimental é grátis mesmo?",
+    resposta:
+      "Sim. É uma primeira conversa pra entender seu nível, seus objetivos e o que você curte, e mostrar como as aulas funcionam na prática.",
+  },
+  {
+    pergunta: "As aulas são online ou presenciais?",
+    resposta: "Você escolhe. Dá pra fazer online, de onde estiver, ou presencial. Local e horários a gente combina pelo WhatsApp.",
+  },
+  {
+    pergunta: "Preciso ter algum nível de inglês pra começar?",
+    resposta:
+      "Não. Já dei aula pra alunos de diferentes idades e níveis. O conteúdo parte de onde você está hoje, do primeiro “hi” até a conversa fluente.",
+  },
+  {
+    pergunta: "Como é uma aula na prática?",
+    resposta:
+      "Muita conversa e pouca decoreba. A aula usa músicas, filmes, séries e situações do dia a dia, sempre conectadas aos seus interesses e ao seu objetivo, seja trabalho, viagem ou cultura.",
+  },
+  {
+    pergunta: "Como funciona a aula em dupla?",
+    resposta:
+      "Vocês estudam juntos, na mesma aula, e cada um paga o valor por pessoa da tabela. É uma boa pra casais, amigos ou colegas de trabalho com objetivos parecidos.",
+  },
+  {
+    pergunta: "Como são os valores?",
+    resposta:
+      "O valor é mensal e depende de quantas horas por semana você quer estudar: de 1 hora a 2 horas semanais. A tabela completa está logo acima, em Planos.",
+  },
+  {
+    pergunta: "Você dá aula pra crianças e adolescentes?",
+    resposta: "Sim. Quando o aluno é menor de idade, o agendamento e a contratação são feitos com o responsável.",
+  },
 ];

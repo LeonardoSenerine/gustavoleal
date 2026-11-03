@@ -172,10 +172,10 @@ function Privacidade() {
       <main className="bg-off text-preto">
         <section className="bg-preto bg-[radial-gradient(70%_80%_at_85%_20%,rgb(142_28_49/0.5),transparent_70%),linear-gradient(170deg,var(--color-preto)_35%,var(--color-vinho-escuro))] px-4 pt-36 pb-16 text-off md:px-8 md:pt-44 md:pb-24">
           <p className="text-base font-semibold text-off/70 [font-stretch:90%]">Atualizada em {atualizacao}</p>
-          <h1 className="letreiro mt-5 text-[17vw] md:text-[9vw]">
+          <h1 className="mt-5 text-[clamp(3rem,8vw,6.5rem)] leading-[0.95] font-medium tracking-[-0.04em]">
             Privacidade
             <br />
-            <span className="text-vermelho">e cookies</span>
+            <span className="font-serif tracking-[-0.01em] text-rosa italic">e cookies</span>
           </h1>
           <p className="mt-8 max-w-[52ch] text-lg leading-relaxed text-off/75">
             Em poucas palavras: este site não usa cookies de rastreamento, não tem formulário e só recebe seus dados quando você mesmo chama no WhatsApp.
@@ -202,8 +202,8 @@ function Privacidade() {
           <article className="max-w-[68ch] md:col-span-8 md:col-start-5">
             {secoes.map((s, i) => (
               <section key={s.id} id={s.id} className="scroll-mt-28 border-t border-preto/10 py-10 first:border-t-0 first:pt-0">
-                <h2 className="flex items-baseline gap-4 text-2xl font-extrabold [font-stretch:85%] md:text-3xl">
-                  <span className="letreiro text-vinho">{String(i + 1).padStart(2, "0")}</span>
+                <h2 className="flex items-baseline gap-4 text-2xl font-medium tracking-[-0.02em] md:text-3xl">
+                  <span className="font-serif text-vinho italic">{String(i + 1).padStart(2, "0")}</span>
                   {s.titulo}
                 </h2>
                 <div className="mt-5 space-y-4 text-lg leading-relaxed text-preto/80 [&_a]:font-semibold [&_a]:text-vinho [&_a]:underline [&_a]:underline-offset-4 [&_li]:pl-1 [&_strong]:text-preto [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ul]:marker:text-vermelho">

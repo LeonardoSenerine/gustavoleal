@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { etapas, numeroSecao } from "@/lib/content";
-import { Placa } from "./Placa";
+import { etapas } from "@/lib/content";
+import { Rotulo, Titulo } from "./Secao";
 
 // O scroll vertical vira um passeio horizontal pelas etapas do método,
-// todas do mesmo tamanho e alinhadas pelo topo.
+// dentro de um painel escuro com o mesmo degradê do arco do hero.
 export function Metodologia() {
   const root = useRef<HTMLElement>(null);
   const trilho = useRef<HTMLDivElement>(null);
@@ -50,21 +50,13 @@ export function Metodologia() {
   );
 
   return (
-    <section
-      id="metodo"
-      ref={root}
-      className="grao relative bg-vinho bg-[linear-gradient(160deg,var(--color-vinho)_0%,var(--color-vinho-escuro)_60%,var(--color-preto)_100%)] text-off"
-    >
-      <div className="relative flex min-h-svh flex-col justify-center overflow-hidden py-24 motion-reduce:overflow-x-auto md:h-svh md:py-0">
-        <div ref={trilho} className="flex w-max items-start gap-5 px-4 md:gap-8 md:px-[6vw]">
-          <div className="w-[86vw] shrink-0 md:w-[40vw] md:pr-[3vw]">
-            <Placa numero={numeroSecao("metodo")} nome="O método" className="!bg-preto" />
-            <h2 className="letreiro mt-6 text-[20vw] md:text-[7.5vw]">
-              Da sala
-              <br />
-              <span className="letreiro-contorno">pra rua</span>
-            </h2>
-            <div className="mt-8 space-y-4 text-lg leading-relaxed text-off/80">
+    <section id="metodo" ref={root} className="relative bg-off px-2 md:px-4 md:py-2">
+      <div className="relative flex min-h-svh flex-col justify-center overflow-hidden rounded-[28px] bg-preto bg-[radial-gradient(80%_60%_at_30%_0%,var(--color-vinho),transparent_70%),linear-gradient(180deg,var(--color-vinho-escuro),var(--color-preto)_60%)] py-20 text-off motion-reduce:overflow-x-auto md:h-[calc(100svh-1rem)] md:min-h-0 md:rounded-[36px] md:py-0">
+        <div ref={trilho} className="flex w-max items-start gap-5 px-5 md:gap-6 md:px-[5vw]">
+          <div className="w-[82vw] shrink-0 md:w-[38vw] md:pr-[3vw]">
+            <Rotulo tom="escuro">O método</Rotulo>
+            <Titulo antes="Da sala" destaque="pra rua." tom="escuro" className="mt-6" />
+            <div className="mt-8 space-y-4 text-lg leading-relaxed text-off/75">
               <p data-revela>
                 <strong className="font-semibold text-off">Minha metodologia parte de uma ideia simples:</strong> cada pessoa aprende de um jeito diferente, e as aulas devem respeitar isso.
               </p>
@@ -76,21 +68,23 @@ export function Metodologia() {
           </div>
 
           {etapas.map((etapa) => (
-            <article key={etapa.numero} className="etapa w-[76vw] shrink-0 md:w-[24vw]">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[12px] bg-vinho-escuro">
+            <article key={etapa.numero} className="etapa w-[74vw] shrink-0 md:w-[23vw]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[20px] bg-vinho-escuro">
                 <img src={`/fotos/${etapa.foto}.webp`} alt="" className="etapa-foto absolute inset-0 h-full w-full object-cover" loading="lazy" />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-preto/75 to-transparent" aria-hidden />
-                <span className="letreiro absolute bottom-3 left-4 text-6xl text-off md:text-7xl">{etapa.numero}</span>
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-preto/70 to-transparent" aria-hidden />
+                <span className="absolute top-4 left-4 rounded-full bg-preto/45 px-3 py-1 text-sm font-semibold text-off backdrop-blur-sm">
+                  Etapa {etapa.numero}
+                </span>
               </div>
-              <h3 className="etapa-texto letreiro mt-6 text-[11vw] md:text-[3.2vw]">{etapa.titulo}</h3>
-              <p className="etapa-texto mt-3 leading-relaxed text-off/80">{etapa.texto}</p>
+              <h3 className="etapa-texto mt-5 font-serif text-[2.1rem] leading-none italic">{etapa.titulo}</h3>
+              <p className="etapa-texto mt-3 leading-relaxed text-off/75">{etapa.texto}</p>
             </article>
           ))}
 
           <div className="w-[2vw] shrink-0" aria-hidden />
         </div>
 
-        <div className="absolute inset-x-4 bottom-6 h-[2px] overflow-hidden bg-off/15 motion-reduce:hidden md:inset-x-[6vw] md:bottom-8">
+        <div className="absolute inset-x-5 bottom-6 h-[2px] overflow-hidden rounded-full bg-off/15 motion-reduce:hidden md:inset-x-[5vw] md:bottom-8">
           <div className="metodo-barra h-full origin-left bg-off" style={{ transform: "scaleX(0)" }} />
         </div>
       </div>

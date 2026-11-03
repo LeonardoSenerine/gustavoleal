@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { depoimentos, numeroSecao } from "@/lib/content";
-import { Placa } from "./Placa";
+import { depoimentos } from "@/lib/content";
+import { Rotulo, Titulo } from "./Secao";
 
 export function Alunos() {
   const root = useRef<HTMLElement>(null);
@@ -39,15 +39,11 @@ export function Alunos() {
   }
 
   return (
-    <section id="alunos" ref={root} className="grao relative overflow-hidden bg-preto py-24 text-off md:py-36">
+    <section id="alunos" ref={root} className="relative overflow-hidden bg-preto py-24 text-off md:py-36">
       <div className="flex flex-col gap-8 px-4 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
-          <Placa numero={numeroSecao("alunos")} nome="Alunos" />
-          <h2 className="letreiro mt-6 text-[16vw] md:text-[7.5vw]">
-            Quem fala
-            <br />
-            por mim <span className="text-vermelho">são eles</span>
-          </h2>
+          <Rotulo tom="escuro">Alunos</Rotulo>
+          <Titulo antes="Quem fala por mim" destaque="são eles." tom="escuro" className="mt-6" />
         </div>
         <div className="flex gap-3">
           {([-1, 1] as const).map((d) => (
@@ -94,7 +90,7 @@ export function Alunos() {
             </div>
             <div className="mt-4 flex items-baseline justify-between gap-3">
               <h3 className="text-lg font-bold [font-stretch:85%]">{d.nome}</h3>
-              <span className="etiqueta text-off/50">{d.contexto}</span>
+              <span className="text-sm text-off/55">{d.contexto}</span>
             </div>
           </article>
         ))}

@@ -20,7 +20,10 @@ mkdirSync(fotosOut, { recursive: true });
 const clips = [
   // Vídeo de apresentação gravado pelo Gustavo (já vem em 9:16 e com legenda).
   { name: "apresentacao", src: "apresentacao", start: 0, dur: 22, ratio: 9 / 16, width: 576, crf: 23, audio: true },
-  { name: "cta", src: "w08", start: 2, dur: 6, ratio: 16 / 9, width: 960, crf: 30 },
+  // Fundo do CTA: o Sena à noite, com a ponte iluminada refletindo na água.
+  { name: "cta", src: "s02", start: 0, dur: 7.4, ratio: 16 / 9, y: 0.45, width: 960, crf: 27 },
+  // Cartão "Cultura" do hero: músicos de rua.
+  { name: "exp-cultura", src: "s04", start: 4, dur: 6, ratio: 3 / 4 },
 ];
 
 function run(args) {
