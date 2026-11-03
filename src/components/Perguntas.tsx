@@ -10,7 +10,7 @@ export function Perguntas() {
   const [aberta, setAberta] = useState<number | null>(0);
 
   return (
-    <section id="perguntas" className="relative bg-off pb-20 text-preto md:pb-32">
+    <section id="perguntas" className="relative bg-papel pt-20 pb-20 text-preto md:pt-28 md:pb-32">
       <div className="recuo mx-auto grid max-w-[1500px] gap-10 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">

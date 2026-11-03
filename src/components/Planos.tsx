@@ -88,9 +88,10 @@ export function Planos() {
           </ul>
         </div>
 
-        <div className="planos-ficha relative self-start overflow-hidden rounded-[3px] bg-folha shadow-[0_1px_0_rgb(13_11_10/0.06),0_40px_80px_-40px_rgb(13_11_10/0.5)] ring-1 ring-preto/8 md:col-span-6 md:col-start-7 md:mt-24">
+        <div className="planos-ficha relative self-start overflow-hidden rounded-[3px] bg-vinho text-off shadow-[0_50px_90px_-40px_rgb(61_9_18/0.75)] md:col-span-6 md:col-start-7 md:mt-24">
+          <div className="pauta-clara absolute inset-0" aria-hidden />
           <div className="relative p-6 md:p-10">
-            <p className="text-sm font-medium text-preto/55">Formato</p>
+            <p className="text-sm font-medium text-off/60">Formato</p>
             <div className="mt-3 grid grid-cols-2 gap-2" role="group" aria-label="Formato da aula">
               {formatos.map((f) => (
                 <button
@@ -99,7 +100,7 @@ export function Planos() {
                   onClick={() => setFormato(f.id)}
                   aria-pressed={formato === f.id}
                   className={`rounded-[2px] border py-3 text-[0.95rem] font-semibold transition-colors duration-300 ${
-                    formato === f.id ? "border-preto bg-preto text-off" : "border-preto/20 bg-folha/80 text-preto/70 hover:border-preto/60"
+                    formato === f.id ? "border-off bg-off text-vinho" : "border-off/25 text-off/80 hover:border-off/60"
                   }`}
                 >
                   {f.nome}
@@ -107,7 +108,7 @@ export function Planos() {
               ))}
             </div>
 
-            <p className="mt-7 text-sm font-medium text-preto/55">Horas por semana</p>
+            <p className="mt-7 text-sm font-medium text-off/60">Horas por semana</p>
             <div className="mt-3 grid grid-cols-4 gap-2" role="group" aria-label="Carga semanal">
               {planos.map((p, i) => (
                 <button
@@ -117,7 +118,7 @@ export function Planos() {
                   aria-pressed={indice === i}
                   aria-label={`${p.extenso} por semana`}
                   className={`rounded-[2px] border py-3 text-lg font-semibold transition-colors duration-300 ${
-                    indice === i ? "border-preto bg-preto text-off" : "border-preto/20 bg-folha/80 text-preto/70 hover:border-preto/60"
+                    indice === i ? "border-off bg-off text-vinho" : "border-off/25 text-off/80 hover:border-off/60"
                   }`}
                 >
                   {p.duracao}
@@ -125,15 +126,15 @@ export function Planos() {
               ))}
             </div>
 
-            <div className="mt-10 border-t border-preto/12 pt-8" aria-live="polite">
+            <div className="mt-10 border-t border-off/15 pt-8" aria-live="polite">
               <p className="flex items-baseline gap-2">
                 <span className="text-xl font-semibold">R$</span>
                 <span className="display text-[clamp(5rem,12vw,8.5rem)] tabular-nums">
                   <Preco valor={valor} />
                 </span>
-                <span className="text-preto/55">/mês</span>
+                <span className="text-off/60">/mês</span>
               </p>
-              <p className="mt-4 text-preto/60">
+              <p className="mt-4 text-off/70">
                 {plano.extenso} por semana · {formato === "dupla" ? "valor por pessoa, em dupla" : "aula individual"}
               </p>
             </div>
@@ -142,11 +143,11 @@ export function Planos() {
               href={linkPersonalizado(interesses, descricaoPlano)}
               target="_blank"
               rel="noreferrer"
-              className="botao mt-9 w-full bg-caneta text-off hover:bg-preto"
+              className="botao mt-9 w-full bg-off text-vinho hover:bg-preto hover:text-off"
             >
               Começar com a aula grátis <span className="seta" aria-hidden>→</span>
             </a>
-            <p className="mt-3 text-center text-sm text-preto/50">A primeira aula é experimental e gratuita.</p>
+            <p className="mt-3 text-center text-sm text-off/60">A primeira aula é experimental e gratuita.</p>
           </div>
         </div>
       </div>

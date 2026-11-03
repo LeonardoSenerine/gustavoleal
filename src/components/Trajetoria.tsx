@@ -79,7 +79,7 @@ export function Trajetoria() {
 
   return (
     <section id="trajetoria" ref={root} className="relative bg-off text-preto">
-      <div className="viagens relative pt-20 md:pt-28 lg:h-[100svh] lg:overflow-hidden lg:pt-0 lg:motion-reduce:overflow-x-auto">
+      <div className="viagens relative pt-20 pb-16 md:pt-28 lg:h-[100svh] lg:pb-0 lg:overflow-hidden lg:pt-0 lg:motion-reduce:overflow-x-auto">
         <div ref={trilho} className="lg:flex lg:h-full lg:w-max lg:items-center lg:gap-[3.5vw] lg:pr-[6vw] lg:pl-[calc(var(--margem)+2.5rem)]">
           <div className="recuo lg:w-[30vw] lg:shrink-0 lg:!p-0">
             <h2 className="display text-[clamp(3.1rem,10.5vw,8.6rem)] text-balance lg:text-[min(5.6vw,7.5rem)]">O inglês me levou longe.</h2>
@@ -160,24 +160,26 @@ export function Trajetoria() {
         </div>
       </div>
 
-      {/* A sala de aula e a frase dele. */}
-      <div className="recuo mx-auto max-w-[1500px] pt-20 pb-20 md:pt-28 md:pb-32">
+      {/* A sala de aula e a frase dele, numa folha vinho. */}
+      <div className="relative bg-vinho text-off">
+      <div className="pauta-clara absolute inset-0" aria-hidden />
+      <div className="recuo relative mx-auto max-w-[1500px] pt-20 pb-20 md:pt-28 md:pb-32">
         <div className="grid gap-6 md:grid-cols-12 md:gap-6">
           <div className="md:col-span-4">
             <h3 className="text-2xl font-semibold tracking-[-0.02em] md:text-3xl">Na sala de aula</h3>
-            <p lang="en" className="mt-1 text-lg font-medium text-caneta-escura">In the classroom</p>
+            <p lang="en" className="mt-1 text-lg font-medium text-rosa">In the classroom</p>
           </div>
           <div className="flex flex-col gap-6 md:col-span-7 md:col-start-6">
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg font-medium" aria-label="Experiência como professor">
               {experienciaProfissional.map((item) => (
                 <li key={item} className="flex items-center gap-3">
-                  <span className="h-[2px] w-3 bg-caneta" aria-hidden />
+                  <span className="h-[2px] w-3 bg-rosa" aria-hidden />
                   {item}
                 </li>
               ))}
             </ul>
-            <LerMais>
-              <p className="max-w-[60ch] text-lg leading-relaxed text-preto/70">
+            <LerMais tom="escuro">
+              <p className="max-w-[60ch] text-lg leading-relaxed text-off/75">
                 Ao longo da minha trajetória como professor, tive a oportunidade de ensinar inglês para alunos de diferentes idades e níveis, tanto em aulas
                 particulares quanto em escolas de idiomas e no ambiente escolar. Cada experiência me ajudou a entender melhor as dificuldades, necessidades e
                 diferentes formas de aprender de cada aluno.
@@ -187,13 +189,14 @@ export function Trajetoria() {
         </div>
 
         <blockquote className="mt-20 grid gap-4 md:mt-32 md:grid-cols-12 md:gap-6">
-          <span className="display text-[6rem] leading-[0.6] text-caneta md:col-span-1 md:text-right md:text-[8rem]" aria-hidden>
+          <span className="display text-[6rem] leading-[0.6] text-rosa md:col-span-1 md:text-right md:text-[8rem]" aria-hidden>
             “
           </span>
           <p className="text-[clamp(1.7rem,3.9vw,3.6rem)] leading-[1.06] font-medium tracking-[-0.035em] text-balance md:col-span-10">
             Aprender inglês não é apenas estudar uma língua, mas ganhar confiança e liberdade para conhecer pessoas, explorar o mundo e viver novas experiências.
           </p>
         </blockquote>
+      </div>
       </div>
     </section>
   );
