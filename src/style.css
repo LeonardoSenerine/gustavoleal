@@ -16,6 +16,10 @@
   --color-folha: #faf6ee;
   --color-vermelho: #d7263d;
   --color-caneta: #d7263d;
+  /* Mesma caneta pra texto pequeno: mais escura no papel, mais clara no
+     escuro, pra passar de 4,5:1 de contraste. */
+  --color-caneta-escura: #c01d33;
+  --color-caneta-clara: #f0566a;
   --color-rosa: #e9a7b1;
 
   --font-sans: "Archivo Variable", system-ui, sans-serif;

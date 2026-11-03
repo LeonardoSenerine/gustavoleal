@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { LerMais, Titulo } from "./Secao";
+import { Ingles, LerMais, Titulo } from "./Secao";
 
 // Quem é: o vídeo dele grande, como a figura principal da página, e o texto
 // em primeira pessoa ao lado.
@@ -42,6 +42,7 @@ export function Apresentacao() {
         <Titulo className="max-w-[11ch]">
           Inglês <span className="text-caneta">não</span> é pra ser entediante.
         </Titulo>
+        <Ingles className="mt-4 md:mt-6">English isn’t meant to be boring.</Ingles>
 
         <div className="mt-12 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-6">
           <figure className="md:col-span-5">

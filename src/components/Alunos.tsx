@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { depoimentos } from "@/lib/content";
-import { Titulo } from "./Secao";
+import { Ingles, Titulo } from "./Secao";
 
 export function Alunos() {
   const root = useRef<HTMLElement>(null);
@@ -43,6 +43,7 @@ export function Alunos() {
       <div className="flex flex-col gap-8 px-4 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
           <Titulo>Quem fala por mim são eles.</Titulo>
+          <Ingles tom="escuro" className="mt-4">Don’t take my word for it.</Ingles>
         </div>
         <div className="flex gap-3">
           {([-1, 1] as const).map((d) => (

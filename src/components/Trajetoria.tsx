@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { experienciaProfissional, viagens } from "@/lib/content";
-import { LerMais } from "./Secao";
+import { Ingles, LerMais } from "./Secao";
 
 // Trajetória como um passeio pelos países: cada um é um capítulo com o nome
 // enorme, a foto principal dele e fotos do lugar. Em tela larga a rolagem
@@ -83,6 +83,7 @@ export function Trajetoria() {
         <div ref={trilho} className="lg:flex lg:h-full lg:w-max lg:items-center lg:gap-[3.5vw] lg:pr-[6vw] lg:pl-[calc(var(--margem)+2.5rem)]">
           <div className="recuo lg:w-[30vw] lg:shrink-0 lg:!p-0">
             <h2 className="display text-[clamp(3.1rem,10.5vw,8.6rem)] text-balance lg:text-[min(5.6vw,7.5rem)]">O inglês me levou longe.</h2>
+            <Ingles className="mt-4 lg:mt-6">English took me places.</Ingles>
             <p data-revela className="mt-6 max-w-[38ch] text-lg leading-relaxed text-preto/70 lg:mt-8">
               Na prática, pude perceber como o idioma conecta pessoas, culturas e experiências, mesmo quando não falamos a língua local.
             </p>
@@ -112,6 +113,7 @@ export function Trajetoria() {
                   <div className="absolute inset-x-0 bottom-0 p-5 text-off lg:hidden">
                     <p className="text-sm font-medium text-off/80">{v.cidades}</p>
                     <h3 className="display mt-1 text-[3.4rem]">{v.pais}</h3>
+                    <p lang="en" className="mt-1 font-medium text-rosa">{v.ingles}</p>
                   </div>
                 </div>
 
@@ -120,6 +122,7 @@ export function Trajetoria() {
                   <div className="viagem-nome">
                     <p className="text-lg font-medium text-preto/55">{v.cidades}</p>
                     <h3 className="display mt-2 text-[min(5.2vw,7rem)]">{v.pais}</h3>
+                    <p lang="en" className="mt-2 text-xl font-medium text-caneta-escura">{v.ingles}</p>
                   </div>
                   {v.extras.length > 0 && (
                     <div className="grid grid-cols-2 gap-4">
@@ -160,7 +163,10 @@ export function Trajetoria() {
       {/* A sala de aula e a frase dele. */}
       <div className="recuo mx-auto max-w-[1500px] pt-20 pb-20 md:pt-28 md:pb-32">
         <div className="grid gap-6 md:grid-cols-12 md:gap-6">
-          <h3 className="text-2xl font-semibold tracking-[-0.02em] md:col-span-4 md:text-3xl">Na sala de aula</h3>
+          <div className="md:col-span-4">
+            <h3 className="text-2xl font-semibold tracking-[-0.02em] md:text-3xl">Na sala de aula</h3>
+            <p lang="en" className="mt-1 text-lg font-medium text-caneta-escura">In the classroom</p>
+          </div>
           <div className="flex flex-col gap-6 md:col-span-7 md:col-start-6">
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg font-medium" aria-label="Experiência como professor">
               {experienciaProfissional.map((item) => (

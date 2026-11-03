@@ -68,36 +68,42 @@ export const etapas = [
   {
     numero: "01",
     titulo: "Você no centro",
+    ingles: "It’s all about you",
     texto: "Cada pessoa aprende de um jeito diferente. Conteúdos e atividades são preparados individualmente, a partir dos seus interesses, objetivos, dificuldades e ritmo.",
     foto: "madrid-rooftop",
   },
   {
     numero: "02",
     titulo: "Fala desde o início",
+    ingles: "Speak from day one",
     texto: "O inglês é aprendido na prática, com foco na comunicação desde a primeira aula. É praticando que você ganha confiança pra se comunicar.",
     foto: "londres-big-ben-gustavo",
   },
   {
     numero: "03",
     titulo: "Cultura",
+    ingles: "Learn through culture",
     texto: "Músicas, filmes e séries entram como material de aula. O idioma aparece do jeito que é usado de verdade, e o aprendizado fica natural e interessante.",
     foto: "louvre-estatua",
   },
   {
     numero: "04",
     titulo: "Vida real",
+    ingles: "Real life, real English",
     texto: "Conversas, situações do cotidiano e assuntos que fazem parte da sua vida. Você aprende o inglês que cabe na sua rotina.",
     foto: "rua-noite",
   },
   {
     numero: "05",
     titulo: "Sem decoreba",
+    ingles: "No rote learning",
     texto: "Não se trata de decorar regras ou traduzir frases. A ideia é entender o idioma, experimentar e praticar até ele ficar seu.",
     foto: "sagrada-sorriso",
   },
   {
     numero: "06",
     titulo: "Dentro e fora",
+    ingles: "In and out of class",
     texto: "Aprender inglês deve fazer sentido dentro e fora da sala de aula. O idioma vem pro seu mundo, e não o contrário.",
     foto: "eiffel-noite",
   },
@@ -124,11 +130,11 @@ export const tirasHero = [
 
 // Viagens: um capítulo por país, com a foto principal dele e até duas
 // fotos do lugar. "foco" é o object-position da foto principal.
-export const viagens: { pais: string; cidades: string; principal: string; foco?: string; extras: string[] }[] = [
-  { pais: "Inglaterra", cidades: "Londres", principal: "londres-cabine", foco: "50% 40%", extras: ["big-ben", "londres-bandeira"] },
-  { pais: "França", cidades: "Paris", principal: "sena-baguete", foco: "50% 70%", extras: ["cafe-paris", "sacre-coeur"] },
-  { pais: "Espanha", cidades: "Madrid e Barcelona", principal: "sagrada-sorriso", foco: "60% 50%", extras: ["madrid-rooftop", "madrid-gran-via"] },
-  { pais: "Itália", cidades: "Roma", principal: "coliseu", foco: "50% 60%", extras: [] },
+export const viagens: { pais: string; ingles: string; cidades: string; principal: string; foco?: string; extras: string[] }[] = [
+  { pais: "Inglaterra", ingles: "England", cidades: "Londres", principal: "londres-cabine", foco: "50% 40%", extras: ["big-ben", "londres-bandeira"] },
+  { pais: "França", ingles: "France", cidades: "Paris", principal: "sena-baguete", foco: "50% 70%", extras: ["cafe-paris", "sacre-coeur"] },
+  { pais: "Espanha", ingles: "Spain", cidades: "Madrid e Barcelona", principal: "sagrada-sorriso", foco: "60% 50%", extras: ["madrid-rooftop", "madrid-gran-via"] },
+  { pais: "Itália", ingles: "Italy", cidades: "Roma", principal: "coliseu", foco: "50% 60%", extras: [] },
 ];
 
 // Valores mensais da tabela do Gustavo. Em dupla, o preço é por pessoa.

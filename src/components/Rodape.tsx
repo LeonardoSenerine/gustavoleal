@@ -39,6 +39,7 @@ export function Rodape() {
         <p className="display mt-14 text-[clamp(3rem,16.6vw,16.5rem)] leading-[0.8] whitespace-nowrap md:mt-20" aria-hidden>
           Gustavo Leal<span className="text-caneta">.</span>
         </p>
+        <p lang="en" className="pb-8 text-lg font-medium text-caneta-escura md:pb-10">See you in class.</p>
       </div>
     </footer>
   );

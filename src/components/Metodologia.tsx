@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { etapas } from "@/lib/content";
 import { Marca } from "./Caneta";
-import { LerMais, Titulo } from "./Secao";
+import { Ingles, LerMais, Titulo } from "./Secao";
 
 // O método como plano de aula, numa folha escura (o quadro da sala). A foto
 // fica presa na tela e troca conforme cada etapa passa. No celular ela fica
@@ -36,6 +36,7 @@ export function Metodologia() {
               rua.
             </Marca>
           </Titulo>
+          <Ingles tom="escuro" className="mt-5 md:mt-7">From the classroom to the streets.</Ingles>
 
           <div className="mt-10 grid gap-6 text-off/70 md:mt-16 md:grid-cols-12 md:gap-6 md:text-lg">
             <p data-revela className="text-xl leading-snug font-medium text-off md:col-span-5 md:text-2xl">
@@ -93,6 +94,9 @@ export function Metodologia() {
                 }`}
               >
                 <h3 className="display text-[clamp(2.8rem,6.4vw,6.2rem)]">{etapa.titulo}</h3>
+                <p lang="en" className="mt-3 text-lg font-medium text-caneta-clara md:text-xl">
+                  {etapa.ingles}
+                </p>
                 <p className="mt-5 max-w-[44ch] text-lg leading-relaxed text-off/75">{etapa.texto}</p>
               </li>
             ))}

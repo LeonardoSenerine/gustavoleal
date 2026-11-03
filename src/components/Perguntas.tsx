@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { perguntas } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
-import { Titulo } from "./Secao";
+import { Ingles, Titulo } from "./Secao";
 
 // Perguntas frequentes em sanfona. A altura anima pelo truque do grid
 // (0fr → 1fr), então a resposta abre suave sem medir nada em JS.
@@ -15,6 +15,7 @@ export function Perguntas() {
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">
             <Titulo className="md:!text-[clamp(3rem,6.2vw,6.4rem)]">Perguntas frequentes.</Titulo>
+            <Ingles className="mt-4 md:mt-5">Got questions?</Ingles>
             <p data-revela className="mt-8 max-w-[34ch] text-lg text-preto/70">
               Não achou o que procurava? Manda sua pergunta no WhatsApp que eu respondo.
             </p>

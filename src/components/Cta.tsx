@@ -46,6 +46,9 @@ export function Cta() {
               <span className="cta-linha block">destravar?</span>
             </span>
           </h2>
+          <p lang="en" data-revela className="mt-5 text-[clamp(1.2rem,2.1vw,1.85rem)] font-medium tracking-[-0.02em] text-rosa">
+            Ready to start talking?
+          </p>
 
           <div className="relative mt-10 flex flex-col gap-8 md:mt-14 md:flex-row md:items-end md:justify-between">
             <p data-revela className="max-w-[40ch] text-lg leading-relaxed text-off/80 md:text-xl">

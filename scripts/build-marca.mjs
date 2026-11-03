@@ -66,8 +66,9 @@ async function recorte(arquivo, largura, altura, fx = 0.5, fy = 0.5) {
 }
 
 // Capa 1200x630: a folha pautada com a linha vermelha da margem à
-// esquerda, só o título, a frase riscada e o nome; à direita, três tiras
-// com o Gustavo em Londres, Paris e Barcelona.
+// esquerda, com o título, a frase riscada, a legenda em inglês, uma linha
+// sobre as aulas, o botão e o nome; à direita, três tiras com o Gustavo em
+// Londres, Paris e Barcelona.
 async function capa() {
   const W = 1200;
   const H = 630;
@@ -98,6 +99,16 @@ async function capa() {
   const y3 = y2 + 74;
   const r = { x1: x0 + antes.largura - 5, x2: x0 + antes.largura + riscado.largura + 7, y: y3 - sub.tamanho * 0.3 };
 
+  // Legenda em inglês em vermelho, como no site, ajustada à coluna.
+  const fraseIngles = "Learn English to live it, not to memorize it.";
+  const tamIngles = Math.min(24, Math.floor((coluna / texto(fraseIngles, { tamanho: 100, wght: 500, espaco: -0.02 }).largura) * 100));
+  const ingles = linha(fraseIngles, { tamanho: tamIngles, wght: 500, espaco: -0.02 }, x0, y3 + 54, cor.caneta);
+  const descricao = linha("Aulas personalizadas, online ou presencial.", { tamanho: 19, wght: 500 }, x0, y3 + 94, "rgba(13,11,10,0.62)");
+
+  // Botão da aula grátis. A Archivo do site não tem a seta, então ela vai desenhada.
+  const botaoTexto = texto("Aula experimental grátis", { tamanho: 19, wght: 650 });
+  const botao = { x: x0, y: y3 + 128, w: botaoTexto.largura + 48 + 28, h: 54 };
+
   const pauta = Array.from({ length: Math.ceil(H / 36) }, (_, i) => `<path d="M0 ${i * 36 + 35.5}H${xFotos}" stroke="rgba(13,11,10,0.06)"/>`).join("");
   const nome = linha("Gustavo Leal", { fonte: "display", tamanho: 40 }, x0, 566, cor.preto);
   const papel = linha("teacher de inglês", { tamanho: 20, wght: 500 }, x0 + nome.largura + 16, 562, "rgba(13,11,10,0.6)");
@@ -112,6 +123,11 @@ async function capa() {
   <path transform="translate(${x0} ${y3})" d="${antes.d}" fill="${cor.preto}"/>
   <path transform="translate(${x0 + antes.largura} ${y3})" d="${riscado.d}" fill="${cor.preto}"/>
   <path d="M${r.x1} ${r.y + 4}C${r.x1 + 80} ${r.y + 2} ${r.x2 - 100} ${r.y - 1} ${r.x2} ${r.y - 4}" fill="none" stroke="${cor.caneta}" stroke-width="4.5" stroke-linecap="round"/>
+  ${ingles.svg}
+  ${descricao.svg}
+  <rect x="${botao.x}" y="${botao.y}" width="${botao.w}" height="${botao.h}" rx="2" fill="${cor.preto}"/>
+  <path transform="translate(${botao.x + 24} ${botao.y + 34})" d="${botaoTexto.d}" fill="${cor.off}"/>
+  <path transform="translate(${botao.x + 24 + botaoTexto.largura + 12} ${botao.y + 27})" d="M0 0H15M9 -6L15 0L9 6" fill="none" stroke="${cor.off}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
   ${nome.svg}
   ${papel.svg}
 </svg>`;

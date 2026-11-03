@@ -5,6 +5,19 @@ export function Titulo({ children, className = "" }: { children: ReactNode; clas
   return <h2 className={`display text-[clamp(3.1rem,10.5vw,8.6rem)] text-balance ${className}`}>{children}</h2>;
 }
 
+// Legenda em inglês, como a tradução que o teacher escreve em vermelho
+// embaixo da frase. lang="en" pro leitor de tela pronunciar em inglês.
+export function Ingles({ children, className = "", tom = "claro" }: { children: ReactNode; className?: string; tom?: "claro" | "escuro" }) {
+  return (
+    <p
+      lang="en"
+      className={`text-[clamp(1.2rem,2.1vw,1.85rem)] leading-tight font-medium tracking-[-0.02em] ${tom === "claro" ? "text-caneta-escura" : "text-caneta-clara"} ${className}`}
+    >
+      {children}
+    </p>
+  );
+}
+
 // No celular, o texto longo fica guardado atrás de um "Ler mais" pra página
 // não virar um paredão. A partir do tablet ele aparece sempre.
 export function LerMais({ children, className = "", tom = "claro" }: { children: ReactNode; className?: string; tom?: "claro" | "escuro" }) {

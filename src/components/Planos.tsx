@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { incluso, planos } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
-import { Titulo } from "./Secao";
+import { Ingles, Titulo } from "./Secao";
 
 type Formato = "individual" | "dupla";
 
@@ -74,6 +74,7 @@ export function Planos() {
       <div className="recuo mx-auto grid max-w-[1500px] gap-12 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-5">
           <Titulo>Escolha seu ritmo.</Titulo>
+          <Ingles className="mt-4 md:mt-6">Pick your pace.</Ingles>
           <p data-revela className="mt-8 max-w-[40ch] text-lg leading-relaxed text-preto/70">
             O valor é mensal e depende de quantas horas por semana você quer estudar. Em dupla, cada um paga menos.
           </p>

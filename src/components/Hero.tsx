@@ -83,6 +83,9 @@ export function Hero() {
                 decorar regra.
               </Marca>
             </p>
+            <p lang="en" className="hero-sobe mt-4 text-lg font-medium text-caneta-escura lg:mt-6 lg:text-[min(1.5vw,1.6rem)]">
+              Learn English to live it, not to memorize it.
+            </p>
           </div>
 
           <div className="hero-sobe mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 lg:mt-14">
