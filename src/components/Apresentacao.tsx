@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { Marca } from "./Caneta";
-import { NumeroMargem, Rotulo, Titulo } from "./Secao";
+import { Titulo } from "./Secao";
 
 // Quem é: o vídeo dele grande, como a figura principal da página, e o texto
-// em primeira pessoa ao lado. A caneta circula o "não" do título.
+// em primeira pessoa ao lado.
 export function Apresentacao() {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -20,7 +19,7 @@ export function Apresentacao() {
           {
             clipPath: "inset(0% 0% 0% 0%)",
             ease: "none",
-            scrollTrigger: { trigger: ".apres-player", start: "top bottom", end: "center 60%", scrub: true },
+            scrollTrigger: { trigger: ".apres-player", start: "top bottom", end: "center 60%", scrub: 0.8 },
           },
         );
       });
@@ -39,15 +38,9 @@ export function Apresentacao() {
 
   return (
     <section id="apresentacao" ref={root} className="relative bg-off pt-16 pb-20 text-preto md:pt-28 md:pb-32">
-      <NumeroMargem numero="02" />
       <div className="recuo mx-auto max-w-[1500px]">
-        <Rotulo numero="02">Quem é o Gustavo</Rotulo>
-        <Titulo className="mt-6 max-w-[11ch] md:mt-8">
-          Inglês{" "}
-          <Marca forma="circulo" espessura="0.035em">
-            não
-          </Marca>{" "}
-          é pra ser entediante.
+        <Titulo className="max-w-[11ch]">
+          Inglês <span className="text-caneta">não</span> é pra ser entediante.
         </Titulo>
 
         <div className="mt-12 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-6">
@@ -77,13 +70,12 @@ export function Apresentacao() {
                     </span>
                     <span>
                       <span className="block text-lg font-semibold">Assistir com som</span>
-                      <span className="nota block text-off/70">21 segundos</span>
+                      <span className="block text-sm text-off/70">21 segundos</span>
                     </span>
                   </span>
                 </button>
               )}
             </div>
-            <figcaption className="nota mt-3 text-preto/50">fig. 1 · o teacher se apresentando</figcaption>
           </figure>
 
           <div className="flex flex-col gap-10 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">

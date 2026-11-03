@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "@fontsource-variable/archivo/wdth.css";
 @import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
 
 /* O caderno do teacher: papel, tinta preta e a caneta vermelha de correção.
    O vinho continua como tom profundo da marca, e o vermelho da cabine de
@@ -67,19 +66,12 @@
     letter-spacing: -0.012em;
   }
 
-  /* Anotações do caderno: verbetes, legendas, números de etapa. */
+  /* Só o verbete de dicionário e a pronúncia usam a mono. */
   .nota {
     font-family: var(--font-mono);
     font-size: 0.78rem;
     line-height: 1.55;
     letter-spacing: 0.01em;
-  }
-  .nota-caps {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
   }
 
   /* Recuo do conteúdo: sempre à direita da linha da margem. */
@@ -150,9 +142,6 @@
 }
 .tracar path {
   animation: tracar 0.55s cubic-bezier(0.6, 0, 0.3, 1) both;
-}
-.tracar path:nth-child(2) {
-  animation-delay: 0.25s;
 }
 
 @media (prefers-reduced-motion: reduce) {

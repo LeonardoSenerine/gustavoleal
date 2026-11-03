@@ -15,8 +15,7 @@ type Props = {
   interna?: boolean;
 };
 
-// Cabeçalho reto, como o topo de uma folha: nome à esquerda, seções em mono
-// e o botão da aula grátis.
+// Cabeçalho reto, como o topo de uma folha: nome, seções e o botão da aula grátis.
 export function Header({ interna = false }: Props) {
   const interesses = useInteresses();
 
@@ -25,14 +24,13 @@ export function Header({ interna = false }: Props) {
       <div className="recuo mx-auto flex h-16 max-w-[1500px] items-center justify-between gap-4">
         <a href={interna ? "/" : "#topo"} className="flex items-baseline gap-3" aria-label="Gustavo Leal, início">
           <span className="display text-[1.65rem] leading-none">Gustavo Leal</span>
-          <span className="nota hidden text-preto/50 sm:inline">teacher de inglês</span>
+          <span className="hidden text-sm text-preto/50 sm:inline">teacher de inglês</span>
         </a>
 
         {!interna && (
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Seções">
-            {links.map((l, i) => (
-              <a key={l.href} href={l.href} className="nota-caps group flex gap-1.5 text-preto/60 transition-colors hover:text-preto">
-                <span className="text-caneta/0 transition-colors group-hover:text-caneta">{String(i + 2).padStart(2, "0")}</span>
+            {links.map((l) => (
+              <a key={l.href} href={l.href} className="text-[0.95rem] font-medium text-preto/60 transition-colors duration-300 hover:text-preto">
                 {l.label}
               </a>
             ))}

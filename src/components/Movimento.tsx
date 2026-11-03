@@ -8,11 +8,11 @@ export function Movimento() {
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       // Textos e blocos marcados com data-revela sobem suavemente ao entrar.
-      gsap.set("[data-revela]", { y: 36, opacity: 0 });
+      gsap.set("[data-revela]", { y: 28, opacity: 0 });
       ScrollTrigger.batch("[data-revela]", {
         start: "top 88%",
         once: true,
-        onEnter: (lote) => gsap.to(lote, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.08, overwrite: true }),
+        onEnter: (lote) => gsap.to(lote, { y: 0, opacity: 1, duration: 1.3, ease: "power3.out", stagger: 0.09, overwrite: true }),
       });
 
       // A caneta desenha cada traço quando ele entra na tela.
@@ -22,9 +22,8 @@ export function Movimento() {
           { strokeDashoffset: 1.001 },
           {
             strokeDashoffset: 0,
-            duration: 0.7,
-            stagger: 0.22,
-            ease: "power2.inOut",
+            duration: 0.85,
+            ease: "power3.inOut",
             delay: Number(svg.dataset.atraso ?? 0),
             scrollTrigger: { trigger: svg, start: "top 82%", once: true },
           },
@@ -49,11 +48,17 @@ export function Movimento() {
       // página encolhe. Recalcula os gatilhos quando a fonte carrega e
       // sempre que a altura do conteúdo muda, senão as revelações atrasam.
       let espera = 0;
+      let altura = document.body.scrollHeight;
       const recalcular = () => {
         window.clearTimeout(espera);
-        espera = window.setTimeout(() => ScrollTrigger.refresh(), 150);
+        espera = window.setTimeout(() => {
+          const nova = document.body.scrollHeight;
+          if (Math.abs(nova - altura) < 4) return;
+          altura = nova;
+          ScrollTrigger.refresh();
+        }, 200);
       };
-      document.fonts?.ready.then(recalcular);
+      document.fonts?.ready.then(() => ScrollTrigger.refresh());
       const observador = new ResizeObserver(recalcular);
       observador.observe(document.body);
       return () => {

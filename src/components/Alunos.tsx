@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { depoimentos } from "@/lib/content";
-import { Rotulo, Titulo } from "./Secao";
+import { Titulo } from "./Secao";
 
 export function Alunos() {
   const root = useRef<HTMLElement>(null);
@@ -42,8 +42,7 @@ export function Alunos() {
     <section id="alunos" ref={root} className="relative overflow-hidden bg-preto py-24 text-off md:py-36">
       <div className="flex flex-col gap-8 px-4 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
-          <Rotulo numero="04" tom="escuro">Alunos</Rotulo>
-          <Titulo className="mt-6">Quem fala por mim são eles.</Titulo>
+          <Titulo>Quem fala por mim são eles.</Titulo>
         </div>
         <div className="flex gap-3">
           {([-1, 1] as const).map((d) => (

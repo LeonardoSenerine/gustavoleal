@@ -22,9 +22,9 @@ export function Hero() {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         // O título (LCP) não anima: aparece pronto. O resto entra em volta dele.
         gsap
-          .timeline({ defaults: { ease: "expo.out" } })
-          .from(".hero-sobe", { y: 22, opacity: 0, stagger: 0.07, duration: 1.1 }, 0.15)
-          .from(".ficha", { y: 90, opacity: 0, stagger: 0.08, duration: 1.4 }, 0.45);
+          .timeline({ defaults: { ease: "power4.out" } })
+          .from(".hero-sobe", { y: 18, opacity: 0, stagger: 0.08, duration: 1.3 }, 0.1)
+          .from(".ficha", { y: 70, opacity: 0, stagger: 0.09, duration: 1.6 }, 0.4);
       });
 
       // As fichas sobem em velocidades diferentes enquanto a página rola.
@@ -33,7 +33,7 @@ export function Hero() {
           gsap.to(ficha, {
             yPercent: [-8, -18, -4, -14][i % 4],
             ease: "none",
-            scrollTrigger: { trigger: ".fichas", start: "top bottom", end: "bottom top", scrub: true },
+            scrollTrigger: { trigger: ".fichas", start: "top bottom", end: "bottom top", scrub: 0.8 },
           });
         });
       });
@@ -46,13 +46,7 @@ export function Hero() {
       <div className="pauta absolute inset-0 [mask-image:linear-gradient(to_bottom,black_30%,transparent_80%)]" aria-hidden />
 
       <div className="recuo relative mx-auto max-w-[1500px]">
-        <p className="hero-sobe nota-caps flex flex-wrap items-center gap-x-3 gap-y-1 text-preto/55">
-          <span className="text-caneta">Lição 01</span>
-          <span className="h-px w-8 bg-current opacity-40" aria-hidden />
-          Aulas de inglês personalizadas
-        </p>
-
-        <h1 className="mt-5 md:mt-8">
+        <h1>
           <span className="sr-only">Inglês pra viver o mundo. Não pra decorar regra.</span>
           <span className="display block text-[clamp(3.5rem,15.2vw,14.5rem)]" aria-hidden>
             Inglês pra
@@ -64,7 +58,7 @@ export function Hero() {
         <div className="mt-6 grid gap-8 md:mt-10 md:grid-cols-12 md:items-start md:gap-6">
           <p className="hero-sobe text-[clamp(1.75rem,4.6vw,3.9rem)] leading-[1] font-medium tracking-[-0.035em] md:col-span-7" aria-hidden>
             Não pra{" "}
-            <Marca forma="risco" atraso={0.7} espessura="0.07em">
+            <Marca forma="risco" atraso={0.6} espessura="0.075em">
               decorar regra.
             </Marca>
           </p>
@@ -72,7 +66,7 @@ export function Hero() {
           {/* Verbete de dicionário, como anotação na margem do caderno. */}
           <dl className="hero-sobe nota max-w-[34ch] border-l border-preto/15 pl-4 text-preto/70 md:col-span-4 md:col-start-9 md:mt-2">
             <dt className="flex flex-wrap items-baseline gap-x-2">
-              <span className="text-[1.05rem] font-medium text-preto">live</span>
+              <span className="text-[1.1rem] text-preto">live</span>
               <span>/lɪv/</span>
               <span className="text-preto/45 italic">verbo</span>
             </dt>
@@ -92,19 +86,16 @@ export function Hero() {
             <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-preto text-off hover:bg-caneta">
               Agendar aula experimental grátis <span className="seta" aria-hidden>→</span>
             </a>
-            <span className="nota text-preto/55">online ou presencial</span>
+            <span className="text-sm text-preto/55">Online ou presencial</span>
           </div>
         </div>
       </div>
 
-      {/* Exercício: fichas de estudo que o visitante marca. */}
-      <div className="relative mt-20 md:mt-32">
+      {/* Fichas de estudo que o visitante marca. */}
+      <div className="relative mt-20 md:mt-36">
         <div className="recuo mx-auto flex max-w-[1500px] flex-col gap-2 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="nota-caps text-caneta">Exercício 1</p>
-            <p className="mt-2 text-2xl leading-tight font-medium tracking-[-0.02em] md:text-3xl">Marque o que você quer destravar.</p>
-          </div>
-          <p className="nota text-preto/55">Pode marcar mais de um. Vai junto na mensagem.</p>
+          <p className="text-2xl leading-tight font-medium tracking-[-0.02em] md:text-3xl">O que você quer destravar?</p>
+          <p className="text-preto/55">Marque quantos quiser. Vai junto na mensagem.</p>
         </div>
 
         <div
@@ -134,9 +125,6 @@ export function Hero() {
                     ) : (
                       <img src={`/fotos/${e.foto}.webp`} alt="" className="absolute inset-0 h-full w-full object-cover" />
                     )}
-                    <span className="nota absolute top-2.5 left-2.5 bg-folha/90 px-1.5 py-0.5 text-preto/70">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                   </span>
 
                   <span className="mt-4 flex items-start justify-between gap-3 px-1.5">
@@ -169,7 +157,7 @@ export function Hero() {
               </a>
             </>
           ) : (
-            <p className="nota text-preto/45">Nenhuma ficha marcada ainda.</p>
+            <p className="text-sm text-preto/45">Nenhuma ficha marcada ainda.</p>
           )}
         </div>
       </div>

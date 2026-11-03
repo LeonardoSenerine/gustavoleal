@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { perguntas } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
-import { NumeroMargem, Rotulo, Titulo } from "./Secao";
+import { Titulo } from "./Secao";
 
 // Perguntas frequentes em sanfona. A altura anima pelo truque do grid
 // (0fr → 1fr), então a resposta abre suave sem medir nada em JS.
@@ -11,12 +11,10 @@ export function Perguntas() {
 
   return (
     <section id="perguntas" className="relative bg-off pb-20 text-preto md:pb-32">
-      <NumeroMargem numero="06" />
       <div className="recuo mx-auto grid max-w-[1500px] gap-10 md:grid-cols-12 md:gap-6">
         <div className="md:col-span-5">
           <div className="md:sticky md:top-28">
-            <Rotulo numero="06">Dúvidas</Rotulo>
-            <Titulo className="mt-6 md:mt-8 md:!text-[clamp(3rem,6.2vw,6.4rem)]">Perguntas frequentes.</Titulo>
+            <Titulo className="md:!text-[clamp(3rem,6.2vw,6.4rem)]">Perguntas frequentes.</Titulo>
             <p data-revela className="mt-8 max-w-[34ch] text-lg text-preto/70">
               Não achou o que procurava? Manda sua pergunta no WhatsApp que eu respondo.
             </p>
@@ -44,11 +42,8 @@ export function Perguntas() {
                     aria-expanded={aberto}
                     aria-controls={id}
                     onClick={() => setAberta(aberto ? null : i)}
-                    className="group flex w-full items-baseline gap-4 py-6 text-left text-xl font-medium tracking-[-0.015em] md:gap-6 md:text-2xl"
+                    className="group flex w-full items-center gap-6 py-6 text-left text-xl font-medium tracking-[-0.015em] md:gap-6 md:text-2xl"
                   >
-                    <span className={`nota shrink-0 tabular-nums transition-colors ${aberto ? "text-caneta" : "text-preto/45"}`}>
-                      Q{String(i + 1).padStart(2, "0")}
-                    </span>
                     <span className="flex-1 transition-colors group-hover:text-caneta">{item.pergunta}</span>
                     <span
                       className={`relative size-4 shrink-0 self-center transition-transform duration-500 ${aberto ? "rotate-45 text-caneta" : ""}`}
@@ -67,7 +62,7 @@ export function Perguntas() {
                   className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${aberto ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="max-w-[58ch] pb-7 pl-[calc(2.6rem)] text-lg leading-relaxed text-preto/70 md:pl-[3.4rem]">{item.resposta}</p>
+                    <p className="max-w-[58ch] pb-7 text-lg leading-relaxed text-preto/70">{item.resposta}</p>
                   </div>
                 </div>
               </div>

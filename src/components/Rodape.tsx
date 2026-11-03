@@ -9,20 +9,20 @@ export function Rodape() {
       <div className="recuo mx-auto max-w-[1500px] pt-14 md:pt-20">
         <div className="grid gap-8 md:grid-cols-12 md:gap-6">
           <div className="md:col-span-4">
-            <p className="nota-caps text-preto/45">WhatsApp</p>
+            <p className="text-sm text-preto/50">WhatsApp</p>
             <a href={linkWhatsApp()} target="_blank" rel="noreferrer" className="mt-2 block text-2xl font-semibold whitespace-nowrap transition-colors hover:text-caneta">
               {telefone}
             </a>
           </div>
           {contato.instagram && (
             <div className="md:col-span-3">
-              <p className="nota-caps text-preto/45">Instagram</p>
+              <p className="text-sm text-preto/50">Instagram</p>
               <a href={`https://instagram.com/${contato.instagram}`} target="_blank" rel="noreferrer" className="mt-2 block text-2xl font-semibold transition-colors hover:text-caneta">
                 @{contato.instagram}
               </a>
             </div>
           )}
-          <div className="nota flex flex-col gap-1.5 text-preto/55 md:col-span-4 md:col-start-9 md:items-end">
+          <div className="flex flex-col gap-1.5 text-sm text-preto/55 md:col-span-4 md:col-start-9 md:items-end">
             <p>Teacher de inglês · online ou presencial</p>
             <a href="/privacidade/" className="underline-offset-4 transition-colors hover:text-preto hover:underline">
               Privacidade e cookies

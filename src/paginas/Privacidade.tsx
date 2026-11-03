@@ -203,7 +203,7 @@ function Privacidade() {
             {secoes.map((s, i) => (
               <section key={s.id} id={s.id} className="scroll-mt-28 border-t border-preto/10 py-10 first:border-t-0 first:pt-0">
                 <h2 className="flex items-baseline gap-4 text-2xl font-medium tracking-[-0.02em] md:text-3xl">
-                  <span className="nota text-caneta">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-caneta">{String(i + 1).padStart(2, "0")}</span>
                   {s.titulo}
                 </h2>
                 <div className="mt-5 space-y-4 text-lg leading-relaxed text-preto/80 [&_a]:font-semibold [&_a]:text-vinho [&_a]:underline [&_a]:underline-offset-4 [&_li]:pl-1 [&_strong]:text-preto [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ul]:marker:text-vermelho">
