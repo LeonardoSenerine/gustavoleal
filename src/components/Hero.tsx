@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { experiencias } from "@/lib/content";
+import { experiencias, tirasHero } from "@/lib/content";
 import { alternarInteresse, linkPersonalizado, listarInteresses, useInteresses } from "@/lib/interesses";
 import { LoopVideo } from "./LoopVideo";
 import { Marca, Traco } from "./Caneta";
@@ -8,10 +8,10 @@ import { Marca, Traco } from "./Caneta";
 // Inclinação de cada ficha no desktop, como fichas soltas na mesa.
 const inclinacao = ["md:-rotate-[1.6deg]", "md:rotate-[1.1deg]", "md:-rotate-[0.6deg]", "md:rotate-[1.8deg]"];
 
-// A primeira folha do caderno: a promessa em letra grande, a caneta riscando
-// "decorar regra" e um verbete de dicionário pra "live". Embaixo, as fichas
-// de estudo: o visitante marca o que quer destravar e isso vai junto na
-// mensagem do WhatsApp (ver lib/interesses.ts).
+// A primeira folha do caderno: a promessa em letra grande com a caneta
+// riscando "decorar regra" e, ao lado, o Gustavo em Londres, Paris e
+// Barcelona. Embaixo, as fichas de estudo: o visitante marca o que quer
+// destravar e isso vai junto na mensagem do WhatsApp (ver lib/interesses.ts).
 export function Hero() {
   const root = useRef<HTMLElement>(null);
   const interesses = useInteresses();
@@ -20,11 +20,28 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        // O título (LCP) não anima: aparece pronto. O resto entra em volta dele.
+        // O título (LCP) não anima: aparece pronto. As tiras sobem uma de cada
+        // vez, a foto assenta dentro delas e o resto entra em volta.
         gsap
           .timeline({ defaults: { ease: "power4.out" } })
-          .from(".hero-sobe", { y: 18, opacity: 0, stagger: 0.08, duration: 1.3 }, 0.1)
-          .from(".ficha", { y: 70, opacity: 0, stagger: 0.09, duration: 1.6 }, 0.4);
+          .fromTo(".tira", { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", stagger: 0.12, duration: 1.5 }, 0.05)
+          .from(".tira-foto", { scale: 1.25, stagger: 0.12, duration: 2 }, 0.05)
+          .from(".tira-cidade", { y: 12, opacity: 0, stagger: 0.12, duration: 1 }, 0.8)
+          .from(".hero-sobe", { y: 18, opacity: 0, stagger: 0.08, duration: 1.3 }, 0.2)
+          .from(".ficha", { y: 70, opacity: 0, stagger: 0.09, duration: 1.6 }, 0.6);
+
+        // Enquanto a página rola, cada foto desliza devagar dentro da tira.
+        gsap.utils.toArray<HTMLElement>(".tira-movel").forEach((foto, i) => {
+          gsap.fromTo(
+            foto,
+            { yPercent: -3 },
+            {
+              yPercent: 4 + i * 1.5,
+              ease: "none",
+              scrollTrigger: { trigger: ".tiras", start: "top top", end: "bottom top", scrub: 0.8 },
+            },
+          );
+        });
       });
 
       // As fichas sobem em velocidades diferentes enquanto a página rola.
@@ -42,52 +59,60 @@ export function Hero() {
   );
 
   return (
-    <section id="topo" ref={root} className="relative overflow-hidden bg-off pt-24 pb-16 text-preto md:pt-32 md:pb-28">
-      <div className="pauta absolute inset-0 [mask-image:linear-gradient(to_bottom,black_30%,transparent_80%)]" aria-hidden />
+    <section id="topo" ref={root} className="relative overflow-hidden bg-off pb-16 text-preto md:pb-28">
+      {/* Abertura: a folha com a promessa e o Gustavo em três lugares. */}
+      <div className="relative lg:grid lg:min-h-[100svh] lg:grid-cols-[1fr_1.12fr]">
+        <div className="pauta absolute inset-0" aria-hidden />
 
-      <div className="recuo relative mx-auto max-w-[1500px]">
-        <h1>
-          <span className="sr-only">Inglês pra viver o mundo. Não pra decorar regra.</span>
-          <span className="display block text-[clamp(3.5rem,15.2vw,14.5rem)]" aria-hidden>
-            Inglês pra
-            <br />
-            viver o mundo.
-          </span>
-        </h1>
+        <div className="recuo relative flex flex-col pt-24 pb-10 md:pt-32 lg:justify-center lg:pt-24 lg:pb-16 lg:!pr-12">
+          <div>
+            <h1>
+              <span className="sr-only">Inglês pra viver o mundo. Não pra decorar regra.</span>
+              <span className="display block text-[clamp(3.5rem,14.6vw,14.5rem)] lg:text-[min(calc(8.1vw-22px),9rem)]" aria-hidden>
+                Inglês pra
+                <br />
+                viver o mundo.
+              </span>
+            </h1>
+            <p
+              className="hero-sobe mt-5 text-[clamp(1.75rem,4.6vw,3.9rem)] leading-[1] font-medium tracking-[-0.035em] lg:mt-8 lg:text-[min(2.7vw,3.4rem)]"
+              aria-hidden
+            >
+              Não pra{" "}
+              <Marca forma="risco" atraso={0.9} espessura="0.075em">
+                decorar regra.
+              </Marca>
+            </p>
+          </div>
 
-        <div className="mt-6 grid gap-8 md:mt-10 md:grid-cols-12 md:items-start md:gap-6">
-          <p className="hero-sobe text-[clamp(1.75rem,4.6vw,3.9rem)] leading-[1] font-medium tracking-[-0.035em] md:col-span-7" aria-hidden>
-            Não pra{" "}
-            <Marca forma="risco" atraso={0.6} espessura="0.075em">
-              decorar regra.
-            </Marca>
-          </p>
-
-          {/* Verbete de dicionário, como anotação na margem do caderno. */}
-          <dl className="hero-sobe nota max-w-[34ch] border-l border-preto/15 pl-4 text-preto/70 md:col-span-4 md:col-start-9 md:mt-2">
-            <dt className="flex flex-wrap items-baseline gap-x-2">
-              <span className="text-[1.1rem] text-preto">live</span>
-              <span>/lɪv/</span>
-              <span className="text-preto/45 italic">verbo</span>
-            </dt>
-            <dd className="mt-1.5">1. viver; ter experiências de verdade.</dd>
-            <dd>2. ao vivo; na hora, sem ensaio.</dd>
-            <dd className="mt-2 text-preto/50">
-              ≠ <span className="text-caneta line-through decoration-1">memorize</span> /ˈmem.ə.raɪz/ decorar.
-            </dd>
-          </dl>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
-          <p className="hero-sobe max-w-[46ch] text-lg leading-relaxed text-preto/70">
-            Aulas personalizadas pra você usar o inglês no trabalho, nas viagens, na cultura que você ama e no jeito de ver o mundo.
-          </p>
-          <div className="hero-sobe flex flex-wrap items-center gap-x-5 gap-y-3">
+          <div className="hero-sobe mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 lg:mt-14">
             <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-preto text-off hover:bg-caneta">
               Agendar aula experimental grátis <span className="seta" aria-hidden>→</span>
             </a>
             <span className="text-sm text-preto/55">Online ou presencial</span>
           </div>
+        </div>
+
+        {/* Três tiras. Em tela larga, a tira sob o mouse se alarga. */}
+        <div className="tiras relative flex h-[62svh] gap-1.5 lg:h-auto lg:gap-2">
+          {tirasHero.map((t, i) => (
+            <figure
+              key={t.foto}
+              className="tira group relative min-w-0 flex-1 overflow-hidden bg-carvao transition-[flex-grow] duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] lg:hover:grow-[1.75]"
+            >
+              <div className="tira-movel absolute inset-x-0 -top-[5%] h-[110%]">
+                <img
+                  src={`/fotos/${t.foto}.webp`}
+                  alt={t.alt}
+                  fetchPriority={i === 0 ? "high" : undefined}
+                  className="tira-foto h-full w-full object-cover transition-[filter] duration-700 lg:group-hover:brightness-110"
+                  style={{ objectPosition: t.foco }}
+                />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-preto/60 to-transparent" aria-hidden />
+              <figcaption className="tira-cidade absolute bottom-3 left-3 text-sm font-medium text-off lg:bottom-5 lg:left-5 lg:text-base">{t.cidade}</figcaption>
+            </figure>
+          ))}
         </div>
       </div>
 

@@ -117,6 +117,14 @@ export const experienciaProfissional = ["Aulas particulares", "Escolas de idioma
 // Países onde ele usou o inglês, pelas fotos que mandou.
 export const paises = ["Inglaterra", "França", "Espanha", "Itália"];
 
+// Abertura do site: o Gustavo em três lugares, em tiras verticais.
+// "foco" é o object-position que mantém ele e o lugar dentro da tira.
+export const tirasHero = [
+  { foto: "londres-big-ben-gustavo", cidade: "Londres", foco: "50% 55%", alt: "Gustavo diante do Big Ben, em Londres, à noite" },
+  { foto: "eiffel-noite", cidade: "Paris", foco: "52% 50%", alt: "Gustavo sob a Torre Eiffel iluminada, em Paris" },
+  { foto: "sagrada", cidade: "Barcelona", foco: "55% 50%", alt: "Gustavo em frente à Sagrada Família, em Barcelona" },
+];
+
 // Cidades da frase da trajetória, cada uma com uma foto dentro do texto.
 export const cidades = [
   { nome: "Londres", foto: "londres-bandeira" },
