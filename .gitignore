@@ -7,3 +7,4 @@ assets/videos/*
 !assets/videos/apresentacao.mp4
 !assets/videos/s02.mp4
 !assets/videos/s04.mp4
+*.tsbuildinfo
