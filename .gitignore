@@ -1,0 +1,8 @@
+node_modules
+dist
+.claude/
+
+# Vídeos brutos: só entram os que o scripts/prepare-media.mjs usa.
+assets/videos/*
+!assets/videos/apresentacao.mp4
+!assets/videos/w08.mp4

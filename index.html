@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gustavo Leal · Teacher de inglês | Aulas personalizadas de conversação</title>
+    <meta
+      name="description"
+      content="Aulas de inglês personalizadas com o teacher Gustavo Leal: conversação desde a primeira aula, música, filmes, séries e situações reais. Individual ou em dupla, a partir de R$ 160 por mês."
+    />
+    <meta name="author" content="Gustavo Leal" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <meta name="theme-color" content="#0d0b0a" />
+
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Capa de link (WhatsApp, Instagram, LinkedIn, Facebook, X). Gerada por npm run marca. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Gustavo Leal · Teacher de inglês" />
+    <meta property="og:title" content="Gustavo Leal · Inglês pra viver o mundo, não pra decorar regra" />
+    <meta
+      property="og:description"
+      content="Aulas de inglês personalizadas: conversação desde o início, música, filmes, séries e situações reais. Agende uma aula experimental."
+    />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gustavo Leal em frente ao Big Ben, em Londres, com o texto: Inglês pra viver o mundo, não pra decorar regra." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gustavo Leal · Inglês pra viver o mundo, não pra decorar regra" />
+    <meta name="twitter:description" content="Aulas de inglês personalizadas com conversação, música, filmes e situações reais." />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og.jpg" />
+    <meta name="twitter:image:alt" content="Gustavo Leal em frente ao Big Ben, em Londres." />
+
+    <!-- Dados estruturados para o Google. Os preços repetem a tabela de src/lib/content.ts. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "%VITE_SITE_URL%/#gustavo",
+            "name": "Gustavo Leal",
+            "jobTitle": "Professor de inglês",
+            "url": "%VITE_SITE_URL%/",
+            "image": "%VITE_SITE_URL%/og.jpg",
+            "telephone": "+55-11-96411-3005",
+            "knowsLanguage": ["pt-BR", "en"]
+          },
+          {
+            "@type": "Service",
+            "name": "Aulas de inglês com Gustavo Leal",
+            "serviceType": "Aulas particulares de inglês",
+            "url": "%VITE_SITE_URL%/",
+            "provider": { "@id": "%VITE_SITE_URL%/#gustavo" },
+            "areaServed": { "@type": "Country", "name": "Brasil" },
+            "availableLanguage": ["pt-BR", "en"],
+            "offers": [
+              {
+                "@type": "AggregateOffer",
+                "name": "Aula individual, valor mensal",
+                "priceCurrency": "BRL",
+                "lowPrice": "220",
+                "highPrice": "415"
+              },
+              {
+                "@type": "AggregateOffer",
+                "name": "Aula em dupla, valor mensal por pessoa",
+                "priceCurrency": "BRL",
+                "lowPrice": "160",
+                "highPrice": "320"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

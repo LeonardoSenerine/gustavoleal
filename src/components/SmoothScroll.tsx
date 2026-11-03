@@ -1,0 +1,25 @@
+import { useEffect } from "react";
+import Lenis from "lenis";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+
+// Rolagem suave com Lenis, sincronizada com o relógio do GSAP
+// para que as animações de scroll acompanhem sem tremer.
+export function SmoothScroll() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const lenis = new Lenis({ lerp: 0.09, anchors: true });
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+    if (import.meta.env.DEV) Object.assign(window, { __lenis: lenis });
+
+    return () => {
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+    };
+  }, []);
+
+  return null;
+}
