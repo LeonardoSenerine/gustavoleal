@@ -10,6 +10,7 @@ import { Perguntas } from "./components/Perguntas";
 import { Cta } from "./components/Cta";
 import { Rodape } from "./components/Rodape";
 import { Movimento } from "./components/Movimento";
+import { LinhaMargem } from "./components/LinhaMargem";
 import { temDepoimentos } from "./lib/content";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <>
       <SmoothScroll />
       <Header />
+      <LinhaMargem />
       <main>
         <Hero />
         <Apresentacao />

@@ -15,6 +15,22 @@ export function Movimento() {
         onEnter: (lote) => gsap.to(lote, { y: 0, opacity: 1, duration: 1.1, ease: "expo.out", stagger: 0.08, overwrite: true }),
       });
 
+      // A caneta desenha cada traço quando ele entra na tela.
+      gsap.utils.toArray<SVGSVGElement>("[data-caneta]").forEach((svg) => {
+        gsap.fromTo(
+          svg.querySelectorAll("path"),
+          { strokeDashoffset: 1.001 },
+          {
+            strokeDashoffset: 0,
+            duration: 0.7,
+            stagger: 0.22,
+            ease: "power2.inOut",
+            delay: Number(svg.dataset.atraso ?? 0),
+            scrollTrigger: { trigger: svg, start: "top 82%", once: true },
+          },
+        );
+      });
+
       // Header some ao descer e volta ao subir.
       const header = document.querySelector<HTMLElement>("[data-header]");
       if (header) {
@@ -28,6 +44,22 @@ export function Movimento() {
 
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
+
+      // A fonte estreita dos títulos chega depois do primeiro cálculo e a
+      // página encolhe. Recalcula os gatilhos quando a fonte carrega e
+      // sempre que a altura do conteúdo muda, senão as revelações atrasam.
+      let espera = 0;
+      const recalcular = () => {
+        window.clearTimeout(espera);
+        espera = window.setTimeout(() => ScrollTrigger.refresh(), 150);
+      };
+      document.fonts?.ready.then(recalcular);
+      const observador = new ResizeObserver(recalcular);
+      observador.observe(document.body);
+      return () => {
+        observador.disconnect();
+        window.clearTimeout(espera);
+      };
     });
 
     // Botões puxam levemente o ponteiro, como um ímã.

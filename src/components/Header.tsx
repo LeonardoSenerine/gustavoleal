@@ -15,29 +15,37 @@ type Props = {
   interna?: boolean;
 };
 
+// Cabeçalho reto, como o topo de uma folha: nome à esquerda, seções em mono
+// e o botão da aula grátis.
 export function Header({ interna = false }: Props) {
   const interesses = useInteresses();
 
   return (
-    <header data-header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border border-preto/5 bg-off/80 py-2 pr-2 pl-5 text-preto shadow-[0_8px_30px_-12px_rgb(0_0_0/0.25)] backdrop-blur-md">
-        <a href={interna ? "/" : "#topo"} className="flex items-baseline gap-1.5 text-xl" aria-label="Gustavo Leal, início">
-          <span className="font-serif text-[1.15em] text-vinho italic">Gustavo</span>
-          <span className="font-semibold tracking-tight">Leal</span>
+    <header data-header className="fixed inset-x-0 top-0 z-50 border-b border-preto/10 bg-off/85 backdrop-blur-md">
+      <div className="recuo mx-auto flex h-16 max-w-[1500px] items-center justify-between gap-4">
+        <a href={interna ? "/" : "#topo"} className="flex items-baseline gap-3" aria-label="Gustavo Leal, início">
+          <span className="display text-[1.65rem] leading-none">Gustavo Leal</span>
+          <span className="nota hidden text-preto/50 sm:inline">teacher de inglês</span>
         </a>
 
         {!interna && (
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Seções">
-            {links.map((l) => (
-              <a key={l.href} href={l.href} className="rounded-full px-3 py-2 text-sm font-medium text-preto/70 transition-colors hover:bg-preto/5 hover:text-preto">
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Seções">
+            {links.map((l, i) => (
+              <a key={l.href} href={l.href} className="nota-caps group flex gap-1.5 text-preto/60 transition-colors hover:text-preto">
+                <span className="text-caneta/0 transition-colors group-hover:text-caneta">{String(i + 2).padStart(2, "0")}</span>
                 {l.label}
               </a>
             ))}
           </nav>
         )}
 
-        <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-vinho !py-2.5 !text-sm text-off hover:bg-vermelho">
-          Aula grátis
+        <a
+          href={linkPersonalizado(interesses)}
+          target="_blank"
+          rel="noreferrer"
+          className="botao bg-preto !py-2.5 !text-sm text-off hover:bg-caneta"
+        >
+          Aula grátis <span className="seta" aria-hidden>→</span>
         </a>
       </div>
     </header>

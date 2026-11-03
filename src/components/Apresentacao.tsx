@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { Rotulo, Titulo } from "./Secao";
+import { Marca } from "./Caneta";
+import { NumeroMargem, Rotulo, Titulo } from "./Secao";
 
+// Quem é: o vídeo dele grande, como a figura principal da página, e o texto
+// em primeira pessoa ao lado. A caneta circula o "não" do título.
 export function Apresentacao() {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
@@ -11,19 +14,15 @@ export function Apresentacao() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".apres-titulo", {
-          y: 40,
-          opacity: 0,
-          duration: 1.2,
-          ease: "expo.out",
-          scrollTrigger: { trigger: ".apres-titulo", start: "top 85%" },
-        });
-        gsap.from(".apres-player", {
-          y: 120,
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: { trigger: root.current, start: "top bottom", end: "center center", scrub: true },
-        });
+        gsap.fromTo(
+          ".apres-player",
+          { clipPath: "inset(12% 10% 12% 10%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            ease: "none",
+            scrollTrigger: { trigger: ".apres-player", start: "top bottom", end: "center 60%", scrub: true },
+          },
+        );
       });
     },
     { scope: root },
@@ -39,28 +38,24 @@ export function Apresentacao() {
   }
 
   return (
-    <section id="apresentacao" ref={root} className="relative overflow-hidden bg-off px-4 pt-12 pb-16 text-preto md:px-8 md:pt-16 md:pb-24">
-      <div className="mx-auto grid max-w-6xl gap-14 md:grid-cols-12 md:items-center md:gap-8">
-        <div className="md:col-span-7">
-          <Rotulo>Quem é o Gustavo</Rotulo>
-          <Titulo antes="Inglês não é pra ser" destaque="entediante." className="apres-titulo mt-6" />
+    <section id="apresentacao" ref={root} className="relative bg-off pt-16 pb-20 text-preto md:pt-28 md:pb-32">
+      <NumeroMargem numero="02" />
+      <div className="recuo mx-auto max-w-[1500px]">
+        <Rotulo numero="02">Quem é o Gustavo</Rotulo>
+        <Titulo className="mt-6 max-w-[11ch] md:mt-8">
+          Inglês{" "}
+          <Marca forma="circulo" espessura="0.035em">
+            não
+          </Marca>{" "}
+          é pra ser entediante.
+        </Titulo>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-2 md:gap-10">
-            <p data-revela className="text-xl leading-snug font-medium">
-              Eu sou o teacher Gustavo, apaixonado pela ideia de que aprender um idioma pode ir muito além de livros e regras gramaticais.
-            </p>
-            <p data-revela className="leading-relaxed text-preto/70">
-              Cada aluno é único. Minhas aulas envolvem conversação, música, filmes, cultura e situações reais, conectadas aos seus interesses e objetivos. Aqui, as aulas se adaptam a você, não o contrário.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative md:col-span-4 md:col-start-9">
-          <div className="apres-player relative mx-auto w-[min(82vw,360px)]">
-            <div className="relative overflow-hidden rounded-[20px] bg-preto shadow-[0_40px_80px_-30px_rgb(61_9_18/0.6)]">
+        <div className="mt-12 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-6">
+          <figure className="md:col-span-5">
+            <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto md:mx-0 md:max-w-none">
               <video
                 ref={video}
-                className="aspect-[9/16] w-full object-cover"
+                className="aspect-[9/16] w-full object-cover md:aspect-[4/5]"
                 src="/media/apresentacao.mp4"
                 poster="/media/apresentacao.jpg"
                 playsInline
@@ -72,16 +67,41 @@ export function Apresentacao() {
                 <button
                   type="button"
                   onClick={assistir}
-                  className="group absolute inset-0 flex flex-col items-center justify-end gap-3 bg-gradient-to-t from-preto/80 via-preto/10 to-transparent p-6 text-off"
+                  className="group absolute inset-0 flex items-center justify-center bg-preto/15 p-4 text-left text-off md:p-6"
                 >
-                  <span className="grid size-20 place-items-center rounded-full bg-off text-vinho transition-transform group-hover:scale-110">
-                    <svg viewBox="0 0 24 24" className="ml-1 size-8 fill-current" aria-hidden>
-                      <path d="M6 4l14 8-14 8z" />
-                    </svg>
+                  <span className="flex items-center gap-4 rounded-full bg-preto/55 py-2 pr-6 pl-2 backdrop-blur-sm">
+                    <span className="grid size-16 place-items-center rounded-full bg-caneta transition-transform duration-500 group-hover:scale-110 md:size-20">
+                      <svg viewBox="0 0 24 24" className="ml-1 size-6 fill-current md:size-7" aria-hidden>
+                        <path d="M6 4l14 8-14 8z" />
+                      </svg>
+                    </span>
+                    <span>
+                      <span className="block text-lg font-semibold">Assistir com som</span>
+                      <span className="nota block text-off/70">21 segundos</span>
+                    </span>
                   </span>
-                  <span className="text-sm font-semibold">Assistir com som · 21 segundos</span>
                 </button>
               )}
+            </div>
+            <figcaption className="nota mt-3 text-preto/50">fig. 1 · o teacher se apresentando</figcaption>
+          </figure>
+
+          <div className="flex flex-col gap-10 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
+            <p data-revela className="text-[clamp(1.6rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.03em]">
+              Eu sou o teacher Gustavo, apaixonado pela ideia de que aprender um idioma pode ir muito além de livros e regras gramaticais.
+            </p>
+
+            <div className="grid gap-8 border-t border-preto/12 pt-8 sm:grid-cols-2">
+              <p data-revela className="leading-relaxed text-preto/70">
+                Cada aluno é único. Minhas aulas envolvem conversação, música, filmes, cultura e situações reais, conectadas aos seus interesses e objetivos.
+              </p>
+              <p data-revela className="leading-relaxed text-preto/70">
+                Aqui, as aulas se adaptam a você,{" "}
+                <span className="relative isolate inline-block whitespace-nowrap text-preto">
+                  não o contrário.
+                  <span className="absolute inset-x-0 bottom-0.5 -z-10 h-2 bg-caneta/20" aria-hidden />
+                </span>
+              </p>
             </div>
           </div>
         </div>

@@ -14,10 +14,23 @@ export function linkWhatsApp(mensagem = "Oi, Gustavo! Quero agendar uma aula exp
 // Cartões do hero: o que o inglês abre na vida do aluno, além das viagens.
 // O visitante marca os que importam pra ele, e a escolha vai junto na
 // mensagem do WhatsApp (ver lib/interesses.ts).
-export const experiencias: { id: string; titulo: string; texto: string; video?: string; foto?: string; alt?: string }[] = [
+// Cada cartão é uma ficha de estudo: a palavra em inglês, a pronúncia e o
+// sentido em português.
+export const experiencias: {
+  id: string;
+  titulo: string;
+  ingles: string;
+  fonetica: string;
+  texto: string;
+  video?: string;
+  foto?: string;
+  alt?: string;
+}[] = [
   {
     id: "trabalho",
     titulo: "Trabalho",
+    ingles: "Work",
+    fonetica: "/wɜːk/",
     texto: "Reuniões, entrevistas e novas oportunidades de carreira.",
     foto: "cafe-paris",
     alt: "Gustavo sentado numa mesa de café em Paris",
@@ -25,14 +38,25 @@ export const experiencias: { id: string; titulo: string; texto: string; video?: 
   {
     id: "viagens",
     titulo: "Viagens",
+    ingles: "Travel",
+    fonetica: "/ˈtræv.əl/",
     texto: "Perguntar, pedir e se virar em qualquer lugar.",
     foto: "londres-cabine",
     alt: "Gustavo numa cabine telefônica vermelha em Londres",
   },
-  { id: "cultura", titulo: "Cultura", texto: "Música, filmes e séries sem depender da legenda.", video: "exp-cultura" },
+  {
+    id: "cultura",
+    titulo: "Cultura",
+    ingles: "Culture",
+    fonetica: "/ˈkʌl.tʃə/",
+    texto: "Música, filmes e séries sem depender da legenda.",
+    video: "exp-cultura",
+  },
   {
     id: "perspectivas",
     titulo: "Novas perspectivas",
+    ingles: "Perspective",
+    fonetica: "/pəˈspek.tɪv/",
     texto: "Conhecer gente de outros lugares e ver o mundo de outro jeito.",
     foto: "piramide",
     alt: "A pirâmide de vidro do Louvre vista de baixo",
@@ -93,26 +117,23 @@ export const experienciaProfissional = ["Aulas particulares", "Escolas de idioma
 // Países onde ele usou o inglês, pelas fotos que mandou.
 export const paises = ["Inglaterra", "França", "Espanha", "Itália"];
 
-// Fotos que passam por trás da trajetória, em duas fileiras.
-export const galeriaViagens = [
-  [
-    { foto: "big-ben", lugar: "Londres" },
-    { foto: "arco-triunfo", lugar: "Paris" },
-    { foto: "sena-baguete", lugar: "Paris" },
-    { foto: "sagrada", lugar: "Barcelona" },
-    { foto: "londres-bandeira", lugar: "Londres" },
-    { foto: "place-des-vosges", lugar: "Paris" },
-    { foto: "madrid-gran-via", lugar: "Madrid" },
-  ],
-  [
-    { foto: "coliseu", lugar: "Roma" },
-    { foto: "eiffel-noite", lugar: "Paris" },
-    { foto: "retiro", lugar: "Madrid" },
-    { foto: "cafe-paris", lugar: "Paris" },
-    { foto: "sacre-coeur", lugar: "Paris" },
-    { foto: "madrid-galeria", lugar: "Madrid" },
-    { foto: "louvre-estatua", lugar: "Paris" },
-  ],
+// Cidades da frase da trajetória, cada uma com uma foto dentro do texto.
+export const cidades = [
+  { nome: "Londres", foto: "londres-bandeira" },
+  { nome: "Paris", foto: "arco-triunfo" },
+  { nome: "Madrid", foto: "madrid-gran-via" },
+  { nome: "Barcelona", foto: "sagrada" },
+  { nome: "Roma", foto: "coliseu" },
+];
+
+// Colagem de fotos da trajetória, como figuras de um caderno de viagem.
+export const colagem = [
+  { foto: "big-ben", lugar: "Londres" },
+  { foto: "sena-baguete", lugar: "Paris" },
+  { foto: "retiro", lugar: "Madrid" },
+  { foto: "sacre-coeur", lugar: "Paris" },
+  { foto: "madrid-galeria", lugar: "Madrid" },
+  { foto: "place-des-vosges", lugar: "Paris" },
 ];
 
 // Valores mensais da tabela do Gustavo. Em dupla, o preço é por pessoa.

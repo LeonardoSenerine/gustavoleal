@@ -1,27 +1,22 @@
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { experienciaProfissional, galeriaViagens, paises } from "@/lib/content";
-import { Rotulo, Titulo } from "./Secao";
+import { cidades, colagem, experienciaProfissional, paises } from "@/lib/content";
+import { NumeroMargem, Rotulo } from "./Secao";
 
-function Fileira({ fotos, className }: { fotos: { foto: string; lugar: string }[]; className: string }) {
-  // A lista vai duas vezes pra fileira nunca acabar no meio do deslize.
-  const repetidas = [...fotos, ...fotos];
-  return (
-    <div className={`${className} flex w-max gap-3 md:gap-5`} aria-hidden>
-      {repetidas.map((f, i) => (
-        <figure key={i} className="relative aspect-[3/4] h-[64vw] shrink-0 overflow-hidden rounded-[20px] bg-papel md:h-[26vw]">
-          <img src={`/fotos/${f.foto}.webp`} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
-          <figcaption className="absolute bottom-3 left-3 rounded-full bg-preto/55 px-3 py-1 text-xs font-semibold text-off backdrop-blur-sm">
-            {f.lugar}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  );
-}
+// Ritmo da colagem no desktop: coluna, largura e quanto cada foto desce.
+const posicoes = [
+  "md:col-span-4 md:col-start-1",
+  "md:col-span-3 md:col-start-6 md:mt-[14vw]",
+  "md:col-span-3 md:col-start-10 md:mt-[4vw]",
+  "md:col-span-3 md:col-start-2 md:mt-[2vw]",
+  "md:col-span-4 md:col-start-6 md:mt-[8vw]",
+  "md:col-span-2 md:col-start-11 md:mt-[22vw]",
+];
+const velocidades = [-6, -16, -10, -4, -12, -20];
 
-// Duas fileiras de fotos de viagem deslizando em sentidos opostos com a
-// rolagem, passando por trás do cartão com o texto, como no Momento Flanar.
+// Trajetória como página de caderno de viagem: uma frase enorme com as
+// cidades e uma foto dentro de cada nome, as anotações da sala de aula e uma
+// colagem de figuras numeradas.
 export function Trajetoria() {
   const root = useRef<HTMLElement>(null);
 
@@ -29,15 +24,24 @@ export function Trajetoria() {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const st = { trigger: root.current, start: "top bottom", end: "bottom top", scrub: 1 };
-        gsap.fromTo(".trajetoria-a", { xPercent: 0 }, { xPercent: -30, ease: "none", scrollTrigger: st });
-        gsap.fromTo(".trajetoria-b", { xPercent: -30 }, { xPercent: 0, ease: "none", scrollTrigger: st });
-        gsap.from(".trajetoria-cartao", {
-          y: 80,
-          opacity: 0,
-          duration: 1.3,
-          ease: "expo.out",
-          scrollTrigger: { trigger: ".trajetoria-cartao", start: "top 85%" },
+        // As fotos dentro da frase abrem do centro, uma depois da outra.
+        gsap.fromTo(
+          ".cidade-foto",
+          { clipPath: "inset(50% 50% 50% 50%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            stagger: 0.15,
+            duration: 0.9,
+            ease: "expo.out",
+            scrollTrigger: { trigger: ".cidades", start: "top 75%" },
+          },
+        );
+        gsap.utils.toArray<HTMLElement>(".figura").forEach((fig, i) => {
+          gsap.to(fig, {
+            yPercent: velocidades[i % velocidades.length],
+            ease: "none",
+            scrollTrigger: { trigger: fig, start: "top bottom", end: "bottom top", scrub: true },
+          });
         });
       });
     },
@@ -45,55 +49,90 @@ export function Trajetoria() {
   );
 
   return (
-    <section id="trajetoria" ref={root} className="relative overflow-hidden bg-off py-12 text-preto md:py-20">
-      <Fileira fotos={galeriaViagens[0]} className="trajetoria-a" />
+    <section id="trajetoria" ref={root} className="relative bg-off pt-20 pb-20 text-preto md:pt-32 md:pb-32">
+      <NumeroMargem numero="04" />
+      <div className="recuo mx-auto max-w-[1500px]">
+        <Rotulo numero="04">Trajetória</Rotulo>
 
-      {/* No celular o cartão só encosta nas fileiras, pra as fotos aparecerem inteiras;
-          no desktop ele avança sobre elas e as fotos passam por trás. */}
-      <div className="relative z-10 -my-8 px-3 md:-my-[9vw] md:px-8">
-        <div className="trajetoria-cartao mx-auto max-w-5xl rounded-[28px] bg-off/90 p-6 shadow-[0_40px_90px_-30px_rgb(61_9_18/0.45)] ring-1 ring-preto/5 backdrop-blur-xl md:rounded-[36px] md:p-14">
-          <div className="text-center">
-            <Rotulo>Trajetória</Rotulo>
-            <Titulo antes="O inglês me" destaque="levou longe." className="mt-6" />
+        <h2 className="cidades display mt-6 text-[clamp(2.7rem,8.4vw,8.4rem)] md:mt-8">
+          O inglês me levou pra{" "}
+          {cidades.map((c, i) => (
+            <Fragment key={c.nome}>
+              <span className="whitespace-nowrap">
+                {c.nome}
+                <img
+                  src={`/fotos/${c.foto}.webp`}
+                  alt=""
+                  loading="lazy"
+                  className="cidade-foto mx-[0.12em] inline-block h-[0.74em] w-[1.05em] rounded-[0.06em] object-cover align-[-0.02em]"
+                />
+              </span>
+              {i < cidades.length - 2 ? " " : i === cidades.length - 2 ? " e " : ""}
+            </Fragment>
+          ))}
+          <span className="text-caneta">.</span>
+        </h2>
+
+        {/* Duas anotações: a sala de aula e o que o inglês deu. */}
+        <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-12 md:gap-6">
+          <div data-revela className="md:col-span-5">
+            <p className="nota-caps text-caneta">a) Na sala de aula</p>
+            <p className="mt-4 text-lg leading-relaxed text-preto/75">
+              Ensinei inglês para alunos de diferentes idades e níveis, em aulas particulares, escolas de idiomas e no ambiente escolar. Cada experiência me
+              ajudou a entender melhor as dificuldades, as necessidades e as diferentes formas de aprender de cada aluno.
+            </p>
+            <ul className="nota mt-6 border-t border-preto/12" aria-label="Experiência como professor">
+              {experienciaProfissional.map((item) => (
+                <li key={item} className="flex gap-3 border-b border-preto/12 py-2.5 text-preto/75">
+                  <span className="text-caneta" aria-hidden>
+                    ✓
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
-            <div>
-              <h3 className="font-serif text-[2rem] leading-none text-vinho italic">Na sala de aula</h3>
-              <p className="mt-4 leading-relaxed text-preto/75">
-                Ensinei inglês para alunos de diferentes idades e níveis, em aulas particulares, escolas de idiomas e no ambiente escolar. Cada experiência me ajudou a entender melhor as dificuldades, as necessidades e as diferentes formas de aprender de cada aluno.
-              </p>
-              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Experiência como professor">
-                {experienciaProfissional.map((item) => (
-                  <li key={item} className="rounded-full border border-preto/15 px-3.5 py-1.5 text-sm font-semibold">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-serif text-[2rem] leading-none text-vinho italic">O que o inglês me deu</h3>
-              <p className="mt-4 leading-relaxed text-preto/75">
-                Viajei por diferentes países usando o inglês como minha principal ferramenta de comunicação em todos eles. Na prática, vi como o idioma conecta pessoas, culturas e experiências, mesmo quando a gente não fala a língua local.
-              </p>
-              <ul className="mt-6 flex flex-wrap gap-2" aria-label="Países onde usei o inglês">
-                {paises.map((pais) => (
-                  <li key={pais} className="rounded-full bg-vinho px-3.5 py-1.5 text-sm font-semibold text-off">
-                    {pais}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div data-revela className="md:col-span-5 md:col-start-8">
+            <p className="nota-caps text-caneta">b) O que o inglês me deu</p>
+            <p className="mt-4 text-lg leading-relaxed text-preto/75">
+              Viajei por diferentes países usando o inglês como minha principal ferramenta de comunicação em todos eles. Na prática, vi como o idioma conecta
+              pessoas, culturas e experiências, mesmo quando a gente não fala a língua local.
+            </p>
+            <ul className="nota mt-6 border-t border-preto/12" aria-label="Países onde usei o inglês">
+              {paises.map((pais, i) => (
+                <li key={pais} className="flex gap-3 border-b border-preto/12 py-2.5 text-preto/75">
+                  <span className="text-preto/40 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  {pais}
+                </li>
+              ))}
+            </ul>
           </div>
-
-          <blockquote className="mx-auto mt-12 max-w-3xl border-t border-preto/10 pt-10 text-center font-serif text-[clamp(1.5rem,2.8vw,2.3rem)] leading-[1.2] text-vinho italic">
-            “Aprender inglês não é apenas estudar uma língua, mas ganhar confiança e liberdade para conhecer pessoas, explorar o mundo e viver novas experiências.”
-          </blockquote>
         </div>
-      </div>
 
-      <Fileira fotos={galeriaViagens[1]} className="trajetoria-b" />
+        {/* Colagem de figuras do caderno de viagem. */}
+        <div className="mt-20 grid grid-cols-2 gap-x-3 gap-y-8 md:mt-32 md:grid-cols-12 md:gap-x-6 md:gap-y-0" aria-hidden>
+          {colagem.map((f, i) => (
+            <figure key={f.foto} className={`figura ${i % 2 === 1 ? "mt-12" : ""} ${posicoes[i % posicoes.length]}`}>
+              <div className="overflow-hidden rounded-[3px] bg-papel">
+                <img src={`/fotos/${f.foto}.webp`} alt="" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+              </div>
+              <figcaption className="nota mt-2 text-preto/50">
+                fig. {String(i + 2).padStart(2, "0")} · {f.lugar}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <blockquote className="mt-24 grid gap-4 md:mt-40 md:grid-cols-12 md:gap-6">
+          <span className="display text-[6rem] leading-[0.6] text-caneta md:col-span-1 md:text-right md:text-[8rem]" aria-hidden>
+            “
+          </span>
+          <p className="text-[clamp(1.8rem,3.9vw,3.6rem)] leading-[1.06] font-medium tracking-[-0.035em] text-balance md:col-span-10">
+            Aprender inglês não é apenas estudar uma língua, mas ganhar confiança e liberdade para conhecer pessoas, explorar o mundo e viver novas experiências.
+          </p>
+        </blockquote>
+      </div>
     </section>
   );
 }

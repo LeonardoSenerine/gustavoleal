@@ -1,22 +1,37 @@
 @import "tailwindcss";
 @import "@fontsource-variable/archivo/wdth.css";
-@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
-/* Vinho como base, preto de asfalto, off-white de papel e um vermelho
-   vivo, o da cabine de Londres, para os destaques. */
+/* O caderno do teacher: papel, tinta preta e a caneta vermelha de correção.
+   O vinho continua como tom profundo da marca, e o vermelho da cabine de
+   Londres virou a caneta. */
 @theme {
   --color-vinho: #6b1020;
   --color-vinho-escuro: #3d0912;
   --color-vinho-claro: #8e1c31;
   --color-preto: #0d0b0a;
-  --color-carvao: #1a1614;
+  --color-carvao: #161312;
   --color-off: #f1ebdf;
   --color-papel: #e6ddcc;
+  --color-folha: #faf6ee;
   --color-vermelho: #d7263d;
+  --color-caneta: #d7263d;
   --color-rosa: #e9a7b1;
 
   --font-sans: "Archivo Variable", system-ui, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+:root {
+  /* Distância da linha vermelha da margem até a borda da tela. */
+  --margem: 0.7rem;
+  --linha-pauta: 2.25rem;
+}
+@media (min-width: 768px) {
+  :root {
+    --margem: 2.6rem;
+  }
 }
 
 @layer base {
@@ -33,27 +48,111 @@
     overflow-x: clip;
   }
   ::selection {
-    background: var(--color-vermelho);
+    background: var(--color-caneta);
     color: var(--color-off);
   }
   :focus-visible {
-    outline: 2px solid var(--color-vermelho);
+    outline: 2px solid var(--color-caneta);
     outline-offset: 3px;
   }
 }
 
 @layer components {
+  /* Títulos: Archivo no eixo mais estreito e pesado, em caixa alta. */
+  .display {
+    font-stretch: 62%;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.012em;
+  }
+
+  /* Anotações do caderno: verbetes, legendas, números de etapa. */
+  .nota {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+  }
+  .nota-caps {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Recuo do conteúdo: sempre à direita da linha da margem. */
+  .recuo {
+    padding-left: calc(var(--margem) + 1.15rem);
+    padding-right: 1.15rem;
+  }
+  @media (min-width: 768px) {
+    .recuo {
+      padding-left: calc(var(--margem) + 2.5rem);
+      padding-right: 2.5rem;
+    }
+  }
+
+  /* Pauta de caderno, bem clara. */
+  .pauta {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 calc(var(--linha-pauta) - 1px),
+      rgb(13 11 10 / 0.075) calc(var(--linha-pauta) - 1px) var(--linha-pauta)
+    );
+  }
+  .pauta-clara {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 calc(var(--linha-pauta) - 1px),
+      rgb(241 235 223 / 0.07) calc(var(--linha-pauta) - 1px) var(--linha-pauta)
+    );
+  }
+
   .botao {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    border-radius: 999px;
-    padding: 1rem 1.6rem;
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: -0.01em;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    justify-content: center;
+    gap: 0.85rem;
+    border-radius: 2px;
+    padding: 1.05rem 1.5rem;
+    font-weight: 650;
+    font-size: 0.98rem;
+    letter-spacing: -0.005em;
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s;
   }
+  .botao .seta {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .botao:hover .seta {
+    transform: translateX(4px);
+  }
+}
+
+/* Traço da caneta. O pathLength="1" de cada path deixa o desenho em 0 a 1,
+   e o GSAP (ou a classe .tracar) anima o deslocamento. */
+[data-caneta] path,
+.tracar path {
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 0;
+}
+@keyframes tracar {
+  from {
+    stroke-dashoffset: 1.001;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.tracar path {
+  animation: tracar 0.55s cubic-bezier(0.6, 0, 0.3, 1) both;
+}
+.tracar path:nth-child(2) {
+  animation-delay: 0.25s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -61,24 +160,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-
-/* Três pontinhos de "digitando", no balão do hero. */
-@keyframes digitando {
-  0%,
-  60%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.45;
-  }
-  30% {
-    transform: translateY(-4px);
-    opacity: 1;
-  }
-}
-.digitando {
-  animation: digitando 1.2s ease-in-out infinite;
 }

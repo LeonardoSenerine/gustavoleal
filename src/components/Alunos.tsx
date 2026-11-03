@@ -42,8 +42,8 @@ export function Alunos() {
     <section id="alunos" ref={root} className="relative overflow-hidden bg-preto py-24 text-off md:py-36">
       <div className="flex flex-col gap-8 px-4 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
-          <Rotulo tom="escuro">Alunos</Rotulo>
-          <Titulo antes="Quem fala por mim" destaque="são eles." tom="escuro" className="mt-6" />
+          <Rotulo numero="04" tom="escuro">Alunos</Rotulo>
+          <Titulo className="mt-6">Quem fala por mim são eles.</Titulo>
         </div>
         <div className="flex gap-3">
           {([-1, 1] as const).map((d) => (

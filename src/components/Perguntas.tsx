@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { perguntas } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
-import { Rotulo, Titulo } from "./Secao";
+import { NumeroMargem, Rotulo, Titulo } from "./Secao";
 
 // Perguntas frequentes em sanfona. A altura anima pelo truque do grid
 // (0fr → 1fr), então a resposta abre suave sem medir nada em JS.
@@ -10,32 +10,33 @@ export function Perguntas() {
   const [aberta, setAberta] = useState<number | null>(0);
 
   return (
-    <section id="perguntas" className="relative bg-off px-4 pb-16 text-preto md:px-8 md:pb-24">
-      <div className="mx-auto grid max-w-6xl gap-10 border-t border-preto/10 pt-14 md:grid-cols-12 md:gap-8 md:pt-20">
-        <div className="md:col-span-4">
-          <div className="md:sticky md:top-32">
-            <Rotulo>Dúvidas</Rotulo>
-            <Titulo antes="Perguntas" destaque="frequentes." className="mt-6" />
-            <p data-revela className="mt-6 max-w-[34ch] text-preto/70">
+    <section id="perguntas" className="relative bg-off pb-20 text-preto md:pb-32">
+      <NumeroMargem numero="06" />
+      <div className="recuo mx-auto grid max-w-[1500px] gap-10 md:grid-cols-12 md:gap-6">
+        <div className="md:col-span-5">
+          <div className="md:sticky md:top-28">
+            <Rotulo numero="06">Dúvidas</Rotulo>
+            <Titulo className="mt-6 md:mt-8 md:!text-[clamp(3rem,6.2vw,6.4rem)]">Perguntas frequentes.</Titulo>
+            <p data-revela className="mt-8 max-w-[34ch] text-lg text-preto/70">
               Não achou o que procurava? Manda sua pergunta no WhatsApp que eu respondo.
             </p>
             <a
               href={linkPersonalizado(interesses)}
               target="_blank"
               rel="noreferrer"
-              className="botao mt-6 border border-preto/20 text-preto hover:border-vinho hover:bg-vinho hover:text-off"
+              className="botao mt-6 border border-preto text-preto hover:bg-preto hover:text-off"
             >
-              Perguntar no WhatsApp
+              Perguntar no WhatsApp <span className="seta" aria-hidden>→</span>
             </a>
           </div>
         </div>
 
-        <div className="md:col-span-7 md:col-start-6">
+        <div className="border-t border-preto/15 md:col-span-7 md:col-start-6 md:mt-2">
           {perguntas.map((item, i) => {
             const aberto = aberta === i;
             const id = `pergunta-${i}`;
             return (
-              <div key={item.pergunta} data-revela className="border-b border-preto/10">
+              <div key={item.pergunta} data-revela className="border-b border-preto/15">
                 <h3>
                   <button
                     type="button"
@@ -43,16 +44,18 @@ export function Perguntas() {
                     aria-expanded={aberto}
                     aria-controls={id}
                     onClick={() => setAberta(aberto ? null : i)}
-                    className="flex w-full items-center justify-between gap-6 py-6 text-left text-xl font-medium tracking-[-0.01em] transition-colors hover:text-vinho"
+                    className="group flex w-full items-baseline gap-4 py-6 text-left text-xl font-medium tracking-[-0.015em] md:gap-6 md:text-2xl"
                   >
-                    {item.pergunta}
+                    <span className={`nota shrink-0 tabular-nums transition-colors ${aberto ? "text-caneta" : "text-preto/45"}`}>
+                      Q{String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 transition-colors group-hover:text-caneta">{item.pergunta}</span>
                     <span
-                      className={`grid size-9 shrink-0 place-items-center rounded-full border text-lg transition-[transform,background-color,color,border-color] duration-500 ${
-                        aberto ? "rotate-45 border-vinho bg-vinho text-off" : "border-preto/20"
-                      }`}
+                      className={`relative size-4 shrink-0 self-center transition-transform duration-500 ${aberto ? "rotate-45 text-caneta" : ""}`}
                       aria-hidden
                     >
-                      +
+                      <span className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-current" />
+                      <span className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-current" />
                     </span>
                   </button>
                 </h3>
@@ -64,7 +67,7 @@ export function Perguntas() {
                   className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${aberto ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="max-w-[60ch] pb-6 text-lg leading-relaxed text-preto/70">{item.resposta}</p>
+                    <p className="max-w-[58ch] pb-7 pl-[calc(2.6rem)] text-lg leading-relaxed text-preto/70 md:pl-[3.4rem]">{item.resposta}</p>
                   </div>
                 </div>
               </div>

@@ -1,51 +1,43 @@
 import { contato, linkWhatsApp } from "@/lib/content";
 
+// Rodapé como a última linha do caderno: o nome em letra enorme, de ponta a ponta.
 export function Rodape() {
   const telefone = contato.whatsapp.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
 
   return (
-    <footer className="bg-off text-preto">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 md:grid-cols-12 md:items-end md:px-8 md:py-16">
-        <p className="text-[clamp(3.2rem,9vw,7rem)] leading-[0.9] font-medium tracking-[-0.04em] md:col-span-7">
-          <span className="font-serif tracking-[-0.01em] text-vinho italic">Gustavo</span> Leal
-          <span className="mt-3 block text-lg font-medium tracking-normal text-preto/60">Teacher de inglês · online ou presencial</span>
-        </p>
-        <div className="flex flex-col gap-6 md:col-span-4 md:col-start-9">
-          <div className="flex flex-wrap gap-x-10 gap-y-6">
-            <div>
-              <p className="text-sm font-semibold text-preto/50">WhatsApp</p>
-              <a href={linkWhatsApp()} target="_blank" rel="noreferrer" className="mt-1 block text-lg font-semibold whitespace-nowrap hover:text-vinho">
-                {telefone}
+    <footer className="relative overflow-hidden bg-off text-preto">
+      <div className="recuo mx-auto max-w-[1500px] pt-14 md:pt-20">
+        <div className="grid gap-8 md:grid-cols-12 md:gap-6">
+          <div className="md:col-span-4">
+            <p className="nota-caps text-preto/45">WhatsApp</p>
+            <a href={linkWhatsApp()} target="_blank" rel="noreferrer" className="mt-2 block text-2xl font-semibold whitespace-nowrap transition-colors hover:text-caneta">
+              {telefone}
+            </a>
+          </div>
+          {contato.instagram && (
+            <div className="md:col-span-3">
+              <p className="nota-caps text-preto/45">Instagram</p>
+              <a href={`https://instagram.com/${contato.instagram}`} target="_blank" rel="noreferrer" className="mt-2 block text-2xl font-semibold transition-colors hover:text-caneta">
+                @{contato.instagram}
               </a>
             </div>
-            {contato.instagram && (
-              <div>
-                <p className="text-sm font-semibold text-preto/50">Instagram</p>
-                <a href={`https://instagram.com/${contato.instagram}`} target="_blank" rel="noreferrer" className="mt-1 block text-lg font-semibold hover:text-vinho">
-                  @{contato.instagram}
-                </a>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col gap-3 border-t border-preto/10 pt-5 text-sm text-preto/55 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} Gustavo Leal</p>
+          )}
+          <div className="nota flex flex-col gap-1.5 text-preto/55 md:col-span-4 md:col-start-9 md:items-end">
+            <p>Teacher de inglês · online ou presencial</p>
             <a href="/privacidade/" className="underline-offset-4 transition-colors hover:text-preto hover:underline">
               Privacidade e cookies
             </a>
+            <p>
+              © {new Date().getFullYear()} Gustavo Leal · site por{" "}
+              <a href="https://senerine.dev" target="_blank" rel="noreferrer" className="text-preto/75 underline-offset-4 hover:text-caneta hover:underline">
+                senerine.dev
+              </a>
+            </p>
           </div>
         </div>
-      </div>
-      <div className="mx-auto max-w-6xl px-4 pb-8 md:px-8">
-        <p className="text-sm text-preto/45">
-          Desenvolvido por{" "}
-          <a
-            href="https://senerine.dev"
-            target="_blank"
-            rel="noreferrer"
-            className="font-semibold text-preto/70 underline-offset-4 transition-colors hover:text-vinho hover:underline"
-          >
-            senerine.dev
-          </a>
+
+        <p className="display mt-14 text-[clamp(3rem,16.6vw,16.5rem)] leading-[0.8] whitespace-nowrap md:mt-20" aria-hidden>
+          Gustavo Leal<span className="text-caneta">.</span>
         </p>
       </div>
     </footer>
