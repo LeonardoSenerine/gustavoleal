@@ -114,9 +114,6 @@ export const temDepoimentos = depoimentos.length > 0;
 // Experiência de sala de aula, do texto de trajetória dele.
 export const experienciaProfissional = ["Aulas particulares", "Escolas de idiomas", "Ensino escolar", "Alunos de várias idades e níveis"];
 
-// Países onde ele usou o inglês, pelas fotos que mandou.
-export const paises = ["Inglaterra", "França", "Espanha", "Itália"];
-
 // Abertura do site: o Gustavo em três lugares, em tiras verticais.
 // "foco" é o object-position que mantém ele e o lugar dentro da tira.
 export const tirasHero = [
@@ -125,23 +122,13 @@ export const tirasHero = [
   { foto: "sagrada", cidade: "Barcelona", foco: "55% 50%", alt: "Gustavo em frente à Sagrada Família, em Barcelona" },
 ];
 
-// Cidades da frase da trajetória, cada uma com uma foto dentro do texto.
-export const cidades = [
-  { nome: "Londres", foto: "londres-bandeira" },
-  { nome: "Paris", foto: "arco-triunfo" },
-  { nome: "Madrid", foto: "madrid-gran-via" },
-  { nome: "Barcelona", foto: "sagrada" },
-  { nome: "Roma", foto: "coliseu" },
-];
-
-// Colagem de fotos da trajetória, como figuras de um caderno de viagem.
-export const colagem = [
-  { foto: "big-ben", lugar: "Londres" },
-  { foto: "sena-baguete", lugar: "Paris" },
-  { foto: "retiro", lugar: "Madrid" },
-  { foto: "sacre-coeur", lugar: "Paris" },
-  { foto: "madrid-galeria", lugar: "Madrid" },
-  { foto: "place-des-vosges", lugar: "Paris" },
+// Viagens: um capítulo por país, com a foto principal dele e até duas
+// fotos do lugar. "foco" é o object-position da foto principal.
+export const viagens: { pais: string; cidades: string; principal: string; foco?: string; extras: string[] }[] = [
+  { pais: "Inglaterra", cidades: "Londres", principal: "londres-cabine", foco: "50% 40%", extras: ["big-ben", "londres-bandeira"] },
+  { pais: "França", cidades: "Paris", principal: "sena-baguete", foco: "50% 70%", extras: ["cafe-paris", "sacre-coeur"] },
+  { pais: "Espanha", cidades: "Madrid e Barcelona", principal: "sagrada-sorriso", foco: "60% 50%", extras: ["madrid-rooftop", "madrid-gran-via"] },
+  { pais: "Itália", cidades: "Roma", principal: "coliseu", foco: "50% 60%", extras: [] },
 ];
 
 // Valores mensais da tabela do Gustavo. Em dupla, o preço é por pessoa.

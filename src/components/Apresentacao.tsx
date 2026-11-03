@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { Titulo } from "./Secao";
+import { LerMais, Titulo } from "./Secao";
 
 // Quem é: o vídeo dele grande, como a figura principal da página, e o texto
 // em primeira pessoa ao lado.
@@ -78,21 +78,21 @@ export function Apresentacao() {
             </div>
           </figure>
 
-          <div className="flex flex-col gap-10 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
+          <div className="flex flex-col gap-8 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
             <p data-revela className="text-[clamp(1.6rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.03em]">
               Eu sou o teacher Gustavo e apaixonado pela ideia de que aprender um idioma pode ir muito além de livros e regras gramaticais.
             </p>
 
-            <div className="grid gap-6 border-t border-preto/12 pt-8 sm:grid-cols-2 sm:gap-8">
-              <p data-revela className="leading-relaxed text-preto/70">
+            <LerMais className="grid gap-6 border-t border-preto/12 pt-8 sm:grid-cols-2 sm:gap-8">
+              <p className="leading-relaxed text-preto/70">
                 Acredito que o inglês deve fazer parte da sua vida, conectado aos seus interesses, à sua personalidade e aos seus objetivos. Por isso, minhas aulas
                 envolvem conversação, música, filmes, cultura e situações reais, tornando o aprendizado mais natural e significativo.
               </p>
-              <p data-revela className="leading-relaxed text-preto/70">
+              <p className="leading-relaxed text-preto/70">
                 Cada aluno é único, e é assim que enxergo o ensino. Não existe uma única maneira de aprender. Meu objetivo é ajudar você a desenvolver confiança, se
                 comunicar de verdade e descobrir tudo o que um novo idioma pode proporcionar.
               </p>
-            </div>
+            </LerMais>
 
             <p data-revela className="text-2xl leading-tight font-medium tracking-[-0.02em] md:text-3xl">
               Aqui, as aulas se adaptam a você,{" "}
