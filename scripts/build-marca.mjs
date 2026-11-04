@@ -23,6 +23,8 @@ const cor = {
   preto: "#0d0b0a",
   off: "#f1ebdf",
   caneta: "#d7263d",
+  vinho: "#6b1020",
+  carvao: "#161312",
 };
 
 // Texto em contorno: devolve o "d" do path e a largura em pixels.
@@ -65,75 +67,130 @@ async function recorte(arquivo, largura, altura, fx = 0.5, fy = 0.5) {
   return `data:image/png;base64,${buffer.toString("base64")}`;
 }
 
-// Capa 1200x630: a folha pautada com a linha vermelha da margem à
-// esquerda, com o título, a frase riscada, a legenda em inglês, uma linha
-// sobre as aulas, o botão e o nome; à direita, três tiras com o Gustavo em
-// Londres, Paris e Barcelona.
-async function capa() {
+// Peças comuns das capas: o título em duas linhas ajustado à coluna, a
+// frase com "decorar regra" riscado, a legenda em inglês, a linha sobre as
+// aulas, o botão e o nome. "claro" é tinta no papel; "escuro", off-white na foto.
+function blocoTexto({ x0, coluna, yTopo, tom }) {
+  const tinta = tom === "claro" ? cor.preto : cor.off;
+  const suave = tom === "claro" ? "rgba(13,11,10,0.62)" : "rgba(241,235,223,0.75)";
+  const vermelho = tom === "claro" ? cor.caneta : "#f0566a";
+  const base = texto("Viver o mundo.", { fonte: "display", tamanho: 100, espaco: -0.012 });
+  const t = Math.floor((coluna / base.largura) * 100);
+  const y1 = yTopo + (archivo.capHeight / archivo.unitsPerEm) * t;
+  const y2 = y1 + t * 0.88;
+
+  const sub = { tamanho: Math.round(t * 0.42), wght: 500, espaco: -0.035 };
+  const antes = texto("Não pra ", sub);
+  const riscado = texto("decorar regra.", sub);
+  const y3 = y2 + sub.tamanho * 1.75;
+  const r = { x1: x0 + antes.largura - 5, x2: x0 + antes.largura + riscado.largura + 7, y: y3 - sub.tamanho * 0.3 };
+
+  const fraseIngles = "Learn English to live it, not to memorize it.";
+  const tamIngles = Math.min(22, Math.floor((coluna / texto(fraseIngles, { tamanho: 100, wght: 500, espaco: -0.02 }).largura) * 100));
+  const ingles = linha(fraseIngles, { tamanho: tamIngles, wght: 500, espaco: -0.02 }, x0, y3 + 46, vermelho);
+  const descricao = linha("Aulas de inglês personalizadas, online ou presencial.", { tamanho: 18, wght: 500 }, x0, y3 + 82, suave);
+
+  // A Archivo do site não tem a seta, então ela vai desenhada.
+  const botaoTexto = texto("Aula experimental grátis", { tamanho: 18, wght: 650 });
+  const botao = { x: x0, y: y3 + 112, w: botaoTexto.largura + 46 + 26, h: 52 };
+  const fundoBotao = tom === "claro" ? cor.preto : cor.off;
+  const textoBotao = tom === "claro" ? cor.off : cor.vinho;
+
+  return `
+  ${linha("Inglês pra", { fonte: "display", tamanho: t, espaco: -0.012 }, x0 - 4, y1, tinta).svg}
+  ${linha("Viver o mundo.", { fonte: "display", tamanho: t, espaco: -0.012 }, x0 - 4, y2, tinta).svg}
+  <path transform="translate(${x0} ${y3})" d="${antes.d}" fill="${tinta}"/>
+  <path transform="translate(${x0 + antes.largura} ${y3})" d="${riscado.d}" fill="${tinta}"/>
+  <path d="M${r.x1} ${r.y + 4}C${r.x1 + 80} ${r.y + 2} ${r.x2 - 100} ${r.y - 1} ${r.x2} ${r.y - 4}" fill="none" stroke="${cor.caneta}" stroke-width="4.5" stroke-linecap="round"/>
+  ${ingles.svg}
+  ${descricao.svg}
+  <rect x="${botao.x}" y="${botao.y}" width="${botao.w}" height="${botao.h}" rx="2" fill="${fundoBotao}"/>
+  <path transform="translate(${botao.x + 23} ${botao.y + 33})" d="${botaoTexto.d}" fill="${textoBotao}"/>
+  <path transform="translate(${botao.x + 23 + botaoTexto.largura + 12} ${botao.y + 26})" d="M0 0H15M9 -6L15 0L9 6" fill="none" stroke="${textoBotao}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+
+function assinatura(x0, y, tom) {
+  const nome = linha("Gustavo Leal", { fonte: "display", tamanho: 36 }, x0, y, tom === "claro" ? cor.preto : cor.off);
+  const papel = linha("teacher de inglês", { tamanho: 19, wght: 500 }, x0 + nome.largura + 14, y - 4, tom === "claro" ? "rgba(13,11,10,0.6)" : "rgba(241,235,223,0.7)");
+  return nome.svg + papel.svg;
+}
+
+// Balão de conversa com texto em contorno. "lado" diz de onde sai a ponta.
+function balao({ x, y, conteudo, fundo, tinta, tamanho = 19, lado = "esquerda", wght = 500 }) {
+  const t = texto(conteudo, { tamanho, wght });
+  const w = t.largura + 34;
+  const h = tamanho + 26;
+  const raio = 16;
+  const ponta = lado === "esquerda" ? `M${x + 2} ${y + h - 4}l-8 10 18-4z` : `M${x + w - 2} ${y + h - 4}l8 10-18-4z`;
+  return {
+    largura: w,
+    svg: `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${raio}" fill="${fundo}" filter="url(#sombra)"/><path d="${ponta}" fill="${fundo}"/>
+  <path transform="translate(${x + 17} ${y + h / 2 + tamanho * 0.36})" d="${t.d}" fill="${tinta}"/>`,
+  };
+}
+
+const filtros = `<defs><filter id="sombra" x="-20%" y="-40%" width="140%" height="200%"><feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dy="8"/><feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+
+// Capa "cabine" (combina com a versão 1 do hero): a folha pautada com a
+// linha vermelha da margem à esquerda e, à direita, o retrato dele na cabine
+// vermelha com o telefone no ouvido e o balão "Hi, I'm Gustavo!".
+async function capaCabine() {
   const W = 1200;
   const H = 630;
   const margem = 46;
   const x0 = margem + 46;
+  const xFoto = 650;
+  const foto = await recorte("londres-cabine.jpg", W - xFoto, H, 0.45, 0.3);
+  const pauta = Array.from({ length: Math.ceil(H / 36) }, (_, i) => `<path d="M0 ${i * 36 + 35.5}H${xFoto}" stroke="rgba(13,11,10,0.06)"/>`).join("");
+  const oi = balao({ x: xFoto + 30, y: 488, conteudo: "Hi, I’m Gustavo!", fundo: cor.off, tinta: cor.vinho, tamanho: 21, wght: 650 });
 
-  const tiraW = 196;
-  const gap = 8;
-  const xFotos = W - (tiraW * 3 + gap * 2);
-  // Ponto de foco (de 0 a 1) de cada foto, pra ele e o lugar caberem na tira.
-  const fotos = [
-    await recorte("londres-big-ben-gustavo.jpg", tiraW, H, 0.5, 0.55),
-    await recorte("eiffel-noite.jpg", tiraW, H, 0.52, 0.5),
-    await recorte("sagrada.jpg", tiraW, H, 0.55, 0.5),
-  ];
-
-  // O título ocupa a coluna da folha inteira.
-  const coluna = xFotos - x0 - 44;
-  const base = texto("Viver o mundo.", { fonte: "display", tamanho: 100, espaco: -0.012 });
-  const t = Math.floor((coluna / base.largura) * 100);
-  const y1 = 80 + (archivo.capHeight / archivo.unitsPerEm) * t;
-  const y2 = y1 + t * 0.88;
-
-  // "Não pra decorar regra." com o risco da caneta, como no hero.
-  const sub = { tamanho: 38, wght: 500, espaco: -0.035 };
-  const antes = texto("Não pra ", sub);
-  const riscado = texto("decorar regra.", sub);
-  const y3 = y2 + 74;
-  const r = { x1: x0 + antes.largura - 5, x2: x0 + antes.largura + riscado.largura + 7, y: y3 - sub.tamanho * 0.3 };
-
-  // Legenda em inglês em vermelho, como no site, ajustada à coluna.
-  const fraseIngles = "Learn English to live it, not to memorize it.";
-  const tamIngles = Math.min(24, Math.floor((coluna / texto(fraseIngles, { tamanho: 100, wght: 500, espaco: -0.02 }).largura) * 100));
-  const ingles = linha(fraseIngles, { tamanho: tamIngles, wght: 500, espaco: -0.02 }, x0, y3 + 54, cor.caneta);
-  const descricao = linha("Aulas personalizadas, online ou presencial.", { tamanho: 19, wght: 500 }, x0, y3 + 94, "rgba(13,11,10,0.62)");
-
-  // Botão da aula grátis. A Archivo do site não tem a seta, então ela vai desenhada.
-  const botaoTexto = texto("Aula experimental grátis", { tamanho: 19, wght: 650 });
-  const botao = { x: x0, y: y3 + 128, w: botaoTexto.largura + 48 + 28, h: 54 };
-
-  const pauta = Array.from({ length: Math.ceil(H / 36) }, (_, i) => `<path d="M0 ${i * 36 + 35.5}H${xFotos}" stroke="rgba(13,11,10,0.06)"/>`).join("");
-  const nome = linha("Gustavo Leal", { fonte: "display", tamanho: 40 }, x0, 566, cor.preto);
-  const papel = linha("teacher de inglês", { tamanho: 20, wght: 500 }, x0 + nome.largura + 16, 562, "rgba(13,11,10,0.6)");
-
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${filtros}
   <rect width="${W}" height="${H}" fill="${cor.off}"/>
   ${pauta}
   <rect x="${margem}" width="1.5" height="${H}" fill="${cor.caneta}"/>
-  ${fotos.map((f, i) => `<image href="${f}" x="${xFotos + i * (tiraW + gap)}" y="0" width="${tiraW}" height="${H}" preserveAspectRatio="none"/>`).join("\n  ")}
-  ${linha("Inglês pra", { fonte: "display", tamanho: t, espaco: -0.012 }, x0 - 4, y1, cor.preto).svg}
-  ${linha("Viver o mundo.", { fonte: "display", tamanho: t, espaco: -0.012 }, x0 - 4, y2, cor.preto).svg}
-  <path transform="translate(${x0} ${y3})" d="${antes.d}" fill="${cor.preto}"/>
-  <path transform="translate(${x0 + antes.largura} ${y3})" d="${riscado.d}" fill="${cor.preto}"/>
-  <path d="M${r.x1} ${r.y + 4}C${r.x1 + 80} ${r.y + 2} ${r.x2 - 100} ${r.y - 1} ${r.x2} ${r.y - 4}" fill="none" stroke="${cor.caneta}" stroke-width="4.5" stroke-linecap="round"/>
-  ${ingles.svg}
-  ${descricao.svg}
-  <rect x="${botao.x}" y="${botao.y}" width="${botao.w}" height="${botao.h}" rx="2" fill="${cor.preto}"/>
-  <path transform="translate(${botao.x + 24} ${botao.y + 34})" d="${botaoTexto.d}" fill="${cor.off}"/>
-  <path transform="translate(${botao.x + 24 + botaoTexto.largura + 12} ${botao.y + 27})" d="M0 0H15M9 -6L15 0L9 6" fill="none" stroke="${cor.off}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-  ${nome.svg}
-  ${papel.svg}
+  <image href="${foto}" x="${xFoto}" y="0" width="${W - xFoto}" height="${H}" preserveAspectRatio="none"/>
+  ${oi.svg}
+  ${blocoTexto({ x0, coluna: xFoto - x0 - 48, yTopo: 64, tom: "claro" })}
+  ${assinatura(x0, 578, "claro")}
 </svg>`;
+}
 
-  await sharp(Buffer.from(svg)).jpeg({ quality: 90, mozjpeg: true }).toFile(path.join(root, "public/og.jpg"));
-  console.log(`capa pronta: public/og.jpg (título em ${t}px)`);
+// Capa "café" (combina com a versão 2): ele numa mesa de café ocupando a
+// tela, a conversa da aula em balões perto do rosto e o título em off-white.
+async function capaCafe() {
+  const W = 1200;
+  const H = 630;
+  const margem = 46;
+  const x0 = margem + 46;
+  const xFoto = 380;
+  const foto = await recorte("cafe-paris.jpg", W - xFoto, H, 0.56, 0.44);
+  const b1 = balao({ x: 820, y: 62, conteudo: "So, tell me about you!", fundo: cor.vinho, tinta: cor.off });
+  const b2 = balao({ x: 860, y: 128, conteudo: "I’m 25 and I love Friends.", fundo: cor.off, tinta: cor.preto, lado: "direita" });
+  const b3 = balao({ x: 820, y: 194, conteudo: "Let’s use your favorite episode!", fundo: cor.vinho, tinta: cor.off });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${filtros}
+  <defs><linearGradient id="funde" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="${cor.carvao}"/><stop offset="0.38" stop-color="${cor.carvao}" stop-opacity="0.55"/><stop offset="0.7" stop-color="${cor.carvao}" stop-opacity="0"/>
+  </linearGradient></defs>
+  <rect width="${W}" height="${H}" fill="${cor.carvao}"/>
+  <image href="${foto}" x="${xFoto}" y="0" width="${W - xFoto}" height="${H}" preserveAspectRatio="none"/>
+  <rect x="${xFoto}" width="${W - xFoto}" height="${H}" fill="url(#funde)"/>
+  <rect x="${margem}" width="1.5" height="${H}" fill="${cor.caneta}" opacity="0.8"/>
+  ${b1.svg}
+  ${b2.svg}
+  ${b3.svg}
+  ${blocoTexto({ x0, coluna: 520, yTopo: 64, tom: "escuro" })}
+  ${assinatura(x0, 578, "escuro")}
+</svg>`;
+}
+
+// CAPA=cafe troca o desenho; SAIDA grava em outro arquivo (pra comparar).
+async function capa() {
+  const qual = process.env.CAPA === "cafe" ? "cafe" : "cabine";
+  const svg = qual === "cafe" ? await capaCafe() : await capaCabine();
+  const saida = process.env.SAIDA ?? path.join(root, "public/og.jpg");
+  await sharp(Buffer.from(svg)).jpeg({ quality: 90, mozjpeg: true }).toFile(saida);
+  console.log(`capa ${qual} pronta: ${saida}`);
 }
 
 // Ícone: o "G" estreito e pesado dos títulos, com o ponto da caneta.
