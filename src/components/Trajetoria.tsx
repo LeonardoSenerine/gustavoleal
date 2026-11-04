@@ -1,7 +1,40 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { experienciaProfissional, viagens } from "@/lib/content";
 import { Ingles, LerMais } from "./Secao";
+
+// Foto das viagens: escolhe 700 ou 1400 px pelo tamanho na tela e aparece
+// com um esmaecimento quando termina de carregar, sem surgir de repente.
+// "carregar" troca o lazy por eager quando a seção está chegando.
+function Foto({
+  nome,
+  sizes,
+  carregar,
+  alt = "",
+  className = "",
+  style,
+}: {
+  nome: string;
+  sizes: string;
+  carregar: boolean;
+  alt?: string;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  return (
+    <img
+      src={`/fotos/${nome}-700.webp`}
+      srcSet={`/fotos/${nome}-700.webp 700w, /fotos/${nome}.webp 1400w`}
+      sizes={sizes}
+      alt={alt}
+      loading={carregar ? "eager" : "lazy"}
+      decoding="async"
+      onLoad={(e) => e.currentTarget.setAttribute("data-pronta", "")}
+      className={`foto-suave ${className}`}
+      style={style}
+    />
+  );
+}
 
 // Trajetória como um passeio pelos países: cada um é um capítulo com o nome
 // enorme, a foto principal dele e fotos do lugar. Em tela larga a rolagem
@@ -12,6 +45,25 @@ export function Trajetoria() {
   const trilho = useRef<HTMLDivElement>(null);
   const carrossel = useRef<HTMLDivElement>(null);
   const barraCelular = useRef<HTMLSpanElement>(null);
+  const [carregar, setCarregar] = useState(false);
+
+  // As fotos ficam fora da tela, pro lado, e o lazy do navegador só as
+  // pediria em cima da hora. Começa a baixar quando faltam ~2 telas.
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          setCarregar(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useGSAP(
     () => {
@@ -102,10 +154,11 @@ export function Trajetoria() {
               <article key={v.pais} className="viagem w-[84vw] max-w-[420px] shrink-0 snap-start lg:flex lg:h-[76vh] lg:w-auto lg:max-w-none lg:gap-6">
                 {/* Foto principal. No celular, o nome do país fica por cima dela. */}
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-papel lg:aspect-auto lg:h-full lg:w-[31vw]">
-                  <img
-                    src={`/fotos/${v.principal}.webp`}
+                  <Foto
+                    nome={v.principal}
+                    sizes="(min-width: 1024px) 36vw, 90vw"
+                    carregar={carregar}
                     alt={`Gustavo em ${v.cidades}`}
-                    loading="lazy"
                     className="viagem-foto absolute inset-y-0 left-[-7%] h-full w-[114%] max-w-none object-cover"
                     style={{ objectPosition: v.foco }}
                   />
@@ -128,7 +181,12 @@ export function Trajetoria() {
                     <div className="grid grid-cols-2 gap-4">
                       {v.extras.map((foto) => (
                         <div key={foto} className="relative aspect-[3/4] overflow-hidden rounded-[3px] bg-papel">
-                          <img src={`/fotos/${foto}.webp`} alt="" loading="lazy" className="viagem-foto absolute inset-y-0 left-[-7%] h-full w-[114%] max-w-none object-cover" />
+                          <Foto
+                            nome={foto}
+                            sizes="14vw"
+                            carregar={carregar}
+                            className="viagem-foto absolute inset-y-0 left-[-7%] h-full w-[114%] max-w-none object-cover"
+                          />
                         </div>
                       ))}
                     </div>
@@ -140,7 +198,7 @@ export function Trajetoria() {
                   <div className="mt-2 grid grid-cols-2 gap-2 lg:hidden" aria-hidden>
                     {v.extras.map((foto) => (
                       <div key={foto} className="relative aspect-[4/3] overflow-hidden rounded-[3px] bg-papel">
-                        <img src={`/fotos/${foto}.webp`} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                        <Foto nome={foto} sizes="45vw" carregar={carregar} className="absolute inset-0 h-full w-full object-cover" />
                       </div>
                     ))}
                   </div>

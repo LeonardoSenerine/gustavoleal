@@ -169,3 +169,12 @@
     transform: none;
   }
 }
+
+/* Foto que aparece suave quando termina de carregar (ver Trajetoria.tsx). */
+.foto-suave {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.foto-suave[data-pronta] {
+  opacity: 1;
+}

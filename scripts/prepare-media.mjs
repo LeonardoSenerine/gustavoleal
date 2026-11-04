@@ -46,10 +46,17 @@ for (const c of clips) {
   console.log("clipe", c.name);
 }
 
+// Cada foto sai em dois tamanhos: 1400 px pra tela cheia e 700 px pras
+// molduras pequenas e pro celular (o site escolhe pelo srcset).
 for (const f of readdirSync(fotosIn).filter((f) => f.endsWith(".jpg"))) {
-  await sharp(path.join(fotosIn, f))
-    .resize({ width: 1400, withoutEnlargement: true })
-    .webp({ quality: 78 })
-    .toFile(path.join(fotosOut, f.replace(/\.jpg$/, ".webp")));
+  for (const [largura, sufixo] of [
+    [1400, ""],
+    [700, "-700"],
+  ]) {
+    await sharp(path.join(fotosIn, f))
+      .resize({ width: largura, withoutEnlargement: true })
+      .webp({ quality: 78 })
+      .toFile(path.join(fotosOut, f.replace(/\.jpg$/, `${sufixo}.webp`)));
+  }
 }
 console.log("fotos prontas");
