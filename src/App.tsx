@@ -1,6 +1,9 @@
 import { SmoothScroll } from "./components/SmoothScroll";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
+import { HeroConversa, HeroObjetivos, HeroPessoal, HeroVideo } from "./components/HeroVersoes";
+import { Fichas } from "./components/Fichas";
+import { versaoHero } from "./lib/versao";
 import { Apresentacao } from "./components/Apresentacao";
 import { Metodologia } from "./components/Metodologia";
 import { Alunos } from "./components/Alunos";
@@ -20,7 +23,13 @@ function App() {
       <Header />
       <LinhaMargem />
       <main>
-        <Hero />
+        {versaoHero === "1" ? <HeroVideo /> : versaoHero === "2" ? <HeroConversa /> : versaoHero === "3" ? <HeroObjetivos /> : versaoHero === "4" ? <HeroPessoal /> : <Hero />}
+        {/* Na versão 3 as fichas já estão na abertura. */}
+        {versaoHero !== "3" && (
+          <section className="bg-off pt-20 pb-16 text-preto md:pt-36 md:pb-28">
+            <Fichas />
+          </section>
+        )}
         <Apresentacao />
         <Metodologia />
         {temDepoimentos && <Alunos />}

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { versaoHero } from "@/lib/versao";
 import { Ingles, LerMais, Titulo } from "./Secao";
 
 // Quem é: o vídeo dele grande, como a figura principal da página, e o texto
@@ -46,39 +47,48 @@ export function Apresentacao() {
         <Ingles tom="vinho" className="mt-4 md:mt-6">English isn’t meant to be boring.</Ingles>
 
         <div className="mt-12 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-6">
-          <figure className="md:col-span-5">
-            <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
-              <video
-                ref={video}
-                className="aspect-[9/16] w-full object-cover md:aspect-[4/5]"
-                src="/media/apresentacao.mp4"
-                poster="/media/apresentacao.jpg"
-                playsInline
-                preload="metadata"
-                onEnded={() => setTocando(false)}
-                aria-label="Gustavo Leal se apresentando e explicando como são as aulas"
-              />
-              {!tocando && (
-                <button
-                  type="button"
-                  onClick={assistir}
-                  className="group absolute inset-0 flex items-center justify-center bg-preto/15 p-4 text-left text-off md:p-6"
-                >
-                  <span className="flex items-center gap-4 rounded-full bg-preto/55 py-2 pr-6 pl-2 backdrop-blur-sm">
-                    <span className="grid size-16 place-items-center rounded-full bg-off text-vinho transition-transform duration-500 group-hover:scale-110 md:size-20">
-                      <svg viewBox="0 0 24 24" className="ml-1 size-6 fill-current md:size-7" aria-hidden>
-                        <path d="M6 4l14 8-14 8z" />
-                      </svg>
+          {/* Na versão 1 do hero o vídeo já está na abertura; aqui entra o retrato. */}
+          {versaoHero === "1" ? (
+            <figure className="md:col-span-5">
+              <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
+                <img src="/fotos/retrato-aula.webp" alt="Gustavo Leal, teacher de inglês" className="aspect-[4/5] w-full object-cover" loading="lazy" />
+              </div>
+            </figure>
+          ) : (
+            <figure className="md:col-span-5">
+              <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
+                <video
+                  ref={video}
+                  className="aspect-[9/16] w-full object-cover md:aspect-[4/5]"
+                  src="/media/apresentacao.mp4"
+                  poster="/media/apresentacao.jpg"
+                  playsInline
+                  preload="metadata"
+                  onEnded={() => setTocando(false)}
+                  aria-label="Gustavo Leal se apresentando e explicando como são as aulas"
+                />
+                {!tocando && (
+                  <button
+                    type="button"
+                    onClick={assistir}
+                    className="group absolute inset-0 flex items-center justify-center bg-preto/15 p-4 text-left text-off md:p-6"
+                  >
+                    <span className="flex items-center gap-4 rounded-full bg-preto/55 py-2 pr-6 pl-2 backdrop-blur-sm">
+                      <span className="grid size-16 place-items-center rounded-full bg-off text-vinho transition-transform duration-500 group-hover:scale-110 md:size-20">
+                        <svg viewBox="0 0 24 24" className="ml-1 size-6 fill-current md:size-7" aria-hidden>
+                          <path d="M6 4l14 8-14 8z" />
+                        </svg>
+                      </span>
+                      <span>
+                        <span className="block text-lg font-semibold">Assistir com som</span>
+                        <span className="block text-sm text-off/70">21 segundos</span>
+                      </span>
                     </span>
-                    <span>
-                      <span className="block text-lg font-semibold">Assistir com som</span>
-                      <span className="block text-sm text-off/70">21 segundos</span>
-                    </span>
-                  </span>
-                </button>
-              )}
-            </div>
-          </figure>
+                  </button>
+                )}
+              </div>
+            </figure>
+          )}
 
           <div className="flex flex-col gap-8 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
             <p data-revela className="text-[clamp(1.6rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.03em]">
