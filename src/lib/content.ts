@@ -128,11 +128,14 @@ export const tirasHero = [
   { foto: "sagrada", cidade: "Barcelona", foco: "55% 50%", alt: "Gustavo em frente à Sagrada Família, em Barcelona" },
 ];
 
-// Viagens: um capítulo por país, com a foto principal dele e até duas
+// Viagens: um capítulo por país, na ordem da rota (Londres, Paris,
+// Bruxelas, Amsterdã, Espanha, Roma), com a foto principal dele e até duas
 // fotos do lugar. "foco" é o object-position da foto principal.
 export const viagens: { pais: string; ingles: string; cidades: string; principal: string; foco?: string; extras: string[] }[] = [
   { pais: "Inglaterra", ingles: "England", cidades: "Londres", principal: "londres-cabine", foco: "50% 40%", extras: ["big-ben", "londres-bandeira"] },
   { pais: "França", ingles: "France", cidades: "Paris", principal: "sena-baguete", foco: "50% 70%", extras: ["cafe-paris", "sacre-coeur"] },
+  { pais: "Bélgica", ingles: "Belgium", cidades: "Bruxelas", principal: "bruxelas-grand-place-gustavo", foco: "30% 60%", extras: ["bruxelas-grand-place", "bruxelas-galeria"] },
+  { pais: "Holanda", ingles: "Netherlands", cidades: "Amsterdã", principal: "amsterda-ponte", foco: "40% 50%", extras: ["amsterda-casas", "amsterda-canal"] },
   { pais: "Espanha", ingles: "Spain", cidades: "Madrid e Barcelona", principal: "sagrada-sorriso", foco: "60% 50%", extras: ["madrid-rooftop", "madrid-gran-via"] },
   { pais: "Itália", ingles: "Italy", cidades: "Roma", principal: "coliseu", foco: "50% 60%", extras: [] },
 ];
