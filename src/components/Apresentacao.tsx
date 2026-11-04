@@ -51,7 +51,7 @@ export function Apresentacao() {
           {versaoHero === "1" ? (
             <figure className="md:col-span-5">
               <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
-                <img src="/fotos/retrato-aula.webp" alt="Gustavo Leal, teacher de inglês" className="aspect-[4/5] w-full object-cover" loading="lazy" />
+                <img src="/fotos/sagrada-sorriso.webp" alt="Gustavo Leal sorrindo" className="aspect-[4/5] w-full object-cover object-[64%_62%]" loading="lazy" />
               </div>
             </figure>
           ) : (
