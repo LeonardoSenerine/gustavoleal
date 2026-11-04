@@ -3,6 +3,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { linkWhatsApp } from "@/lib/content";
 import { Header } from "@/components/Header";
 import { montar } from "./montar";
+import { foto } from "@/lib/foto";
 
 function NaoEncontrada() {
   const root = useRef<HTMLElement>(null);
@@ -28,7 +29,7 @@ function NaoEncontrada() {
         ref={root}
         className="relative flex min-h-svh items-end overflow-hidden bg-preto px-4 pt-32 pb-16 text-off md:items-center md:px-8 md:pb-24"
       >
-        <img src="/fotos/rua-noite.webp" alt="" className="erro-fundo absolute inset-0 h-full w-full object-cover opacity-45" />
+        <img {...foto("rua-noite")} sizes="100vw" alt="" className="erro-fundo absolute inset-0 h-full w-full object-cover opacity-45" />
         <div
           className="absolute inset-0 bg-[linear-gradient(100deg,var(--color-preto)_15%,rgb(61_9_18/0.85)_55%,rgb(107_16_32/0.35))]"
           aria-hidden

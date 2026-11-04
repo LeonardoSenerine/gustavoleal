@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { versaoHero } from "@/lib/versao";
 import { Ingles, LerMais, Titulo } from "./Secao";
+import { foto } from "@/lib/foto";
 
 // Quem é: o vídeo dele grande, como a figura principal da página, e o texto
 // em primeira pessoa ao lado.
@@ -51,7 +52,7 @@ export function Apresentacao() {
           {versaoHero === "1" ? (
             <figure className="md:col-span-5">
               <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
-                <img src="/fotos/sagrada-sorriso.webp" alt="Gustavo Leal sorrindo" className="aspect-[4/5] w-full object-cover object-[64%_62%]" loading="lazy" />
+                <img {...foto("sagrada-sorriso")} sizes="(min-width: 768px) 40vw, 90vw" alt="Gustavo Leal sorrindo" className="aspect-[4/5] w-full object-cover object-[64%_62%]" loading="lazy" />
               </div>
             </figure>
           ) : (
@@ -63,7 +64,7 @@ export function Apresentacao() {
                   src="/media/apresentacao.mp4"
                   poster="/media/apresentacao.jpg"
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   onEnded={() => setTocando(false)}
                   aria-label="Gustavo Leal se apresentando e explicando como são as aulas"
                 />

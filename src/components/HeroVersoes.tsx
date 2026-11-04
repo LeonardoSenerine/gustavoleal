@@ -3,6 +3,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
 import { Marca } from "./Caneta";
 import { Fichas } from "./Fichas";
+import { foto } from "@/lib/foto";
 
 // Quatro propostas de abertura pra apresentar ao cliente (?hero=1 a 4).
 // Todas mostram o Gustavo como professor: as fotos são recortadas nele,
@@ -125,7 +126,8 @@ export function HeroVideo() {
         <div className="relative h-[82svh] lg:h-auto">
           <div className="hero-foto absolute inset-0 overflow-hidden bg-carvao">
             <img
-              src="/fotos/londres-cabine.webp"
+              {...foto("londres-cabine")}
+              sizes="(min-width: 1024px) 50vw, 100vw"
               alt="Gustavo Leal numa cabine telefônica vermelha, com o telefone no ouvido"
               fetchPriority="high"
               className="absolute inset-x-0 -top-[4%] h-[108%] w-full object-cover object-[45%_28%]"
@@ -218,7 +220,8 @@ export function HeroConversa() {
         {/* A foto ocupa a tela (no celular, a parte de cima). */}
         <div className="hero-foto relative h-[64svh] overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[68%]">
           <img
-            src="/fotos/cafe-paris.webp"
+            {...foto("cafe-paris")}
+            sizes="(min-width: 1024px) 68vw, 100vw"
             alt="Gustavo Leal sentado à mesa de um café, conversando"
             fetchPriority="high"
             className="absolute inset-x-0 -top-[4%] h-[108%] w-full object-cover object-[58%_30%]"
@@ -278,7 +281,7 @@ export function HeroObjetivos() {
           {/* O teacher, sorrindo, apresentando as fichas. */}
           <figure className="hero-sobe flex items-center gap-4 lg:col-span-4 lg:flex-col lg:items-start lg:gap-5 lg:pb-2">
             <div className="hero-foto relative size-24 shrink-0 overflow-hidden rounded-full bg-papel ring-4 ring-folha shadow-[0_20px_40px_-20px_rgb(13_11_10/0.6)] lg:size-auto lg:aspect-[4/5] lg:w-full lg:max-w-[300px] lg:rounded-[3px]">
-              <img src="/fotos/sena-baguete.webp" alt="Gustavo Leal sorrindo" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[48%_62%] lg:object-[50%_70%]" />
+              <img {...foto("sena-baguete")} sizes="(min-width: 1024px) 300px, 96px" alt="Gustavo Leal sorrindo" fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[48%_62%] lg:object-[50%_70%]" />
             </div>
             <figcaption className="text-lg leading-snug">
               <strong className="font-semibold">Teacher Gustavo.</strong> Marque o que você quer destravar e a aula é montada em volta disso.

@@ -3,6 +3,7 @@ import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { etapas } from "@/lib/content";
 import { Marca } from "./Caneta";
 import { Ingles, LerMais, Titulo } from "./Secao";
+import { foto } from "@/lib/foto";
 
 // O método como plano de aula, numa folha escura (o quadro da sala). A foto
 // fica presa na tela e troca conforme cada etapa passa. No celular ela fica
@@ -68,7 +69,9 @@ export function Metodologia() {
               {etapas.map((etapa, i) => (
                 <img
                   key={etapa.foto}
-                  src={`/fotos/${etapa.foto}.webp`}
+                  {...foto(etapa.foto)}
+                  sizes="(min-width: 1024px) 42vw, 92vw"
+                  decoding="async"
                   alt=""
                   loading="lazy"
                   className={`absolute inset-0 h-full w-full object-cover transition-[opacity,scale] duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] will-change-[opacity,scale] ${

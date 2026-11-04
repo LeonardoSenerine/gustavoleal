@@ -3,6 +3,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { tirasHero } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
 import { Marca } from "./Caneta";
+import { foto } from "@/lib/foto";
 
 // A primeira folha do caderno: a promessa em letra grande com a caneta
 // riscando "decorar regra" e, ao lado, o Gustavo em Londres, Paris e
@@ -88,7 +89,8 @@ export function Hero() {
             >
               <div className="tira-movel absolute inset-x-0 -top-[5%] h-[110%]">
                 <img
-                  src={`/fotos/${t.foto}.webp`}
+                  {...foto(t.foto)}
+                  sizes="(min-width: 1024px) 82vh, 52vh"
                   alt={t.alt}
                   fetchPriority={i === 0 ? "high" : undefined}
                   className="tira-foto h-full w-full object-cover transition-[filter] duration-700 lg:group-hover:brightness-110"

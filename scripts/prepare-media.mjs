@@ -19,11 +19,13 @@ mkdirSync(fotosOut, { recursive: true });
 // (0 a 1) para descer ou subir o enquadramento.
 const clips = [
   // Vídeo de apresentação gravado pelo Gustavo (já vem em 9:16 e com legenda).
-  { name: "apresentacao", src: "apresentacao", start: 0, dur: 22, ratio: 9 / 16, width: 576, crf: 23, audio: true },
+  // crf 28 mantém a legenda gravada nítida; a voz vai em mono 64k.
+  { name: "apresentacao", src: "apresentacao", start: 0, dur: 22, ratio: 9 / 16, width: 576, crf: 28, audio: true },
   // Fundo do CTA: o Sena à noite, com a ponte iluminada refletindo na água.
-  { name: "cta", src: "s02", start: 0, dur: 7.4, ratio: 16 / 9, y: 0.45, width: 960, crf: 27 },
-  // Cartão "Cultura" do hero: músicos de rua.
-  { name: "exp-cultura", src: "s04", start: 4, dur: 6, ratio: 3 / 4 },
+  // Fica atrás de um degradê a 45% de opacidade, então pode ir bem comprimido.
+  { name: "cta", src: "s02", start: 0, dur: 7.4, ratio: 16 / 9, y: 0.45, width: 720, crf: 32, fps: 24 },
+  // Cartão "Cultura" das fichas: músicos de rua, num cartão de ~300 px.
+  { name: "exp-cultura", src: "s04", start: 4, dur: 6, ratio: 3 / 4, width: 400, crf: 30, fps: 24 },
 ];
 
 function run(args) {
@@ -36,13 +38,13 @@ for (const c of clips) {
   const r = c.ratio ?? 4 / 5;
   const y = c.y ?? 0.5;
   const crop = `crop='min(iw,ih*${r})':'min(ih,iw/${r})':'(iw-ow)/2':'(ih-oh)*${y}'`;
-  const vf = `${crop},scale=${c.width ?? 540}:-2`;
-  const audio = c.audio ? ["-c:a", "aac", "-b:a", "96k"] : ["-an"];
+  const vf = `${crop},scale=${c.width ?? 540}:-2${c.fps ? `,fps=${c.fps}` : ""}`;
+  const audio = c.audio ? ["-c:a", "aac", "-ac", "1", "-b:a", "64k"] : ["-an"];
   run(["-ss", String(c.start), "-t", String(c.dur), "-i", src, "-vf", vf, ...audio,
     "-c:v", "libx264", "-preset", "slow", "-crf", String(c.crf ?? 27), "-pix_fmt", "yuv420p",
     "-movflags", "+faststart", path.join(mediaOut, `${c.name}.mp4`)]);
   run(["-ss", String(c.start + 0.2), "-i", src, "-frames:v", "1", "-vf", vf,
-    "-q:v", "4", path.join(mediaOut, `${c.name}.jpg`)]);
+    "-q:v", "6", path.join(mediaOut, `${c.name}.jpg`)]);
   console.log("clipe", c.name);
 }
 
@@ -55,7 +57,7 @@ for (const f of readdirSync(fotosIn).filter((f) => f.endsWith(".jpg"))) {
   ]) {
     await sharp(path.join(fotosIn, f))
       .resize({ width: largura, withoutEnlargement: true })
-      .webp({ quality: 78 })
+      .webp({ quality: 72, effort: 6, smartSubsample: true })
       .toFile(path.join(fotosOut, f.replace(/\.jpg$/, `${sufixo}.webp`)));
   }
 }
