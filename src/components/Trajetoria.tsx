@@ -151,21 +151,21 @@ export function Trajetoria() {
             className="mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-pl-[calc(var(--margem)+1.15rem)] pr-5 pl-[calc(var(--margem)+1.15rem)] [scrollbar-width:none] lg:contents"
           >
             {viagens.map((v) => (
-              <article key={v.pais} className="viagem w-[84vw] max-w-[420px] shrink-0 snap-start lg:flex lg:h-[76vh] lg:w-auto lg:max-w-none lg:gap-6">
+              <article key={v.titulo} className="viagem w-[84vw] max-w-[420px] shrink-0 snap-start lg:flex lg:h-[76vh] lg:w-auto lg:max-w-none lg:gap-6">
                 {/* Foto principal. No celular, o nome do país fica por cima dela. */}
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[3px] bg-papel lg:aspect-auto lg:h-full lg:w-[31vw]">
                   <Foto
                     nome={v.principal}
                     sizes="(min-width: 1024px) 36vw, 90vw"
                     carregar={carregar}
-                    alt={`Gustavo em ${v.cidades}`}
+                    alt={v.alt}
                     className="viagem-foto absolute inset-y-0 left-[-7%] h-full w-[114%] max-w-none object-cover"
                     style={{ objectPosition: v.foco }}
                   />
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-preto/75 to-transparent lg:hidden" aria-hidden />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-off lg:hidden">
-                    <p className="text-sm font-medium text-off/80">{v.cidades}</p>
-                    <h3 className="display mt-1 text-[3.4rem]">{v.pais}</h3>
+                    <p className="text-sm font-medium text-off/80">{v.sub}</p>
+                    <h3 className="display mt-1 text-[3.4rem]">{v.titulo}</h3>
                     <p lang="en" className="mt-1 font-medium text-rosa">{v.ingles}</p>
                   </div>
                 </div>
@@ -173,8 +173,8 @@ export function Trajetoria() {
                 {/* Coluna do desktop: nome enorme em cima, fotos do lugar embaixo. */}
                 <div className="hidden lg:flex lg:w-[25vw] lg:flex-col lg:justify-between">
                   <div className="viagem-nome">
-                    <p className="text-lg font-medium text-preto/55">{v.cidades}</p>
-                    <h3 className="display mt-2 text-[min(5.2vw,7rem)]">{v.pais}</h3>
+                    <p className="text-lg font-medium text-preto/55">{v.sub}</p>
+                    <h3 className="display mt-2 text-[min(5.2vw,7rem)]">{v.titulo}</h3>
                     <p lang="en" className="mt-2 text-xl font-medium text-caneta-escura">{v.ingles}</p>
                   </div>
                   {v.extras.length > 0 && (
