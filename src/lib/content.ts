@@ -113,10 +113,9 @@ export const etapas = [
 // depoimentos some da página e do menu. Pra cada vídeo novo: salvar em assets/videos/aluno-<nome>.mp4,
 // rodar npm run media e adicionar aqui, por exemplo
 // { nome: "Ana", video: "aluno-ana" }.
-// PENDENTE: nome do aluno do segundo vídeo.
 export const depoimentos: { nome: string; video: string }[] = [
   { nome: "Lorena", video: "aluno-lorena" },
-  { nome: "Aluno", video: "aluno-2" },
+  { nome: "Kayo", video: "aluno-kayo" },
 ];
 
 export const temDepoimentos = depoimentos.length > 0;
