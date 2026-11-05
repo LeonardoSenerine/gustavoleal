@@ -1,15 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { versaoHero } from "@/lib/versao";
 import { Ingles, LerMais, Titulo } from "./Secao";
 import { foto } from "@/lib/foto";
 
-// Quem é: o vídeo dele grande, como a figura principal da página, e o texto
-// em primeira pessoa ao lado.
+// Quem é: uma foto dele sorrindo e o texto em primeira pessoa ao lado. O
+// vídeo de apresentação fica na abertura.
 export function Apresentacao() {
   const root = useRef<HTMLElement>(null);
-  const video = useRef<HTMLVideoElement>(null);
-  const [tocando, setTocando] = useState(false);
 
   useGSAP(
     () => {
@@ -29,15 +26,6 @@ export function Apresentacao() {
     { scope: root },
   );
 
-  function assistir() {
-    const v = video.current;
-    if (!v) return;
-    v.controls = true;
-    v.muted = false;
-    v.play().catch(() => {});
-    setTocando(true);
-  }
-
   return (
     <section id="apresentacao" ref={root} className="relative bg-vinho pt-16 pb-20 text-off md:pt-28 md:pb-32">
       <div className="pauta-clara absolute inset-0" aria-hidden />
@@ -48,48 +36,12 @@ export function Apresentacao() {
         <Ingles tom="vinho" className="mt-4 md:mt-6">English isn’t meant to be boring.</Ingles>
 
         <div className="mt-12 grid gap-12 md:mt-20 md:grid-cols-12 md:gap-6">
-          {/* Na versão 1 do hero o vídeo já está na abertura; aqui entra o retrato. */}
-          {versaoHero === "1" ? (
-            <figure className="md:col-span-5">
-              <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
-                <img {...foto("sagrada-sorriso")} sizes="(min-width: 768px) 40vw, 90vw" alt="Gustavo Leal sorrindo" className="aspect-[4/5] w-full object-cover object-[64%_62%]" loading="lazy" />
-              </div>
-            </figure>
-          ) : (
-            <figure className="md:col-span-5">
-              <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
-                <video
-                  ref={video}
-                  className="aspect-[9/16] w-full object-cover md:aspect-[4/5]"
-                  src="/media/apresentacao.mp4"
-                  poster="/media/apresentacao.jpg"
-                  playsInline
-                  preload="none"
-                  onEnded={() => setTocando(false)}
-                  aria-label="Gustavo Leal se apresentando e explicando como são as aulas"
-                />
-                {!tocando && (
-                  <button
-                    type="button"
-                    onClick={assistir}
-                    className="group absolute inset-0 flex items-center justify-center bg-preto/15 p-4 text-left text-off md:p-6"
-                  >
-                    <span className="flex items-center gap-4 rounded-full bg-preto/55 py-2 pr-6 pl-2 backdrop-blur-sm">
-                      <span className="grid size-16 place-items-center rounded-full bg-off text-vinho transition-transform duration-500 group-hover:scale-110 md:size-20">
-                        <svg viewBox="0 0 24 24" className="ml-1 size-6 fill-current md:size-7" aria-hidden>
-                          <path d="M6 4l14 8-14 8z" />
-                        </svg>
-                      </span>
-                      <span>
-                        <span className="block text-lg font-semibold">Assistir com som</span>
-                        <span className="block text-sm text-off/70">21 segundos</span>
-                      </span>
-                    </span>
-                  </button>
-                )}
-              </div>
-            </figure>
-          )}
+          {/* O vídeo dele já está na abertura; aqui entra uma foto dele sorrindo. */}
+          <figure className="md:col-span-5">
+            <div className="apres-player relative mx-auto w-full max-w-[420px] overflow-hidden rounded-[3px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] md:mx-0 md:max-w-none">
+              <img {...foto("sorrento-sorriso")} sizes="(min-width: 768px) 40vw, 90vw" alt="Gustavo Leal sorrindo num mirante" className="aspect-[4/5] w-full object-cover object-[62%_45%]" loading="lazy" />
+            </div>
+          </figure>
 
           <div className="flex flex-col gap-8 md:col-span-6 md:col-start-7 md:gap-14 md:pt-4">
             <p data-revela className="text-[clamp(1.6rem,3.2vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.03em]">

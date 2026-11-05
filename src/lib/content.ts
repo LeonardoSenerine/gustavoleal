@@ -121,14 +121,6 @@ export const temDepoimentos = depoimentos.length > 0;
 // Experiência de sala de aula, do texto de trajetória dele.
 export const experienciaProfissional = ["Aulas particulares", "Escolas de idiomas", "Ensino escolar", "Alunos de várias idades e níveis"];
 
-// Abertura do site: o Gustavo em três lugares, em tiras verticais.
-// "foco" é o object-position que mantém ele e o lugar dentro da tira.
-export const tirasHero = [
-  { foto: "londres-big-ben-gustavo", cidade: "Londres", foco: "50% 55%", alt: "Gustavo diante do Big Ben, em Londres, à noite" },
-  { foto: "eiffel-noite", cidade: "Paris", foco: "52% 50%", alt: "Gustavo sob a Torre Eiffel iluminada, em Paris" },
-  { foto: "sagrada", cidade: "Barcelona", foco: "55% 50%", alt: "Gustavo em frente à Sagrada Família, em Barcelona" },
-];
-
 // Viagens: um capítulo por lugar, na ordem da rota. "titulo" é a cidade,
 // em letra grande; "sub" é o país, em cima dela; "ingles" traz os dois em
 // inglês, embaixo. A foto principal é
