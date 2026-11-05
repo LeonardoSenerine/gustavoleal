@@ -10,6 +10,9 @@ export function useSequencia(total: number) {
   const barras = useRef<(HTMLElement | null)[]>([]);
   const [atual, setAtual] = useState(0);
   const [comSom, setComSom] = useState(false);
+  // Guarda a escolha de som fora do estado, pra o próximo vídeo já nascer
+  // com ela (o <video> é trocado a cada depoimento).
+  const somLigado = useRef(false);
   const [tocando, setTocando] = useState(false);
   const [naTela, setNaTela] = useState(false);
   const reduzir = useRef(false);
@@ -28,8 +31,20 @@ export function useSequencia(total: number) {
     const v = video.current;
     if (!v) return;
     setTocando(false);
-    if (naTela && !reduzir.current) v.play().catch(() => {});
-    else v.pause();
+    v.muted = !somLigado.current;
+    if (!naTela || reduzir.current) {
+      v.pause();
+      return;
+    }
+    v.play().catch(() => {
+      // Se o navegador não deixar tocar com som sozinho, toca sem som.
+      if (!v.muted) {
+        v.muted = true;
+        somLigado.current = false;
+        setComSom(false);
+        v.play().catch(() => {});
+      }
+    });
   }, [atual, naTela]);
 
   // Progresso: a barra do vídeo atual enche; as anteriores ficam cheias.
@@ -67,8 +82,10 @@ export function useSequencia(total: number) {
   function alternarSom() {
     const v = video.current;
     if (!v) return;
-    v.muted = comSom;
-    setComSom(!comSom);
+    const ligar = !somLigado.current;
+    somLigado.current = ligar;
+    v.muted = !ligar;
+    setComSom(ligar);
     if (v.paused) v.play().catch(() => {});
   }
 

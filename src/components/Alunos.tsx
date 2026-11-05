@@ -43,7 +43,7 @@ function BotaoSom({ comSom, alternar, tom = "escuro" }: { comSom: boolean; alter
       type="button"
       onClick={alternar}
       aria-pressed={comSom}
-      className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold backdrop-blur-sm transition-colors ${
+      className={`inline-flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold whitespace-nowrap backdrop-blur-sm transition-colors ${
         tom === "claro" ? "border border-preto/20 text-preto hover:bg-preto hover:text-off" : "bg-preto/55 text-off hover:bg-caneta"
       }`}
     >
@@ -51,7 +51,7 @@ function BotaoSom({ comSom, alternar, tom = "escuro" }: { comSom: boolean; alter
         <path d="M4 9h4l5-4v14l-5-4H4z" strokeLinejoin="round" />
         {comSom ? <path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" strokeLinecap="round" /> : <path d="M17 9l5 6M22 9l-5 6" strokeLinecap="round" />}
       </svg>
-      {comSom ? "Com som" : "Ouvir"}
+      {comSom ? "Som ligado" : "Ouvir"}
     </button>
   );
 }
@@ -76,7 +76,6 @@ function Seta({ lado, onClick, tom = "escuro", className = "" }: { lado: "esq" |
 // termina, o leque gira pro próximo.
 export function Alunos() {
   const s = useSequencia(n);
-  const d = lista[s.atual];
   const palco = useRef<HTMLDivElement>(null);
   const arrasto = useRef({ x0: 0, dx: 0, ativo: false });
   const [arrastando, setArrastando] = useState(false);
@@ -167,55 +166,63 @@ export function Alunos() {
         {lista.map((v, k) => {
           const x = distancia(k);
           const longe = Math.abs(x) > 2;
+          const meio = x === 0;
+          const estilo = {
+            transform: `translate(-50%, -50%) translateX(calc(${x * 64}% * var(--abre) + var(--arrasto))) scale(${meio ? 1 : 0.8 - Math.abs(x) * 0.04}) rotate(calc(${x * 3}deg * var(--abre) + var(--giro)))`,
+            opacity: longe ? 0 : 1,
+            zIndex: 10 - Math.abs(x),
+            pointerEvents: longe ? ("none" as const) : undefined,
+          };
+          const base = `absolute top-1/2 left-1/2 aspect-[9/16] h-full overflow-hidden rounded-[22px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] will-change-transform ${curva}`;
+
+          // O mesmo elemento serve pros dois papéis, pra o cartão não ser
+          // recriado (e pular) quando chega ao meio. Dos lados, um toque leva
+          // até ele; no meio, o vídeo fica dentro, então borda, vídeo e nome
+          // giram e acompanham o arrasto juntos.
           return (
-            <button
+            <div
               key={v.video}
-              type="button"
-              onClick={() => s.ir(k)}
-              tabIndex={x === 0 || longe ? -1 : 0}
-              aria-label={`Assistir: ${v.nome}`}
-              className={`absolute top-1/2 left-1/2 aspect-[9/16] h-full overflow-hidden rounded-[22px] bg-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] will-change-transform ${curva}`}
-              style={{
-                transform: `translate(-50%, -50%) translateX(calc(${x * 64}% * var(--abre) + var(--arrasto))) scale(${x === 0 ? 1 : 0.8 - Math.abs(x) * 0.04}) rotate(calc(${x * 3}deg * var(--abre) + var(--giro)))`,
-                opacity: longe ? 0 : 1,
-                zIndex: 10 - Math.abs(x),
-                pointerEvents: longe ? "none" : undefined,
-              }}
+              role={meio ? undefined : "button"}
+              tabIndex={meio || longe ? -1 : 0}
+              aria-label={meio ? undefined : `Assistir: ${v.nome}`}
+              onClick={meio ? undefined : () => s.ir(k)}
+              onKeyDown={meio ? undefined : (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), s.ir(k))}
+              onPointerDown={meio ? comecar : undefined}
+              onPointerMove={meio ? arrastar : undefined}
+              onPointerUp={meio ? soltar : undefined}
+              onPointerCancel={meio ? soltar : undefined}
+              className={`${base} select-none ${meio ? "cursor-grab touch-pan-y ring-2 ring-off/90 active:cursor-grabbing" : "cursor-pointer ring-0 ring-off/0"}`}
+              style={estilo}
             >
-              <img src={capa(v.video)} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-              {/* Véu escuro nas laterais: mais leve que um filtro de cor. */}
+              <img src={capa(v.video)} alt="" draggable={false} loading={meio ? undefined : "lazy"} className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+              {meio ? (
+                <>
+                  <video
+                    {...s.propsVideo}
+                    src={mp4(v.video)}
+                    className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out ${s.tocando && assentou ? "opacity-100" : "opacity-0"}`}
+                    aria-label={`Depoimento: ${v.nome}`}
+                  />
+                  <Barras barra={s.barra} atual={s.atual} className="pointer-events-none absolute inset-x-3 top-3 z-10" />
+                </>
+              ) : null}
               <span
-                className={`absolute inset-0 bg-vinho-escuro transition-opacity duration-[700ms] ${x === 0 ? "opacity-0" : "opacity-55"}`}
+                className={`pointer-events-none absolute inset-0 bg-vinho-escuro transition-opacity duration-[700ms] ${meio ? "opacity-0" : "opacity-55"}`}
                 aria-hidden
               />
-              {x !== 0 && <span className="absolute inset-x-0 bottom-0 p-4 text-left font-semibold">{v.nome}</span>}
-            </button>
+              <div
+                className={`pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-preto/85 to-transparent transition-[padding] duration-[700ms] ${meio ? "p-5 pt-20" : "p-4 pt-10"}`}
+              >
+                <p
+                  key={meio ? "meio" : "lado"}
+                  className={meio ? "display animate-[abrir_0.7s_cubic-bezier(.32,.72,0,1)_0.15s_both] text-[2.1rem] md:text-[2.6rem]" : "text-left font-semibold"}
+                >
+                  {v.nome}
+                </p>
+              </div>
+            </div>
           );
         })}
-
-        {/* O vídeo que toca, por cima da capa do meio, e a área de arrasto. */}
-        <div
-          onPointerDown={comecar}
-          onPointerMove={arrastar}
-          onPointerUp={soltar}
-          onPointerCancel={soltar}
-          className={`absolute top-1/2 left-1/2 z-20 aspect-[9/16] h-full cursor-grab touch-pan-y overflow-hidden rounded-[22px] ring-2 ring-off/90 select-none active:cursor-grabbing will-change-transform ${curva}`}
-          style={{ transform: "translate(-50%, -50%) translateX(var(--arrasto)) rotate(var(--giro))" }}
-        >
-          <img src={capa(d.video)} alt="" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
-          <video
-            {...s.propsVideo}
-            src={mp4(d.video)}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-out ${s.tocando && assentou ? "opacity-100" : "opacity-0"}`}
-            aria-label={`Depoimento: ${d.nome}`}
-          />
-          <Barras barra={s.barra} atual={s.atual} className="absolute inset-x-3 top-3 z-10" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-preto/85 to-transparent p-5 pt-20">
-            <div key={s.atual} className="animate-[abrir_0.7s_cubic-bezier(.32,.72,0,1)_0.15s_both]">
-              <p className="display text-[2.1rem] md:text-[2.6rem]">{d.nome}</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="recuo relative mt-8 flex items-center justify-center gap-4">
