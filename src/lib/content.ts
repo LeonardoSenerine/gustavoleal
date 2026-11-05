@@ -128,21 +128,21 @@ export const tirasHero = [
   { foto: "sagrada", cidade: "Barcelona", foco: "55% 50%", alt: "Gustavo em frente à Sagrada Família, em Barcelona" },
 ];
 
-// Viagens: um capítulo por lugar, na ordem da rota. "titulo" é o nome
-// grande (o país, ou a cidade quando o país tem vários capítulos, como a
-// Itália), "sub" vai em cima dele e "ingles" embaixo. A foto principal é
+// Viagens: um capítulo por lugar, na ordem da rota. "titulo" é a cidade,
+// em letra grande; "sub" é o país, em cima dela; "ingles" traz os dois em
+// inglês, embaixo. A foto principal é
 // dele; "extras" são até duas fotos do lugar. "foco" é o object-position
 // da foto principal e "alt" descreve ela.
 export const viagens: { titulo: string; sub: string; ingles: string; principal: string; foco?: string; alt: string; extras: string[] }[] = [
-  { titulo: "Inglaterra", sub: "Londres", ingles: "England", principal: "londres-cabine", foco: "50% 40%", alt: "Gustavo numa cabine telefônica vermelha em Londres", extras: ["big-ben", "londres-bandeira"] },
-  { titulo: "França", sub: "Paris", ingles: "France", principal: "sena-baguete", foco: "50% 70%", alt: "Gustavo sentado às margens do Sena, em Paris", extras: ["cafe-paris", "sacre-coeur"] },
-  { titulo: "Bélgica", sub: "Bruxelas", ingles: "Belgium", principal: "bruxelas-grand-place-gustavo", foco: "30% 60%", alt: "Gustavo na Grand Place, em Bruxelas", extras: ["bruxelas-grand-place", "bruxelas-galeria"] },
-  { titulo: "Holanda", sub: "Amsterdã", ingles: "Netherlands", principal: "amsterda-ponte", foco: "40% 50%", alt: "Gustavo numa ponte sobre um canal de Amsterdã", extras: ["amsterda-casas", "amsterda-canal"] },
-  { titulo: "Espanha", sub: "Madrid e Barcelona", ingles: "Spain", principal: "sagrada-sorriso", foco: "60% 50%", alt: "Gustavo sorrindo em frente à Sagrada Família, em Barcelona", extras: ["madrid-rooftop", "madrid-gran-via"] },
-  { titulo: "Roma", sub: "Itália", ingles: "Rome", principal: "roma-trevi-gustavo", foco: "45% 55%", alt: "Gustavo na Fontana di Trevi, em Roma", extras: ["roma-coliseu-noite", "roma-pizza"] },
-  { titulo: "Nápoles", sub: "Itália", ingles: "Naples", principal: "napoles-vesuvio-gustavo", foco: "38% 50%", alt: "Gustavo sorrindo na baía de Nápoles, com o Vesúvio ao fundo", extras: ["napoles-vespa", "napoles-varais"] },
-  { titulo: "Capri", sub: "Itália", ingles: "Capri", principal: "capri-gustavo", foco: "40% 50%", alt: "Gustavo num mirante de Capri, com o mar ao fundo", extras: ["capri-faraglioni", "capri-marina"] },
-  { titulo: "Amalfi", sub: "Costa Amalfitana · Itália", ingles: "Amalfi Coast", principal: "amalfi-gustavo", foco: "48% 50%", alt: "Gustavo de camisa vermelha dentro do mar, na Costa Amalfitana", extras: ["amalfi-furore", "amalfi-sorrento"] },
+  { titulo: "Londres", sub: "Inglaterra", ingles: "London, England", principal: "londres-cabine", foco: "50% 40%", alt: "Gustavo numa cabine telefônica vermelha em Londres", extras: ["big-ben", "londres-bandeira"] },
+  { titulo: "Paris", sub: "França", ingles: "Paris, France", principal: "sena-baguete", foco: "50% 70%", alt: "Gustavo sentado às margens do Sena, em Paris", extras: ["cafe-paris", "sacre-coeur"] },
+  { titulo: "Bruxelas", sub: "Bélgica", ingles: "Brussels, Belgium", principal: "bruxelas-grand-place-gustavo", foco: "30% 60%", alt: "Gustavo na Grand Place, em Bruxelas", extras: ["bruxelas-grand-place", "bruxelas-galeria"] },
+  { titulo: "Amsterdã", sub: "Holanda", ingles: "Amsterdam, Netherlands", principal: "amsterda-ponte", foco: "40% 50%", alt: "Gustavo numa ponte sobre um canal de Amsterdã", extras: ["amsterda-casas", "amsterda-canal"] },
+  { titulo: "Madrid e Barcelona", sub: "Espanha", ingles: "Madrid & Barcelona, Spain", principal: "sagrada-sorriso", foco: "60% 50%", alt: "Gustavo sorrindo em frente à Sagrada Família, em Barcelona", extras: ["madrid-rooftop", "madrid-gran-via"] },
+  { titulo: "Roma", sub: "Itália", ingles: "Rome, Italy", principal: "roma-trevi-gustavo", foco: "45% 55%", alt: "Gustavo na Fontana di Trevi, em Roma", extras: ["roma-coliseu-noite", "roma-pizza"] },
+  { titulo: "Nápoles", sub: "Itália", ingles: "Naples, Italy", principal: "napoles-vesuvio-gustavo", foco: "38% 50%", alt: "Gustavo sorrindo na baía de Nápoles, com o Vesúvio ao fundo", extras: ["napoles-vespa", "napoles-varais"] },
+  { titulo: "Capri", sub: "Itália", ingles: "Capri, Italy", principal: "capri-gustavo", foco: "40% 50%", alt: "Gustavo num mirante de Capri, com o mar ao fundo", extras: ["capri-faraglioni", "capri-marina"] },
+  { titulo: "Costa Amalfitana", sub: "Itália", ingles: "Amalfi Coast, Italy", principal: "amalfi-gustavo", foco: "48% 50%", alt: "Gustavo de camisa vermelha dentro do mar, na Costa Amalfitana", extras: ["amalfi-furore", "amalfi-sorrento"] },
 ];
 
 // Valores mensais da tabela do Gustavo. Em dupla, o preço é por pessoa.
