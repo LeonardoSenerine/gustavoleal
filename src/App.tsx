@@ -15,7 +15,7 @@ import { Rodape } from "./components/Rodape";
 import { Movimento } from "./components/Movimento";
 import { LinhaMargem } from "./components/LinhaMargem";
 import { temDepoimentos } from "./lib/content";
-import { versaoAlunos } from "./lib/alunos";
+import { previaAlunos } from "./lib/alunos";
 
 // As versões do hero (?hero=1 a 4) só são baixadas quando pedidas no
 // endereço; quem entra no site normal não carrega esse código.
@@ -25,23 +25,6 @@ const versoes = {
   "3": lazy(() => import("./components/HeroVersoes").then((m) => ({ default: m.HeroObjetivos }))),
   "4": lazy(() => import("./components/HeroVersoes").then((m) => ({ default: m.HeroPessoal }))),
 } as const;
-
-// As versões da seção de depoimentos (?alunos=1 a 3), também sob demanda.
-const versoesAlunos = {
-  "1": lazy(() => import("./components/AlunosVersoes").then((m) => ({ default: m.AlunosCarrossel }))),
-  "2": lazy(() => import("./components/AlunosVersoes").then((m) => ({ default: m.AlunosStories }))),
-  "3": lazy(() => import("./components/AlunosVersoes").then((m) => ({ default: m.AlunosPilha }))),
-} as const;
-
-function Depoimentos() {
-  if (!versaoAlunos) return temDepoimentos ? <Alunos /> : null;
-  const Versao = versoesAlunos[versaoAlunos as keyof typeof versoesAlunos];
-  return (
-    <Suspense fallback={<section id="alunos" className="min-h-[100svh] bg-carvao" />}>
-      <Versao />
-    </Suspense>
-  );
-}
 
 function Abertura() {
   if (!versaoHero) return <Hero />;
@@ -69,7 +52,7 @@ function App() {
         )}
         <Apresentacao />
         <Metodologia />
-        <Depoimentos />
+        {(temDepoimentos || previaAlunos) && <Alunos />}
         <Trajetoria />
         <Planos />
         <Perguntas />

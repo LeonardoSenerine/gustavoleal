@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { temDepoimentos } from "@/lib/content";
+import { previaAlunos } from "@/lib/alunos";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
 
 const links = [
   { href: "#apresentacao", label: "Quem é" },
   { href: "#metodo", label: "Método" },
-  ...(temDepoimentos ? [{ href: "#alunos", label: "Alunos" }] : []),
+  ...(temDepoimentos || previaAlunos ? [{ href: "#alunos", label: "Alunos" }] : []),
   { href: "#trajetoria", label: "Trajetória" },
   { href: "#planos", label: "Planos" },
   { href: "#perguntas", label: "Dúvidas" },

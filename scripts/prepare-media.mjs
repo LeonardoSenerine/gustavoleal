@@ -28,6 +28,14 @@ const clips = [
   { name: "exp-cultura", src: "s04", start: 4, dur: 6, ratio: 3 / 4, width: 400, crf: 30, fps: 24 },
 ];
 
+// Depoimentos dos alunos: todo assets/videos/aluno-*.mp4 vira um clipe em pé
+// (9:16), com som, e uma capa. Depois é só listar em "depoimentos"
+// (src/lib/content.ts) com o mesmo nome do arquivo.
+for (const f of readdirSync(videosIn).filter((f) => /^aluno-.+\.mp4$/.test(f))) {
+  const name = f.replace(/\.mp4$/, "");
+  clips.push({ name, src: name, start: 0, dur: 90, ratio: 9 / 16, width: 540, crf: 28, audio: true });
+}
+
 function run(args) {
   const r = spawnSync(ffmpeg, ["-y", "-loglevel", "error", ...args], { stdio: "inherit" });
   if (r.status !== 0) throw new Error(`ffmpeg falhou: ${args.join(" ")}`);

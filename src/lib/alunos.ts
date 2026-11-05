@@ -1,11 +1,11 @@
-// Versões da seção de depoimentos pra mostrar ao cliente: ?alunos=1 a 3.
-// Enquanto os vídeos dos alunos não chegam, as versões usam clipes de
-// exemplo (trechos dos vídeos que já existem), marcados como exemplo na
-// tela. Quando chegarem, entram em "depoimentos" (lib/content.ts).
+// Seção de depoimentos (components/Alunos.tsx). Ela só aparece no site
+// quando há vídeos de alunos em "depoimentos" (lib/content.ts). Pra ver
+// antes, abra o site com ?alunos no endereço: aí ela usa clipes de exemplo
+// (trechos do vídeo do Gustavo), com aviso de prévia na tela. Os exemplos
+// nunca vão pro ar como se fossem alunos.
 import { depoimentos } from "./content";
 
-const param = typeof window === "undefined" ? "" : (new URLSearchParams(window.location.search).get("alunos") ?? "");
-export const versaoAlunos = ["1", "2", "3"].includes(param) ? param : "";
+export const previaAlunos = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("alunos");
 
 export type Depoimento = { nome: string; contexto: string; video: string };
 
