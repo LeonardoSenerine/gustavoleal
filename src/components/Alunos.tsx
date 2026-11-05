@@ -129,7 +129,6 @@ export function Alunos() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-preto/85 to-transparent p-5 pt-20">
             <div key={s.atual} className="animate-[abrir_0.6s_cubic-bezier(.22,1,.36,1)]">
               <p className="display text-[2.1rem] md:text-[2.6rem]">{d.nome}</p>
-              <p className="text-sm text-off/75">{d.contexto}</p>
             </div>
           </div>
         </div>

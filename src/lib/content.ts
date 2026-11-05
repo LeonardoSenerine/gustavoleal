@@ -112,11 +112,11 @@ export const etapas = [
 // PENDENTE: vídeos dos alunos. Enquanto a lista estiver vazia, a seção de
 // depoimentos some da página e do menu. Pra cada vídeo novo: salvar em assets/videos/aluno-<nome>.mp4,
 // rodar npm run media e adicionar aqui, por exemplo
-// { nome: "Ana", contexto: "Aluna há 1 ano", video: "aluno-ana" }.
-// PENDENTE: nome do aluno do segundo vídeo e uma linha de contexto pra cada um.
-export const depoimentos: { nome: string; contexto: string; video: string }[] = [
-  { nome: "Lorena", contexto: "Aluna do teacher Gustavo", video: "aluno-lorena" },
-  { nome: "Aluno", contexto: "Aluno do teacher Gustavo", video: "aluno-2" },
+// { nome: "Ana", video: "aluno-ana" }.
+// PENDENTE: nome do aluno do segundo vídeo.
+export const depoimentos: { nome: string; video: string }[] = [
+  { nome: "Lorena", video: "aluno-lorena" },
+  { nome: "Aluno", video: "aluno-2" },
 ];
 
 export const temDepoimentos = depoimentos.length > 0;
