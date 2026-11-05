@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { linkPersonalizado, listarInteresses, useInteresses } from "@/lib/interesses";
-import { LoopVideo } from "./LoopVideo";
 
-// Fechamento em tela escura com o show ao fundo.
+// Fechamento em tela escura com o Coliseu iluminado à noite ao fundo.
 export function Cta() {
   const root = useRef<HTMLElement>(null);
   const interesses = useInteresses();
@@ -21,7 +20,7 @@ export function Cta() {
         });
         gsap.fromTo(
           ".cta-fundo",
-          { scale: 1.2 },
+          { scale: 1.08 },
           { scale: 1, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom bottom", scrub: 0.8 } },
         );
       });
@@ -31,8 +30,18 @@ export function Cta() {
 
   return (
     <section id="contato" ref={root} className="relative overflow-hidden bg-preto text-off">
-      <LoopVideo name="cta" className="cta-fundo absolute inset-0 h-full w-full object-cover opacity-45" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(13_11_10/0.7),rgb(61_9_18/0.55)_55%,rgb(13_11_10/0.92))]" aria-hidden />
+      <img
+        src="/fotos/fundo-coliseu-noite-800.webp"
+        srcSet="/fotos/fundo-coliseu-noite-800.webp 800w, /fotos/fundo-coliseu-noite.webp 1600w"
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="cta-fundo absolute inset-0 h-full w-full object-cover object-[50%_55%]"
+      />
+      {/* Escurece só onde está o texto (embaixo e à esquerda); a foto aparece no resto. */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(13_11_10/0.35)_0%,transparent_30%,rgb(13_11_10/0.15)_55%,rgb(13_11_10/0.8)_100%)]" aria-hidden />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(61_9_18/0.45),transparent_60%)]" aria-hidden />
 
       <div className="recuo relative mx-auto flex min-h-[88svh] max-w-[1500px] flex-col justify-between gap-16 py-20 md:py-28">
         <p className="text-off/65">Aula experimental grátis, online ou presencial</p>

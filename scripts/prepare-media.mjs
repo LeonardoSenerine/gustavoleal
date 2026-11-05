@@ -21,9 +21,6 @@ const clips = [
   // Vídeo de apresentação gravado pelo Gustavo (já vem em 9:16 e com legenda).
   // crf 28 mantém a legenda gravada nítida; a voz vai em mono 64k.
   { name: "apresentacao", src: "apresentacao", start: 0, dur: 22, ratio: 9 / 16, width: 576, crf: 28, audio: true },
-  // Fundo do CTA: o Sena à noite, com a ponte iluminada refletindo na água.
-  // Fica atrás de um degradê a 45% de opacidade, então pode ir bem comprimido.
-  { name: "cta", src: "s02", start: 0, dur: 7.4, ratio: 16 / 9, y: 0.45, width: 720, crf: 32, fps: 24 },
   // Cartão "Cultura" das fichas: músicos de rua, num cartão de ~300 px.
   { name: "exp-cultura", src: "s04", start: 4, dur: 6, ratio: 3 / 4, width: 400, crf: 30, fps: 24 },
 ];
