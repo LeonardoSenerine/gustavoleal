@@ -30,7 +30,8 @@ const clips = [
 // (src/lib/content.ts) com o mesmo nome do arquivo.
 for (const f of readdirSync(videosIn).filter((f) => /^aluno-.+\.mp4$/.test(f))) {
   const name = f.replace(/\.mp4$/, "");
-  clips.push({ name, src: name, start: 0, dur: 90, ratio: 9 / 16, width: 540, crf: 28, audio: true });
+  // Vídeo inteiro (dur longo), na largura de celular em que eles chegam.
+  clips.push({ name, src: name, start: 0, dur: 600, ratio: 9 / 16, width: 464, crf: 28, audio: true });
 }
 
 function run(args) {

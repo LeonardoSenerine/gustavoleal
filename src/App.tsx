@@ -13,7 +13,6 @@ import { Rodape } from "./components/Rodape";
 import { Movimento } from "./components/Movimento";
 import { LinhaMargem } from "./components/LinhaMargem";
 import { temDepoimentos } from "./lib/content";
-import { previaAlunos } from "./lib/alunos";
 
 function App() {
   return (
@@ -28,7 +27,7 @@ function App() {
         </section>
         <Apresentacao />
         <Metodologia />
-        {(temDepoimentos || previaAlunos) && <Alunos />}
+        {temDepoimentos && <Alunos />}
         <Trajetoria />
         <Planos />
         <Perguntas />

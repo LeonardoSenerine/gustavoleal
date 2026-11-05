@@ -85,7 +85,7 @@ export function useSequencia(total: number) {
     ref: video,
     muted: true,
     playsInline: true,
-    preload: "auto" as const,
+    preload: "metadata" as const,
     onEnded: proximo,
     onPlaying: () => setTocando(true),
     onWaiting: () => setTocando(false),

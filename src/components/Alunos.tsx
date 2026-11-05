@@ -1,4 +1,4 @@
-import { ehExemplo, listaAlunos as lista } from "@/lib/alunos";
+import { listaAlunos as lista } from "@/lib/alunos";
 import { Ingles, Titulo } from "./Secao";
 import { useSequencia } from "./useSequencia";
 
@@ -19,11 +19,6 @@ function Cabecalho({ tom, className = "" }: { tom: Tom; className?: string }) {
       <Ingles tom={tom} className="mt-4 md:mt-6">
         Don’t take my word for it.
       </Ingles>
-      {ehExemplo && (
-        <p className={`mt-6 inline-flex rounded-full border px-3 py-1 text-sm ${tom === "claro" ? "border-preto/20 text-preto/60" : "border-off/25 text-off/70"}`}>
-          Prévia com vídeos de exemplo. Aqui entram os depoimentos dos alunos.
-        </p>
-      )}
     </div>
   );
 }
