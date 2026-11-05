@@ -140,7 +140,7 @@ export function Planos() {
             </div>
 
             <a
-              href={linkPersonalizado(interesses, descricaoPlano)}
+              data-agendar href={linkPersonalizado(interesses, descricaoPlano)}
               target="_blank"
               rel="noreferrer"
               className="botao mt-9 w-full bg-off text-vinho hover:bg-preto hover:text-off"

@@ -58,7 +58,7 @@ export function Cta() {
             </p>
             <div className="relative self-start md:self-auto">
               <a
-                href={linkPersonalizado(interesses)}
+                data-agendar href={linkPersonalizado(interesses)}
                 target="_blank"
                 rel="noreferrer"
                 className="botao bg-off !px-8 !py-5 !text-lg text-preto hover:bg-caneta hover:text-off"

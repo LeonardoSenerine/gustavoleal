@@ -14,7 +14,7 @@ function Agendar({ tom = "claro" }: { tom?: "claro" | "escuro" }) {
   return (
     <div className="hero-sobe flex flex-wrap items-center gap-x-5 gap-y-3">
       <a
-        href={linkPersonalizado(interesses)}
+        data-agendar href={linkPersonalizado(interesses)}
         target="_blank"
         rel="noreferrer"
         className={`botao ${tom === "claro" ? "bg-preto text-off hover:bg-caneta" : "bg-off text-vinho hover:bg-caneta hover:text-off"}`}

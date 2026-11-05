@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { temDepoimentos } from "@/lib/content";
 import { linkPersonalizado, useInteresses } from "@/lib/interesses";
 
@@ -15,9 +16,59 @@ type Props = {
   interna?: boolean;
 };
 
-// Cabeçalho reto, como o topo de uma folha: nome, seções e o botão da aula grátis.
+// Diz se algum botão de agendar da página ([data-agendar]) está na tela.
+// Vigia também os que aparecem depois, como o "Agendar com esse foco".
+function useAgendarNaTela() {
+  const [naTela, setNaTela] = useState(false);
+
+  useEffect(() => {
+    const visiveis = new Set<Element>();
+    const io = new IntersectionObserver(
+      (entradas) => {
+        for (const e of entradas) {
+          if (e.isIntersecting) visiveis.add(e.target);
+          else visiveis.delete(e.target);
+        }
+        setNaTela(visiveis.size > 0);
+      },
+      // Desconta a faixa do cabeçalho no topo: botão escondido atrás dele não conta.
+      { rootMargin: "-64px 0px 0px 0px" },
+    );
+    const vigiados = new Set<Element>();
+    const vigiar = () => {
+      document.querySelectorAll("[data-agendar]").forEach((el) => {
+        if (vigiados.has(el)) return;
+        vigiados.add(el);
+        io.observe(el);
+      });
+      // Botões que saíram da página deixam de contar.
+      for (const el of vigiados) {
+        if (!el.isConnected) {
+          vigiados.delete(el);
+          visiveis.delete(el);
+          io.unobserve(el);
+        }
+      }
+      setNaTela(visiveis.size > 0);
+    };
+    vigiar();
+    const mo = new MutationObserver(vigiar);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, []);
+
+  return naTela;
+}
+
+// Cabeçalho reto, como o topo de uma folha: nome, seções e o botão da aula
+// grátis. O botão some enquanto outro botão de agendar está na tela, pra não
+// repetir o mesmo convite duas vezes.
 export function Header({ interna = false }: Props) {
   const interesses = useInteresses();
+  const repetido = useAgendarNaTela();
 
   return (
     <header data-header className="fixed inset-x-0 top-0 z-50 border-b border-preto/10 bg-off/85 backdrop-blur-md">
@@ -41,7 +92,11 @@ export function Header({ interna = false }: Props) {
           href={linkPersonalizado(interesses)}
           target="_blank"
           rel="noreferrer"
-          className="botao bg-preto !py-2.5 !text-sm text-off hover:bg-caneta"
+          inert={repetido}
+          aria-hidden={repetido || undefined}
+          className={`botao bg-preto !py-2.5 !text-sm text-off transition-[opacity,translate,background-color] duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:bg-caneta ${
+            repetido ? "pointer-events-none translate-y-1 opacity-0" : "opacity-100"
+          }`}
         >
           Aula grátis <span className="seta" aria-hidden>→</span>
         </a>

@@ -73,7 +73,7 @@ export function Hero() {
           </div>
 
           <div className="hero-sobe mt-9 flex flex-wrap items-center gap-x-5 gap-y-3 lg:mt-14">
-            <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-preto text-off hover:bg-caneta">
+            <a data-agendar href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-preto text-off hover:bg-caneta">
               Agendar aula experimental grátis <span className="seta" aria-hidden>→</span>
             </a>
             <span className="text-sm text-preto/55">Online ou presencial</span>

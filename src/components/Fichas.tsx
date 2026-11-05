@@ -107,7 +107,7 @@ export function Fichas({ cabecalho = true, className = "" }: { cabecalho?: boole
             <p className="text-lg text-preto/80">
               Sua aula grátis com foco em <strong className="font-semibold text-caneta-escura">{listarInteresses(interesses)}</strong>.
             </p>
-            <a href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-caneta text-off hover:bg-preto">
+            <a data-agendar href={linkPersonalizado(interesses)} target="_blank" rel="noreferrer" className="botao bg-caneta text-off hover:bg-preto">
               Agendar com esse foco <span className="seta" aria-hidden>→</span>
             </a>
           </>
