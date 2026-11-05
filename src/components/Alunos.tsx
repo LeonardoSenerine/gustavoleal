@@ -37,24 +37,6 @@ function Barras({ barra, atual, className = "" }: { barra: (k: number) => (el: H
   );
 }
 
-function BotaoSom({ comSom, alternar, tom = "escuro" }: { comSom: boolean; alternar: () => void; tom?: Tom }) {
-  return (
-    <button
-      type="button"
-      onClick={alternar}
-      aria-pressed={comSom}
-      className={`inline-flex shrink-0 items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold whitespace-nowrap backdrop-blur-sm transition-colors ${
-        tom === "claro" ? "border border-preto/20 text-preto hover:bg-preto hover:text-off" : "bg-preto/55 text-off hover:bg-caneta"
-      }`}
-    >
-      <svg viewBox="0 0 24 24" className="size-4 fill-none stroke-current stroke-2" aria-hidden>
-        <path d="M4 9h4l5-4v14l-5-4H4z" strokeLinejoin="round" />
-        {comSom ? <path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" strokeLinecap="round" /> : <path d="M17 9l5 6M22 9l-5 6" strokeLinecap="round" />}
-      </svg>
-      {comSom ? "Som ligado" : "Ouvir"}
-    </button>
-  );
-}
 
 function Seta({ lado, onClick, tom = "escuro", className = "" }: { lado: "esq" | "dir"; onClick: () => void; tom?: Tom; className?: string }) {
   return (
@@ -118,7 +100,7 @@ export function Alunos() {
   };
 
   // Arrastar com o dedo (ou o mouse): o leque acompanha; passou de 60 px,
-  // troca. Um toque curto nas laterais volta ou avança; no meio, pausa.
+  // troca. Um toque curto no vídeo liga ou desliga o som.
   const mover = (dx: number) => {
     const el = palco.current;
     if (!el) return;
@@ -145,11 +127,8 @@ export function Alunos() {
     if (dx < -60) return s.proximo();
     if (dx > 60) return s.anterior();
     if (Math.abs(dx) > 6) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    const onde = (e.clientX - r.left) / r.width;
-    if (onde < 0.33) s.anterior();
-    else if (onde > 0.67) s.proximo();
-    else s.tocarOuPausar();
+    // Toque no vídeo liga ou desliga o som.
+    s.alternarSom();
   };
 
   const curva = arrastando || !abriu ? "" : "transition-[transform,opacity] duration-[700ms] ease-[cubic-bezier(.32,.72,0,1)]";
@@ -182,11 +161,17 @@ export function Alunos() {
           return (
             <div
               key={v.video}
-              role={meio ? undefined : "button"}
-              tabIndex={meio || longe ? -1 : 0}
-              aria-label={meio ? undefined : `Assistir: ${v.nome}`}
+              role="button"
+              tabIndex={longe ? -1 : 0}
+              aria-label={meio ? (s.comSom ? `Desligar o som do depoimento de ${v.nome}` : `Ouvir o depoimento de ${v.nome}`) : `Assistir: ${v.nome}`}
+              aria-pressed={meio ? s.comSom : undefined}
               onClick={meio ? undefined : () => s.ir(k)}
-              onKeyDown={meio ? undefined : (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), s.ir(k))}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter" && e.key !== " ") return;
+                e.preventDefault();
+                if (meio) s.alternarSom();
+                else s.ir(k);
+              }}
               onPointerDown={meio ? comecar : undefined}
               onPointerMove={meio ? arrastar : undefined}
               onPointerUp={meio ? soltar : undefined}
@@ -204,6 +189,20 @@ export function Alunos() {
                     aria-label={`Depoimento: ${v.nome}`}
                   />
                   <Barras barra={s.barra} atual={s.atual} className="pointer-events-none absolute inset-x-3 top-3 z-10" />
+                  {/* Indica o som; o toque é no vídeo todo. */}
+                  <span
+                    className="pointer-events-none absolute top-7 right-3 z-10 grid size-9 place-items-center rounded-full bg-preto/55 text-off backdrop-blur-sm transition-colors"
+                    aria-hidden
+                  >
+                    <svg viewBox="0 0 24 24" className="size-4 fill-none stroke-current stroke-2">
+                      <path d="M4 9h4l5-4v14l-5-4H4z" strokeLinejoin="round" />
+                      {s.comSom ? (
+                        <path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" strokeLinecap="round" />
+                      ) : (
+                        <path d="M17 9l5 6M22 9l-5 6" strokeLinecap="round" />
+                      )}
+                    </svg>
+                  </span>
                 </>
               ) : null}
               <span
@@ -231,7 +230,6 @@ export function Alunos() {
           {dois(s.atual)} <span className="text-off/45">/ {dois(n - 1)}</span>
         </p>
         <Seta lado="dir" onClick={s.proximo} />
-        <BotaoSom comSom={s.comSom} alternar={s.alternarSom} />
       </div>
     </section>
   );
