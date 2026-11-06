@@ -135,7 +135,7 @@ export function Trajetoria() {
         <div ref={trilho} className="lg:flex lg:h-full lg:w-max lg:items-center lg:gap-[3.5vw] lg:pr-[6vw] lg:pl-[calc(var(--margem)+2.5rem)]">
           <div className="recuo lg:w-[30vw] lg:shrink-0 lg:!p-0">
             <h2 className="display text-[clamp(3.1rem,10.5vw,8.6rem)] text-balance lg:text-[min(5.6vw,7.5rem)]">O inglês me levou longe.</h2>
-            <Ingles className="mt-4 lg:mt-6">English took me places.</Ingles>
+            <Ingles className="mt-4 lg:mt-6">English took me to the world.</Ingles>
             <p data-revela className="mt-6 max-w-[38ch] text-lg leading-relaxed text-preto/70 lg:mt-8">
               Na prática, pude perceber como o idioma conecta pessoas, culturas e experiências, mesmo quando não falamos a língua local.
             </p>
