@@ -116,6 +116,7 @@ export const etapas = [
 export const depoimentos: { nome: string; video: string }[] = [
   { nome: "Lorena", video: "aluno-lorena" },
   { nome: "Kayo", video: "aluno-kayo" },
+  { nome: "Ana Carol", video: "aluno-ana-carol" },
 ];
 
 export const temDepoimentos = depoimentos.length > 0;
