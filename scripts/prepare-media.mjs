@@ -31,8 +31,8 @@ const clips = [
 for (const f of readdirSync(videosIn).filter((f) => /^aluno-.+\.mp4$/.test(f))) {
   const name = f.replace(/\.mp4$/, "");
   // Vídeo inteiro (dur longo), na largura de celular em que eles chegam.
-  // Obs.: o aluno-luisa veio do TikTok; a marca d'água foi tirada à mão com
-  // delogo (ver o commit "Depoimentos: vídeo da Luisa"). Rodar este script
+  // Obs.: o aluno-daniela veio do TikTok; a marca d'água foi tirada à mão com
+  // delogo (ver o commit "Depoimentos: vídeo da Luisa" (hoje aluno-daniela)). Rodar este script
   // de novo traria a marca de volta pra ele.
   clips.push({ name, src: name, start: 0, dur: 600, ratio: 9 / 16, width: 464, crf: 28, audio: true });
 }
