@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { listaAlunos as lista } from "@/lib/alunos";
+import { linkPersonalizado, useInteresses } from "@/lib/interesses";
 import { Ingles, Titulo } from "./Secao";
 import { useSequencia } from "./useSequencia";
 
@@ -8,6 +9,8 @@ import { useSequencia } from "./useSequencia";
 // próximo quando ele termina.
 
 const n = lista.length;
+// Depois do último depoimento vem o cartão-convite (posição n do leque).
+const total = n + 1;
 const mp4 = (v: string) => `/media/${v}.mp4`;
 const capa = (v: string) => `/media/${v}.jpg`;
 const dois = (k: number) => String(k + 1).padStart(2, "0");
@@ -57,9 +60,19 @@ function Seta({ lado, onClick, tom = "escuro", className = "" }: { lado: "esq" |
 // dos stories em cima. Toque nas laterais pra voltar ou avançar; quando um
 // termina, o leque gira pro próximo.
 export function Alunos() {
-  const s = useSequencia(n);
+  const s = useSequencia(total);
+  const interesses = useInteresses();
+  const noConvite = s.atual === n;
   const palco = useRef<HTMLDivElement>(null);
   const arrasto = useRef({ x0: 0, dx: 0, ativo: false });
+  // No computador, soltar o mouse depois de arrastar ainda dispara um clique
+  // no cartão que acabou de ir pro lado, e ele voltaria pro meio. Esse
+  // clique é ignorado.
+  const acabouDeArrastar = useRef(false);
+  const tocar = (k: number) => () => {
+    if (acabouDeArrastar.current) return;
+    s.ir(k);
+  };
   const [arrastando, setArrastando] = useState(false);
   // O vídeo só aparece depois que o cartão novo assenta no centro, pra não
   // surgir no meio do giro do leque.
@@ -94,8 +107,8 @@ export function Alunos() {
   // Distância de cada vídeo até o atual, pelo caminho mais curto do leque.
   const distancia = (k: number) => {
     let x = k - s.atual;
-    if (x > n / 2) x -= n;
-    if (x < -n / 2) x += n;
+    if (x > total / 2) x -= total;
+    if (x < -total / 2) x += total;
     return x;
   };
 
@@ -108,6 +121,8 @@ export function Alunos() {
     el.style.setProperty("--giro", `${dx / 45}deg`);
   };
   const comecar = (e: React.PointerEvent<HTMLDivElement>) => {
+    // No convite, o toque no botão é do botão (sem isso o arrasto rouba o clique).
+    if ((e.target as Element).closest("a, button")) return;
     arrasto.current = { x0: e.clientX, dx: 0, ativo: true };
     e.currentTarget.setPointerCapture(e.pointerId);
   };
@@ -124,11 +139,15 @@ export function Alunos() {
     arrasto.current.ativo = false;
     setArrastando(false);
     mover(0);
+    if (Math.abs(dx) > 6) {
+      acabouDeArrastar.current = true;
+      window.setTimeout(() => (acabouDeArrastar.current = false), 0);
+    }
     if (dx < -60) return s.proximo();
     if (dx > 60) return s.anterior();
     if (Math.abs(dx) > 6) return;
-    // Toque no vídeo liga ou desliga o som.
-    s.alternarSom();
+    // Toque no vídeo liga ou desliga o som (no convite não há vídeo).
+    if (!noConvite) s.alternarSom();
   };
 
   const curva = arrastando || !abriu ? "" : "transition-[transform,opacity] duration-[700ms] ease-[cubic-bezier(.32,.72,0,1)]";
@@ -165,7 +184,7 @@ export function Alunos() {
               tabIndex={longe ? -1 : 0}
               aria-label={meio ? (s.comSom ? `Desligar o som do depoimento de ${v.nome}` : `Ouvir o depoimento de ${v.nome}`) : `Assistir: ${v.nome}`}
               aria-pressed={meio ? s.comSom : undefined}
-              onClick={meio ? undefined : () => s.ir(k)}
+              onClick={meio ? undefined : tocar(k)}
               onKeyDown={(e) => {
                 if (e.key !== "Enter" && e.key !== " ") return;
                 e.preventDefault();
@@ -222,12 +241,80 @@ export function Alunos() {
             </div>
           );
         })}
+
+        {(() => {
+          const x = distancia(n);
+          const longe = Math.abs(x) > 2;
+          const meio = x === 0;
+          return (
+            <div
+              key="convite"
+              role={meio ? "group" : "button"}
+              tabIndex={meio || longe ? -1 : 0}
+              aria-label={meio ? "Sua vez: marque a aula experimental" : "Ver o convite pra aula experimental"}
+              onClick={meio ? undefined : tocar(n)}
+              onKeyDown={(e) => {
+                if (meio || (e.key !== "Enter" && e.key !== " ")) return;
+                e.preventDefault();
+                s.ir(n);
+              }}
+              onPointerDown={meio ? comecar : undefined}
+              onPointerMove={meio ? arrastar : undefined}
+              onPointerUp={meio ? soltar : undefined}
+              onPointerCancel={meio ? soltar : undefined}
+              className={`absolute top-1/2 left-1/2 flex aspect-[9/16] h-full flex-col justify-between overflow-hidden rounded-[22px] bg-off p-6 text-preto shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)] will-change-transform select-none md:p-8 ${curva} ${
+                meio ? "cursor-grab touch-pan-y ring-2 ring-off active:cursor-grabbing" : "cursor-pointer"
+              }`}
+              style={{
+                transform: `translate(-50%, -50%) translateX(calc(${x * 64}% * var(--abre) + var(--arrasto))) scale(${meio ? 1 : 0.8 - Math.abs(x) * 0.04}) rotate(calc(${x * 3}deg * var(--abre) + var(--giro)))`,
+                opacity: longe ? 0 : 1,
+                zIndex: 10 - Math.abs(x),
+                pointerEvents: longe ? "none" : undefined,
+              }}
+            >
+              <div className="pauta pointer-events-none absolute inset-0" aria-hidden />
+              <span className="pointer-events-none absolute inset-y-0 left-5 w-px bg-caneta/60 md:left-6" aria-hidden />
+              <p className="relative pl-3 text-sm font-semibold text-preto/55 md:pl-4">Sua vez</p>
+              <div key={meio ? "meio" : "lado"} className={`relative pl-3 md:pl-4 ${meio ? "animate-[abrir_0.7s_cubic-bezier(.32,.72,0,1)_0.15s_both]" : ""}`}>
+                <p className={`display ${meio ? "text-[clamp(3rem,13vw,4.4rem)]" : "text-[2.6rem]"}`}>
+                  Tá esperando
+                  <br />o quê?
+                </p>
+                <p lang="en" className={`mt-3 font-medium text-caneta-escura ${meio ? "text-lg" : "text-sm"}`}>
+                  What are you waiting for?
+                </p>
+                {meio && (
+                  <>
+                    <p className="mt-5 text-[1.05rem] leading-snug text-preto/70">
+                      O próximo vídeo pode ser o seu. A primeira aula é experimental e grátis.
+                    </p>
+                    <a
+                      data-agendar
+                      href={linkPersonalizado(interesses)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="botao mt-6 w-full bg-caneta !px-4 text-off hover:bg-preto"
+                    >
+                      Bora marcar <span className="seta" aria-hidden>→</span>
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       <div className="recuo relative mt-8 flex items-center justify-center gap-4">
         <Seta lado="esq" onClick={s.anterior} />
-        <p className="display w-24 text-center text-3xl tabular-nums" aria-live="polite">
-          {dois(s.atual)} <span className="text-off/45">/ {dois(n - 1)}</span>
+        <p className="display w-28 text-center text-3xl tabular-nums" aria-live="polite">
+          {noConvite ? (
+            "Sua vez"
+          ) : (
+            <>
+              {dois(s.atual)} <span className="text-off/45">/ {dois(n - 1)}</span>
+            </>
+          )}
         </p>
         <Seta lado="dir" onClick={s.proximo} />
       </div>
